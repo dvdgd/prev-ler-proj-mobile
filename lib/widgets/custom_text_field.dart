@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../theme/theme_colors.dart';
 
-class TextFieldWidget extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final dynamic? onSubmitted;
+  final List<FilteringTextInputFormatter>? inputFormatters;
+  final TextInputType? textInputType;
+  final int? maxLength;
+  final bool? obscureText;
 
-  const TextFieldWidget({
+  const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
     this.prefixIcon,
     this.suffixIcon,
     this.onSubmitted,
+    this.inputFormatters,
+    this.textInputType,
+    this.maxLength,
+    this.obscureText,
   });
 
   @override
@@ -36,6 +45,9 @@ class TextFieldWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: TextField(
+            inputFormatters: inputFormatters,
+            keyboardType: textInputType,
+            obscureText: obscureText ?? false,
             controller: controller,
             onSubmitted: onSubmitted,
             cursorColor: ThemeColors().blue,

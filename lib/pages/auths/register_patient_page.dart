@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:menu_lateral/widgets/custom_password_field.dart';
 
 import '../../main.dart';
 import '../../service/auth_service.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_date_picker.dart';
-import '../../widgets/text_field_widget.dart';
+import '../../widgets/custom_text_field.dart';
 
 class RegisterPatientPage extends StatefulWidget {
   const RegisterPatientPage({super.key});
@@ -19,7 +20,6 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
   final _nomeController = TextEditingController();
   final _dataNascimentoController = TextEditingController();
   final _ocupacaoController = TextEditingController();
-  final _ufCrmController = TextEditingController();
 
   Future<void> _handleRegister(context) async {
     var email = _emailController.text;
@@ -74,20 +74,23 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              TextFieldWidget(
+              CustomTextField(
                 controller: _emailController,
+                textInputType: TextInputType.emailAddress,
                 hintText: 'Email',
+                maxLength: 50,
                 prefixIcon: const Icon(Icons.email_outlined),
               ),
-              TextFieldWidget(
+              CustomPasswordField(
                 controller: _passwordController,
+                maxLength: 25,
                 hintText: 'Senha',
-                prefixIcon: const Icon(Icons.password_outlined),
               ),
-              TextFieldWidget(
+              CustomTextField(
                 controller: _nomeController,
                 hintText: 'Nome',
-                prefixIcon: const Icon(Icons.abc),
+                maxLength: 50,
+                prefixIcon: const Icon(Icons.text_fields_outlined),
               ),
               CustomDatePicker(
                 context: context,
@@ -95,9 +98,10 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                 hintText: 'Data de Nascimento',
                 prefixIcon: const Icon(Icons.date_range_outlined),
               ),
-              TextFieldWidget(
+              CustomTextField(
                 controller: _ocupacaoController,
                 hintText: 'Ocupação',
+                maxLength: 25,
                 prefixIcon: const Icon(Icons.work_history_outlined),
               ),
               const SizedBox(height: 20),

@@ -5,7 +5,7 @@ import 'package:menu_lateral/widgets/custom_dropdown_button.dart';
 import '../../main.dart';
 import '../../service/auth_service.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/text_field_widget.dart';
+import '../../widgets/custom_text_field.dart';
 
 class RegisterMedicPage extends StatefulWidget {
   const RegisterMedicPage({super.key});
@@ -75,17 +75,17 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              TextFieldWidget(
+              CustomTextField(
                 controller: _emailController,
                 hintText: 'Email',
                 prefixIcon: const Icon(Icons.email_outlined),
               ),
-              TextFieldWidget(
+              CustomTextField(
                 controller: _passwordController,
                 hintText: 'Senha',
                 prefixIcon: const Icon(Icons.password_outlined),
               ),
-              TextFieldWidget(
+              CustomTextField(
                 controller: _nomeController,
                 hintText: 'Nome',
                 prefixIcon: const Icon(Icons.abc),
@@ -96,7 +96,7 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
                 hintText: 'Data de Nascimento',
                 prefixIcon: const Icon(Icons.date_range_outlined),
               ),
-              TextFieldWidget(
+              CustomTextField(
                 controller: _numeroCrmController,
                 hintText: 'Numero CRM',
                 prefixIcon: const Icon(Icons.numbers_outlined),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:menu_lateral/pages/auths/register_medic_page.dart';
 import 'package:menu_lateral/pages/auths/register_patient_page.dart';
+import 'package:menu_lateral/widgets/custom_password_field.dart';
 
 import '../../main.dart';
 import '../../service/auth_service.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/text_field_widget.dart';
+import '../../widgets/custom_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -64,15 +65,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextFieldWidget(
+                CustomTextField(
                   controller: _emailController,
                   hintText: 'Email',
                   prefixIcon: const Icon(Icons.email_outlined),
                 ),
-                TextFieldWidget(
+                CustomPasswordField(
                   controller: _passwordController,
                   hintText: 'Senha',
-                  prefixIcon: const Icon(Icons.password_outlined),
                 ),
                 const SizedBox(height: 20),
                 CustomButton(
