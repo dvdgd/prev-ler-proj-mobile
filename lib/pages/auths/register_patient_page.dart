@@ -64,7 +64,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
               const Padding(
                 padding: EdgeInsets.only(left: 20.0, right: 20, top: 15),
                 child: Text(
-                  "Registre-se como paciente em nosso aplicativo e gerencie sua rotina de exercícios sobre Lesão por Esforço Repetitivo (LER) com segurança e eficácia. Tenha acesso a conteúdos confiáveis cadastrados por médicos para melhorar sua saúde e bem-estar!",
+                  "Previna as Lesões por Esforço Repetitivo (LER) com exercícios e gestão de rotinas. Tenha acesso a conteúdos exclusivos desenvolvidos por médicos licenciados para melhorar sua saúde e bem-estar.",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey,

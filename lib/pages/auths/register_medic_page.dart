@@ -65,7 +65,7 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
               const Padding(
                 padding: EdgeInsets.only(left: 20.0, right: 20, top: 15),
                 child: Text(
-                  "Cadastre-se como médico em nosso aplicativo para criar conteúdos confiáveis e exercícios sobre Lesão por Esforço Repetitivo (LER). Informe seu CRM e estado de origem para garantir a segurança das informações.",
+                  "Informe seu CRM e estado de origem para garantir a segurança das informações.",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
