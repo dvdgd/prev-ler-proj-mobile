@@ -41,7 +41,12 @@ class CustomDatePicker extends StatelessWidget {
               border: InputBorder.none,
               hintText: hintText,
               prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.clear_outlined),
+                onPressed: () {
+                  controller.text = '';
+                },
+              ),
             ),
             controller: controller,
             readOnly: true,
