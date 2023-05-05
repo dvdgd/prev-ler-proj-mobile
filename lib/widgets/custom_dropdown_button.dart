@@ -1,27 +1,22 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../theme/theme_colors.dart';
 
 class CustomDropdownButton extends StatefulWidget {
   final TextEditingController controller;
+  final List list;
 
-  const CustomDropdownButton({super.key, required this.controller});
+  const CustomDropdownButton({
+    super.key,
+    required this.controller,
+    required this.list,
+  });
 
   @override
   State<CustomDropdownButton> createState() => _CustomDropdownButtonState();
 }
 
 class _CustomDropdownButtonState extends State<CustomDropdownButton> {
-  late String _dropdownValue;
-
-  @override
-  void initState() {
-    super.initState();
-    _dropdownValue = widget.controller.text;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,17 +34,15 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: DropdownButtonFormField<String>(
-          value: _getDropdownMenuItems()[0],
-          items: _getDropdownMenuItems()
-              .map((estado) => DropdownMenuItem<String>(
-                    value: estado,
-                    child: Text(estado),
+          items: widget.list
+              .map((value) => DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value.toString()),
                   ))
               .toList(),
           onChanged: (String? newValue) {
             if (newValue != null) {
               setState(() {
-                _dropdownValue = newValue;
                 widget.controller.text = newValue;
               });
             }
@@ -58,42 +51,9 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
             hintText: 'Selecione um estado',
             border: InputBorder.none,
             prefixIcon: Icon(Icons.map_outlined),
-            hintStyle: TextStyle(color: Colors.grey),
           ),
         ),
       ),
     );
-  }
-
-  List<String> _getDropdownMenuItems() {
-    return [
-      'AC',
-      'AL',
-      'AP',
-      'AM',
-      'BA',
-      'CE',
-      'DF',
-      'ES',
-      'GO',
-      'MA',
-      'MT',
-      'MS',
-      'MG',
-      'PA',
-      'PB',
-      'PR',
-      'PE',
-      'PI',
-      'RJ',
-      'RN',
-      'RS',
-      'RO',
-      'RR',
-      'SC',
-      'SP',
-      'SE',
-      'TO'
-    ];
   }
 }
