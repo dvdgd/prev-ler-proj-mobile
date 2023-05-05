@@ -23,22 +23,7 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
   final _ufCrmController = TextEditingController();
 
   Future<void> _handleRegister(context) async {
-    var email = _emailController.text;
-    var password = _passwordController.text;
-
-    if (email.isEmpty && password.isEmpty) {
-      throw Exception("Email e senha devem ser preenchidos");
-    }
-
-    try {
-      await AuthService().register(email, password);
-
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const HomePage(),
-      ));
-    } catch (e) {
-      print("Erro " + e.toString());
-    }
+    throw UnimplementedError();
   }
 
   @override
