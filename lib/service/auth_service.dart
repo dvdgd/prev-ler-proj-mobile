@@ -46,6 +46,10 @@ class AuthService {
     return responseBody;
   }
 
+  Future<void> logout() async {
+    await storage.delete(key: 'jwt_token');
+  }
+
   Future<String?> getToken() async {
     var jwtToken = await storage.read(key: 'jwt_token');
     if (jwtToken == null) {

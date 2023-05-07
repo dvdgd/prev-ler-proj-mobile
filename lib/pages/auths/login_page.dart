@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:menu_lateral/pages/auths/register_medic_page.dart';
+import 'package:menu_lateral/main_page.dart';
+import 'package:menu_lateral/service/auth_service.dart';
+import 'package:menu_lateral/widgets/custom_alert_dialog.dart';
+import 'package:menu_lateral/widgets/custom_text_field.dart';
 import 'package:menu_lateral/pages/auths/register_patient_page.dart';
 import 'package:menu_lateral/widgets/custom_async_loading_button.dart';
 import 'package:menu_lateral/widgets/custom_password_field.dart';
-
-import '../../main.dart';
-import '../../service/auth_service.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,18 +23,21 @@ class _LoginPageState extends State<LoginPage> {
     var email = _emailController.text;
     var password = _passwordController.text;
 
-    if (email.isEmpty && password.isEmpty) {
-      throw Exception("Email e senha devem ser preenchidos");
-    }
-
     try {
+      if (email.isEmpty && password.isEmpty) {
+        throw Exception("Email e senha devem ser preenchidos");
+      }
+
       await AuthService().login(email, password);
 
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const HomePage(),
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const MainPage(),
       ));
     } catch (e) {
-      print("Erro " + e.toString());
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(message: e.toString()),
+      );
     }
   }
 
