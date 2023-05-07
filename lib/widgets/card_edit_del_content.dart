@@ -33,9 +33,9 @@ class CardEditDeleteContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 13),
         child: Card(
-          color: Color.fromARGB(255, 227, 232, 237),
+          color: const Color.fromARGB(255, 227, 232, 237),
           elevation: 3,
           shape: const RoundedRectangleBorder(
               side: BorderSide(
@@ -44,7 +44,7 @@ class CardEditDeleteContent extends StatelessWidget {
               ),
               borderRadius: BorderRadius.all(Radius.circular(25))),
           child: SizedBox(
-            height: 160,
+            height: 180,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Column(
@@ -68,15 +68,43 @@ class CardEditDeleteContent extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Editar'),
+                      InkWell(
+                        onTap: () {
+                          //função a ser executada quando o ícone for clicado
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.delete_forever_outlined,
+                              color: Colors.red,
+                              size: 30,
+                            ),
+                          ),
+                        ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Excluir'),
+                      InkWell(
+                        onTap: () {
+                          //função a ser executada quando o ícone for clicado
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.edit_note_sharp,
+                              color: Color.fromARGB(255, 112, 112, 112),
+                              size: 30,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
