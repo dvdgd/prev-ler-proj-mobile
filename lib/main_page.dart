@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/pages/home/home_page.dart';
+import 'package:prev_ler/pages/home/home_page.dart';
 
 import 'service/auth_service.dart';
 import 'theme/theme_colors.dart';

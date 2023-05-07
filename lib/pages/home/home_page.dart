@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:menu_lateral/pages/home/routine_card.dart';
+import 'package:prev_ler/pages/home/routine_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

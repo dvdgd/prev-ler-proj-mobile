@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/pages/auths/register_medic_page.dart';
-import 'package:menu_lateral/main_page.dart';
-import 'package:menu_lateral/service/auth_service.dart';
-import 'package:menu_lateral/widgets/custom_alert_dialog.dart';
-import 'package:menu_lateral/widgets/custom_text_field.dart';
-import 'package:menu_lateral/pages/auths/register_patient_page.dart';
-import 'package:menu_lateral/widgets/custom_async_loading_button.dart';
-import 'package:menu_lateral/widgets/custom_password_field.dart';
+import 'package:prev_ler/pages/auths/register_medic_page.dart';
+import 'package:prev_ler/main_page.dart';
+import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/widgets/custom_alert_dialog.dart';
+import 'package:prev_ler/widgets/custom_text_field.dart';
+import 'package:prev_ler/pages/auths/register_patient_page.dart';
+import 'package:prev_ler/widgets/custom_async_loading_button.dart';
+import 'package:prev_ler/widgets/custom_password_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

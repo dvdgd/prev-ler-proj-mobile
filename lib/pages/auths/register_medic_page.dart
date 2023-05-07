@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/service/auth_service.dart';
-import 'package:menu_lateral/widgets/custom_alert_dialog.dart';
-import 'package:menu_lateral/widgets/custom_async_loading_button.dart';
-import 'package:menu_lateral/widgets/custom_date_picker.dart';
-import 'package:menu_lateral/widgets/custom_dropdown_button.dart';
-import 'package:menu_lateral/entities/user.dart';
-import 'package:menu_lateral/widgets/custom_password_field.dart';
-import 'package:menu_lateral/widgets/custom_text_field.dart';
+import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/widgets/custom_alert_dialog.dart';
+import 'package:prev_ler/widgets/custom_async_loading_button.dart';
+import 'package:prev_ler/widgets/custom_date_picker.dart';
+import 'package:prev_ler/widgets/custom_dropdown_button.dart';
+import 'package:prev_ler/entities/user.dart';
+import 'package:prev_ler/widgets/custom_password_field.dart';
+import 'package:prev_ler/widgets/custom_text_field.dart';
 
 class RegisterMedicPage extends StatefulWidget {
   const RegisterMedicPage({super.key});

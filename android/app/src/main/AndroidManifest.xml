@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.menu_lateral">
+    package="com.example.prev_ler">
    <application
-        android:label="menu_lateral"
+        android:label="prev_ler"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
