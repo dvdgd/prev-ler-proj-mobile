@@ -86,7 +86,7 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
                 hintText: 'Numero CRM',
                 prefixIcon: const Icon(Icons.numbers_outlined),
               ),
-              CustomDropdownButton(controller: _ufCrmController, list: const [
+              CustomDropdownButton(controller: _ufCrmController, hintText: 'Selecione um estado', list: const [
                 'AC',
                 'AL',
                 'AP',

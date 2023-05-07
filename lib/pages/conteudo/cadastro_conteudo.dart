@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:menu_lateral/widgets/custom_dropdown_button.dart';
+import 'package:menu_lateral/widgets/custom_text_field.dart';
 
 void main() {
-  runApp(ContentPage());
+  runApp(const ContentPage());
 }
 
 class ContentPage extends StatefulWidget {
@@ -12,40 +14,50 @@ class ContentPage extends StatefulWidget {
 }
 
 class _ContentPageState extends State<ContentPage> {
-  @override
-  int _selectedIndex = 0;
+  final _tituloController = TextEditingController();
+  final _subtituloController = TextEditingController();
+  final _lesaoController = TextEditingController();
+  final _descricaoController = TextEditingController();
 
+  int _selectedIndex = 0;
+  
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(15),
         child: Column(
-          children: [
-            Text(
-              'Cadastrar Conteúdo',
-              textAlign: TextAlign.left,
-            ),
-            FieldsConteudo(label: 'Título'),
+          children : [
+            CustomTextField(controller: _tituloController, hintText: 'Título'),
             const SizedBox(
-              height: 20,
+              height: 15,
+              width: 15,
             ),
-            FieldsConteudo(label: 'Subtítulo'),
+            CustomTextField(controller: _subtituloController, hintText: 'Subtítulo'),
             const SizedBox(
-              height: 20,
+              height: 15,
+              width: 15,
             ),
-            FieldsConteudo(label: 'Título'),
+            CustomDropdownButton(controller: _lesaoController, hintText: 'Selecionar Lesão', list: const [
+              'Tendinite',
+              'Bursite',
+              'Miosites',
+              'Tenossinovite',
+              'Sinovite',
+              'Lumbago'
+            ],
+            ),
             const SizedBox(
-              height: 20,
+              height: 15,
+              width: 15,
             ),
-          ],
-        ),
+          ],  
+      ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -70,22 +82,6 @@ class _ContentPageState extends State<ContentPage> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.indigo,
         onTap: _onItemTapped,
-      ),
-    );
-  }
-}
-
-class FieldsConteudo extends StatelessWidget {
-  final String label;
-  const FieldsConteudo({super.key, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(),
-        isDense: true,
       ),
     );
   }

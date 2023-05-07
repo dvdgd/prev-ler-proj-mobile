@@ -5,11 +5,13 @@ import '../theme/theme_colors.dart';
 class CustomDropdownButton extends StatefulWidget {
   final TextEditingController controller;
   final List list;
+  final String hintText;
 
   const CustomDropdownButton({
     super.key,
     required this.controller,
     required this.list,
+    required this.hintText,
   });
 
   @override
@@ -47,10 +49,10 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
               });
             }
           },
-          decoration: const InputDecoration(
-            hintText: 'Selecione um estado',
+          decoration: InputDecoration(
+            hintText: widget.hintText,
             border: InputBorder.none,
-            prefixIcon: Icon(Icons.map_outlined),
+            prefixIcon: const Icon(Icons.map_outlined),
           ),
         ),
       ),
