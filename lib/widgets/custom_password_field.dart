@@ -4,6 +4,7 @@ import 'package:menu_lateral/widgets/custom_text_field.dart';
 class CustomPasswordField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
+  final Widget? prefixIcon;
   final int? maxLength;
   final bool? obscureText;
 
@@ -13,6 +14,7 @@ class CustomPasswordField extends StatefulWidget {
     required this.hintText,
     this.maxLength,
     this.obscureText,
+    this.prefixIcon,
   });
 
   @override

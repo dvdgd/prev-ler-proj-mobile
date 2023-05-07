@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import '../entities/user.dart';
+
 class AuthService {
   final storage = const FlutterSecureStorage();
 
@@ -13,12 +15,16 @@ class AuthService {
     'Accept': 'application/json',
   };
 
-  Future<Map<String, dynamic>> register(String email, String password) async {
+  Future<Map<String, dynamic>> register(User user) async {
     final response = await http.post(
       Uri.parse(baseUrl),
       headers: headers,
-      body: {'email': email, 'password': password},
+      body: jsonEncode(user.toJson()),
     );
+
+    if (response.statusCode != 201) {
+      throw Exception(response.body);
+    }
 
     return json.decode(response.body);
   }
