@@ -33,7 +33,6 @@ class _ContentPageState extends State<ContentPage> {
       body: Column(
         children: [
           Container(
-            alignment: Alignment.topLeft,
             margin: const EdgeInsets.all(20.0),
             child: const Text(
               'Cadastrar Conteúdo',
@@ -84,11 +83,12 @@ class _ContentPageState extends State<ContentPage> {
                   ),
                   TextField(
                     controller: _descricaoController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Descrição',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(),
-                      )
+                        borderSide: BorderSide(
+                        ),
+                      ),
                     ),
                     maxLines: 4),
                   const SizedBox(

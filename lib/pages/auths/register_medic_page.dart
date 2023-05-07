@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:menu_lateral/service/auth_service.dart';
+import 'package:menu_lateral/widgets/custom_alert_dialog.dart';
+import 'package:menu_lateral/widgets/custom_async_loading_button.dart';
 import 'package:menu_lateral/widgets/custom_date_picker.dart';
 import 'package:menu_lateral/widgets/custom_dropdown_button.dart';
-
-import '../../main.dart';
-import '../../service/auth_service.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text_field.dart';
+import 'package:menu_lateral/entities/user.dart';
+import 'package:menu_lateral/widgets/custom_password_field.dart';
+import 'package:menu_lateral/widgets/custom_text_field.dart';
 
 class RegisterMedicPage extends StatefulWidget {
   const RegisterMedicPage({super.key});
@@ -17,13 +18,67 @@ class RegisterMedicPage extends StatefulWidget {
 class _RegisterMedicPageState extends State<RegisterMedicPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _nomeController = TextEditingController();
-  final _dataNascimentoController = TextEditingController();
-  final _numeroCrmController = TextEditingController();
-  final _ufCrmController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _bornDateController = TextEditingController();
+  final _crmNumberController = TextEditingController();
+  final _crmStateController = TextEditingController();
+  final _selectedBornDateController = TextEditingController();
+
+  User _validateForm() {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    final name = _nameController.text;
+    final bornDate = _selectedBornDateController.text;
+    final crmNumber = _crmNumberController.text;
+    final crmState = _crmStateController.text;
+
+    if (email.isEmpty) {
+      throw Exception('Email não pode ser vazio');
+    }
+    if (password.isEmpty) {
+      throw Exception('A senha é obrigatória');
+    }
+    if (name.isEmpty) {
+      throw Exception('Por favor, preencha seu nome');
+    }
+    if (bornDate.isEmpty) {
+      throw Exception('Selecione uma data de nascimento');
+    }
+    if (crmNumber.isEmpty) {
+      throw Exception('Email não pode ser vazio');
+    }
+    if (crmState.isEmpty) {
+      throw Exception('Email não pode ser vazio');
+    }
+
+    return User(
+      email: email,
+      password: password,
+      medic: Medic(
+        name: name,
+        bornDate: DateTime.parse(bornDate),
+        crmNumber: crmNumber,
+        crmState: crmState,
+      ),
+    );
+  }
 
   Future<void> _handleRegister(context) async {
-    throw UnimplementedError();
+    final currentContext = context;
+    try {
+      final user = _validateForm();
+      await AuthService().register(user);
+      await showDialog(
+        context: currentContext,
+        builder: (context) => const CustomAlertDialog(message: 'Sucesso!'),
+      );
+      Navigator.of(currentContext).pop();
+    } catch (e) {
+      await showDialog(
+        context: currentContext,
+        builder: (context) => CustomAlertDialog(message: e.toString()),
+      );
+    }
   }
 
   @override
@@ -63,62 +118,67 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
               CustomTextField(
                 controller: _emailController,
                 hintText: 'Email',
+                textInputType: TextInputType.emailAddress,
                 prefixIcon: const Icon(Icons.email_outlined),
               ),
-              CustomTextField(
+              CustomPasswordField(
                 controller: _passwordController,
                 hintText: 'Senha',
-                prefixIcon: const Icon(Icons.password_outlined),
               ),
               CustomTextField(
-                controller: _nomeController,
+                controller: _nameController,
                 hintText: 'Nome',
-                prefixIcon: const Icon(Icons.abc),
+                prefixIcon: const Icon(Icons.text_fields_outlined),
               ),
               CustomDatePicker(
                 context: context,
-                controller: _dataNascimentoController,
+                controller: _bornDateController,
+                selectedDate: _selectedBornDateController,
                 hintText: 'Data de Nascimento',
                 prefixIcon: const Icon(Icons.date_range_outlined),
               ),
               CustomTextField(
-                controller: _numeroCrmController,
+                controller: _crmNumberController,
                 hintText: 'Numero CRM',
+                textInputType: TextInputType.number,
                 prefixIcon: const Icon(Icons.numbers_outlined),
               ),
-              CustomDropdownButton(controller: _ufCrmController, hintText: 'Selecione um estado', list: const [
-                'AC',
-                'AL',
-                'AP',
-                'AM',
-                'BA',
-                'CE',
-                'DF',
-                'ES',
-                'GO',
-                'MA',
-                'MT',
-                'MS',
-                'MG',
-                'PA',
-                'PB',
-                'PR',
-                'PE',
-                'PI',
-                'RJ',
-                'RN',
-                'RS',
-                'RO',
-                'RR',
-                'SC',
-                'SP',
-                'SE',
-                'TO',
-              ]),
+              CustomDropdownButton(
+                  controller: _crmStateController,
+                  hintText: 'Selecione um estado',
+                  list: const [
+                    'AC',
+                    'AL',
+                    'AP',
+                    'AM',
+                    'BA',
+                    'CE',
+                    'DF',
+                    'ES',
+                    'GO',
+                    'MA',
+                    'MT',
+                    'MS',
+                    'MG',
+                    'PA',
+                    'PB',
+                    'PR',
+                    'PE',
+                    'PI',
+                    'RJ',
+                    'RN',
+                    'RS',
+                    'RO',
+                    'RR',
+                    'SC',
+                    'SP',
+                    'SE',
+                    'TO',
+                  ]),
               const SizedBox(height: 20),
-              CustomButton(
+              CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
-                onTap: () async {
+                action: () async {
                   await _handleRegister(context);
                 },
               ),

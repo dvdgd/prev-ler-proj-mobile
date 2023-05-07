@@ -6,6 +6,7 @@ import '../theme/theme_colors.dart';
 class CustomDatePicker extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
+  final TextEditingController selectedDate;
   final BuildContext context;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -15,6 +16,7 @@ class CustomDatePicker extends StatelessWidget {
     required this.hintText,
     required this.controller,
     required this.context,
+    required this.selectedDate,
     this.prefixIcon,
     this.suffixIcon,
   });
@@ -51,15 +53,16 @@ class CustomDatePicker extends StatelessWidget {
             controller: controller,
             readOnly: true,
             onTap: () async {
-              final selectedDate = await showDatePicker(
+              final date = await showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime(1990),
                 lastDate: DateTime(2035),
               );
 
-              if (selectedDate != null) {
-                controller.text = DateFormat('dd/MM/yyyy').format(selectedDate);
+              if (date != null) {
+                selectedDate.text = date.toString();
+                controller.text = DateFormat('dd/MM/yyyy').format(date);
               }
             },
           ),
