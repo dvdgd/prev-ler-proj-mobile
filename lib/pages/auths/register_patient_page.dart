@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:menu_lateral/widgets/custom_async_loading_button.dart';
 import 'package:menu_lateral/widgets/custom_password_field.dart';
 
 import '../../main.dart';
@@ -72,27 +73,28 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                 hintText: 'Senha',
               ),
               CustomTextField(
-                controller: _nomeController,
+                controller: _nameController,
                 hintText: 'Nome',
                 maxLength: 50,
                 prefixIcon: const Icon(Icons.text_fields_outlined),
               ),
               CustomDatePicker(
+                selectedDate: _selectedBornDateController,
                 context: context,
-                controller: _dataNascimentoController,
+                controller: _bornDateController,
                 hintText: 'Data de Nascimento',
                 prefixIcon: const Icon(Icons.date_range_outlined),
               ),
               CustomTextField(
-                controller: _ocupacaoController,
+                controller: _occupationController,
                 hintText: 'Ocupação',
                 maxLength: 25,
                 prefixIcon: const Icon(Icons.work_history_outlined),
               ),
               const SizedBox(height: 20),
-              CustomButton(
+              CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
-                onTap: () async {
+                action: () async {
                   await _handleRegister(context);
                 },
               ),
