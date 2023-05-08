@@ -103,12 +103,7 @@ class _ContentPageState extends State<ContentPage> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    color : Colors.amber,
-                    decoration: BoxDecoration(
-                      border: InputBorder.none,
-                    ),
-                    child : ElevatedButton(
+                    ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: ThemeColors().blue,
                     ),
@@ -121,7 +116,6 @@ class _ContentPageState extends State<ContentPage> {
                     
                     onPressed: () {},
                     ),
-                  ),
                 ],
               ),
             ),
