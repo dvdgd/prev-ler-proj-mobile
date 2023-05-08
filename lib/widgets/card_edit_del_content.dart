@@ -1,54 +1,30 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const CardExamplesApp());
-}
-
-class CardExamplesApp extends StatelessWidget {
-  const CardExamplesApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          colorSchemeSeed: const Color(0xff6750a4), useMaterial3: true),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Card Examples')),
-        body: Column(
-          children: const <Widget>[
-            Spacer(),
-            CardEditDeleteContent(),
-            Spacer(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CardEditDeleteContent extends StatelessWidget {
-  const CardEditDeleteContent({super.key});
+class CustomCard extends StatelessWidget {
+  const CustomCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 13),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Card(
           color: const Color.fromARGB(255, 227, 232, 237),
           elevation: 3,
           shape: const RoundedRectangleBorder(
-              side: BorderSide(
-                color: Color.fromARGB(255, 158, 173, 186),
-                width: 2,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(25))),
+            side: BorderSide(
+              color: Color.fromARGB(255, 158, 173, 186),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(25)),
+          ),
           child: SizedBox(
             height: 180,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     'Como prevenir a tendinite',
@@ -66,43 +42,48 @@ class CardEditDeleteContent extends StatelessWidget {
                       maxLines: 3,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          //função a ser executada quando o ícone for clicado
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.delete_forever_outlined,
-                              color: Colors.red,
-                              size: 30,
+                      Expanded(
+                        flex: 1,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Ação a ser executada quando o botão for pressionado
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[200],
+                            padding: const EdgeInsets.all(15.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
                             ),
+                          ),
+                          child: const Icon(
+                            Icons.delete_forever_outlined,
+                            color: Colors.red,
+                            size: 30,
                           ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          //função a ser executada quando o ícone for clicado
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.edit_note_sharp,
-                              color: Color.fromARGB(255, 112, 112, 112),
-                              size: 30,
+                      const SizedBox(width: 10),
+                      Expanded(
+                        flex: 1,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Ação a ser executada quando o botão for pressionado
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[200],
+                            padding: const EdgeInsets.all(15.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
                             ),
+                          ),
+                          child: const Icon(
+                            Icons.edit_note_sharp,
+                            color: Color.fromARGB(255, 112, 112, 112),
+                            size: 30,
                           ),
                         ),
                       ),

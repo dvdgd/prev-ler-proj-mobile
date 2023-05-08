@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../widgets/custom_text_field.dart';
+import '../../../widgets/card_edit_del_content.dart';
 
 void main() {
   runApp(const Home());
@@ -35,24 +35,38 @@ class _HomeState extends State<Home> {
           ),
           body: Container(
             padding: const EdgeInsets.all(15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      isDense: true,
-                      labelText: "Buscar lesão",
-                      border: OutlineInputBorder(),
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          isDense: true,
+                          labelText: "Buscar lesão",
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(width: 10),
+                    Icon(
+                      Icons.filter_alt,
+                      color: Colors.deepPurple,
+                      size: 40,
+                    ),
+                  ],
                 ),
-                SizedBox(width: 10),
-                Icon(
-                  Icons.filter_alt,
-                  color: Colors.deepPurple,
-                  size: 40,
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: 15,
+                    itemBuilder: (BuildContext context, int index) {
+                      return const CustomCard();
+                    },
+                  ),
                 ),
               ],
             ),
