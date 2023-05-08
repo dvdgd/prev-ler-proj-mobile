@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:menu_lateral/pages/home/home_page.dart';
+import 'package:menu_lateral/widgets/custom_button.dart';
 import 'package:menu_lateral/widgets/custom_dropdown_button.dart';
 import 'package:menu_lateral/widgets/custom_text_field.dart';
 
@@ -40,7 +42,8 @@ class _ContentPageState extends State<ContentPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  CustomTextField(controller: _tituloController, hintText: 'Título'),
+                  CustomTextField(
+                      controller: _tituloController, hintText: 'Título'),
                   spaceBetweenFields(),
                   CustomTextField(
                     controller: _subtituloController,
@@ -59,63 +62,52 @@ class _ContentPageState extends State<ContentPage> {
                       'Lumbago'
                     ],
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  spaceBetweenFields(),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 18.0),
                     decoration: BoxDecoration(
                       color: ThemeColors().grey.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child : Padding(
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                    child: TextField(
-                      controller: _descricaoController,
-                      decoration: const InputDecoration(
-                        hintText: 'Descrição',
-                        border: InputBorder.none,
-                      ),
-                      maxLines: 5),
+                      child: TextField(
+                          controller: _descricaoController,
+                          decoration: const InputDecoration(
+                            hintText: 'Descrição',
+                            border: InputBorder.none,
+                          ),
+                          maxLines: 5),
+                    ),
                   ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-
+                  spaceBetweenFields(),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 18.0),
                     decoration: BoxDecoration(
                       color: ThemeColors().grey.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child : Padding(
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                    child: TextField(
-                      controller: _observacoesController,
-                      decoration: const InputDecoration(
-                        hintText: 'Observações',
-                        border: InputBorder.none,
-                      ),
-                      maxLines: 3),
-                  ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                    ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ThemeColors().blue,
+                      child: TextField(
+                          controller: _observacoesController,
+                          decoration: const InputDecoration(
+                            hintText: 'Observações',
+                            border: InputBorder.none,
+                          ),
+                          maxLines: 3),
                     ),
-                    child: const Text(
-                      'Salvar',
-                      style: TextStyle(
-                        color: Colors.white,
+                  ),
+                  spaceBetweenFields(),
+                  CustomButton(
+                    text: 'Salvar',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ContentPage(),
                       ),
-                      ),
-                    
-                    onPressed: () {},
                     ),
+                  ),
                 ],
               ),
             ),
@@ -124,10 +116,10 @@ class _ContentPageState extends State<ContentPage> {
       ),
     );
   }
+
   SizedBox spaceBetweenFields() {
     return const SizedBox(
-    height: 2.0,
-    width: 2.0,
+      height: 15.0,
     );
   }
 }
