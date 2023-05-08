@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/pages/conteudo/cadastro_conteudo.dart';
 import 'package:prev_ler/pages/home/home_page.dart';
 
 import 'service/auth_service.dart';
@@ -18,7 +19,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     HomePage(),
     HomePage(),
-    HomePage(),
+    ContentPage(),
   ];
 
   void tappedPage(int index) {

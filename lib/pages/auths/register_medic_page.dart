@@ -145,6 +145,7 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
               ),
               CustomDropdownButton(
                   controller: _crmStateController,
+                  hintText: 'Selecione um estado',
                   list: const [
                     'AC',
                     'AL',
