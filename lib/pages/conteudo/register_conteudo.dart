@@ -101,12 +101,27 @@ class _ContentPageState extends State<ContentPage> {
                   ),
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: 15,
                   ),
-                  ElevatedButton(
-                    child: const Text('Salvar'),
+                  Container(
+                    color : Colors.amber,
+                    decoration: BoxDecoration(
+                      border: InputBorder.none,
+                    ),
+                    child : ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ThemeColors().blue,
+                    ),
+                    child: const Text(
+                      'Salvar',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      ),
+                    
                     onPressed: () {},
                     ),
+                  ),
                 ],
               ),
             ),
