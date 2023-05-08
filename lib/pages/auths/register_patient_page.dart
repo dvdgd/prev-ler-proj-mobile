@@ -46,11 +46,11 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
     }
 
     return User(
+      name: name,
+      bornDate: DateTime.parse(bornDate),
       email: email,
       password: password,
       patient: Patient(
-        bornDate: DateTime.parse(bornDate),
-        name: name,
         occupation: occupation,
       ),
     );
@@ -130,7 +130,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                 selectedDate: _selectedBornDateController,
                 context: context,
                 controller: _bornDateController,
-                hintText: 'Data de Nascimento',
+                labelText: 'Data de Nascimento',
                 prefixIcon: const Icon(Icons.date_range_outlined),
               ),
               CustomTextField(

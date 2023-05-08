@@ -8,11 +8,13 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final dynamic? onSubmitted;
+  final dynamic onSubmitted;
   final List<FilteringTextInputFormatter>? inputFormatters;
   final TextInputType? textInputType;
   final int? maxLength;
   final bool? obscureText;
+  final bool? enable;
+  final EdgeInsets? margin;
 
   const CustomTextField({
     super.key,
@@ -25,38 +27,44 @@ class CustomTextField extends StatelessWidget {
     this.textInputType,
     this.maxLength,
     this.obscureText,
+    this.enable,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 10,
+    return Container(
+      margin: margin ??
+          const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 10,
+          ),
+      height: 58,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: ThemeColors().grey.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Container(
-        height: 50,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: ThemeColors().grey.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: TextField(
-            inputFormatters: inputFormatters,
-            keyboardType: textInputType,
-            obscureText: obscureText ?? false,
-            controller: controller,
-            onSubmitted: onSubmitted,
-            cursorColor: ThemeColors().blue,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: hintText,
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
-            ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: TextField(
+          inputFormatters: inputFormatters,
+          keyboardType: textInputType,
+          obscureText: obscureText ?? false,
+          controller: controller,
+          onSubmitted: onSubmitted,
+          cursorColor: ThemeColors().blue,
+          enabled: enable,
+          style: TextStyle(
+            color: enable != null ? Colors.grey : null,
+          ),
+          decoration: InputDecoration(
+            enabled: enable ?? true,
+            border: InputBorder.none,
+            labelText: hintText,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
           ),
         ),
       ),

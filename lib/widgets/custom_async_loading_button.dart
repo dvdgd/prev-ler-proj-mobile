@@ -27,34 +27,33 @@ class _CustomAsyncLoadingButtonState extends State<CustomAsyncLoadingButton> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        _changeIsLoading();
-        await widget.action();
-        _changeIsLoading();
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Container(
-          height: 50,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: ThemeColors().blue,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: TextButton(
+        onPressed: () async {
+          _changeIsLoading();
+          await widget.action();
+          _changeIsLoading();
+        },
+        style: TextButton.styleFrom(
+          backgroundColor: ThemeColors().blue,
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          child: Center(
-            child: _isLoading
-                ? const CircularProgressIndicator(
+          minimumSize: const Size(double.infinity, 60),
+        ),
+        child: Center(
+          child: _isLoading
+              ? const CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : Text(
+                  widget.text,
+                  style: const TextStyle(
                     color: Colors.white,
-                  )
-                : Text(
-                    widget.text,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
+                    fontSize: 16,
                   ),
-          ),
+                ),
         ),
       ),
     );
