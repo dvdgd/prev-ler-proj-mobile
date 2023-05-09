@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/pages/auths/register_medic_page.dart';
-import 'package:prev_ler/main_page.dart';
+import 'package:prev_ler/pages/main_page.dart';
 import 'package:prev_ler/service/auth_service.dart';
 import 'package:prev_ler/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
