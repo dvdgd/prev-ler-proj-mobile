@@ -115,13 +115,26 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                     height: 15,
                   ),
                   spaceBetweenFields(),
-                  CustomButton(
-                    text: 'Salvar',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ManagementContentPage(),
-                      ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            buttonColor: Colors.pink,
+                            text: 'Cancelar',
+                            onTap: () {},
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: CustomButton(
+                            text: 'Salvar',
+                            onTap: () {},
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
