@@ -59,7 +59,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
                   ))
               .toList(),
           // onTap: null,
-          onChanged: widget.enable != null ? null : _setNewValue,
+          onChanged: _buildWidgetOnChanged(),
           decoration: InputDecoration(
             enabled: widget.enable ?? true,
             labelText: widget.hintText,
@@ -69,6 +69,12 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
         ),
       ),
     );
+  }
+
+  dynamic _buildWidgetOnChanged() {
+    if (widget.enable == true || widget.enable == null) {
+      return _setNewValue;
+    }
   }
 
   void _setNewValue(String? newValue) {
