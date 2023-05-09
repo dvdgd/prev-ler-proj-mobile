@@ -56,11 +56,7 @@ class CustomTextField extends StatelessWidget {
           onSubmitted: onSubmitted,
           cursorColor: ThemeColors().blue,
           enabled: enable,
-          style: TextStyle(
-            color: enable != null ? Colors.grey : null,
-          ),
           decoration: InputDecoration(
-            enabled: enable ?? true,
             border: InputBorder.none,
             labelText: hintText,
             prefixIcon: prefixIcon,

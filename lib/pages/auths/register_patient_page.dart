@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/entities/user.dart';
+import 'package:prev_ler/pages/auths/build_user_form.dart';
 import 'package:prev_ler/service/auth_service.dart';
 import 'package:prev_ler/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/widgets/custom_async_loading_button.dart';
-import 'package:prev_ler/widgets/custom_date_picker.dart';
-import 'package:prev_ler/widgets/custom_password_field.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
 
 class RegisterPatientPage extends StatefulWidget {
@@ -108,30 +107,14 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              CustomTextField(
-                controller: _emailController,
-                textInputType: TextInputType.emailAddress,
-                hintText: 'Email',
-                maxLength: 50,
-                prefixIcon: const Icon(Icons.email_outlined),
-              ),
-              CustomPasswordField(
-                controller: _passwordController,
-                maxLength: 25,
-                hintText: 'Senha',
-              ),
-              CustomTextField(
-                controller: _nameController,
-                hintText: 'Nome',
-                maxLength: 50,
-                prefixIcon: const Icon(Icons.text_fields_outlined),
-              ),
-              CustomDatePicker(
-                selectedDate: _selectedBornDateController,
+              ...buildUserForm(
                 context: context,
-                controller: _bornDateController,
-                labelText: 'Data de Nascimento',
-                prefixIcon: const Icon(Icons.date_range_outlined),
+                emailController: _emailController,
+                passwordController: _passwordController,
+                nameController: _nameController,
+                selectedBornDateController: _selectedBornDateController,
+                bornDateController: _bornDateController,
+                isEditing: false,
               ),
               CustomTextField(
                 controller: _occupationController,

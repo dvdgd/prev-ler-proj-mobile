@@ -43,10 +43,6 @@ class CustomDatePicker extends StatelessWidget {
           child: TextField(
             enabled: enable,
             controller: controller,
-            readOnly: true,
-            style: TextStyle(
-              color: enable != null ? Colors.grey : null,
-            ),
             decoration: InputDecoration(
               border: InputBorder.none,
               labelText: labelText,

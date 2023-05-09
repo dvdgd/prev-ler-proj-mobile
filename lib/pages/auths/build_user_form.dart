@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/widgets/custom_date_picker.dart';
 import 'package:prev_ler/widgets/custom_dropdown_button.dart';
+import 'package:prev_ler/widgets/custom_password_field.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
 
 List<Widget> buildUserForm({
@@ -12,7 +13,7 @@ List<Widget> buildUserForm({
   required TextEditingController bornDateController,
   required bool isEditing,
 }) {
-  return [
+  List<Widget> formWidgets = [
     CustomTextField(
       controller: emailController,
       textInputType: TextInputType.emailAddress,
@@ -36,6 +37,19 @@ List<Widget> buildUserForm({
       enable: !isEditing,
     ),
   ];
+
+  if (!isEditing) {
+    formWidgets.insert(
+      1,
+      CustomPasswordField(
+        controller: passwordController,
+        maxLength: 25,
+        hintText: 'Senha',
+      ),
+    );
+  }
+
+  return formWidgets;
 }
 
 List<Widget> buildPatientForm({

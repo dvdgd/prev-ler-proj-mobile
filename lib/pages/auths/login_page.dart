@@ -13,7 +13,6 @@ class LoginPage extends ConsumerWidget {
   LoginPage({super.key});
 
   final _emailController = TextEditingController();
-
   final _passwordController = TextEditingController();
 
   Future<void> _handleLogin(BuildContext context, WidgetRef ref) async {
