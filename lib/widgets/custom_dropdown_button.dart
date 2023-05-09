@@ -36,6 +36,8 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
 
   @override
   Widget build(BuildContext context) {
+    final isNotEnable = widget.enable != null && widget.enable == false;
+
     return Padding(
       padding: const EdgeInsets.only(
         left: 20,
@@ -58,8 +60,9 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
                     child: Text(value.toString()),
                   ))
               .toList(),
-          onChanged: _setNewValue,
+          onChanged: isNotEnable ? null : _setNewValue,
           decoration: InputDecoration(
+            enabled: !isNotEnable,
             labelText: widget.hintText,
             border: InputBorder.none,
             prefixIcon: const Icon(Icons.map_outlined),

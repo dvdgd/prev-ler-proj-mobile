@@ -55,6 +55,10 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           onSubmitted: onSubmitted,
           cursorColor: ThemeColors().blue,
+          style: TextStyle(
+            color:
+                enable != null && enable == false ? Colors.grey.shade400 : null,
+          ),
           enabled: enable,
           decoration: InputDecoration(
             border: InputBorder.none,

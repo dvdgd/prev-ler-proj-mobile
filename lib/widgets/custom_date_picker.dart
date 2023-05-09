@@ -25,6 +25,8 @@ class CustomDatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isNotEnable = enable != null && enable == false;
+
     return Padding(
       padding: const EdgeInsets.only(
         left: 20,
@@ -43,6 +45,9 @@ class CustomDatePicker extends StatelessWidget {
           child: TextField(
             enabled: enable,
             controller: controller,
+            style: TextStyle(
+              color: isNotEnable ? Colors.grey.shade400 : null,
+            ),
             decoration: InputDecoration(
               border: InputBorder.none,
               labelText: labelText,
