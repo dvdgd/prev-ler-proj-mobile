@@ -1,36 +1,42 @@
-
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/theme/theme_colors.dart';
+import 'package:prev_ler/theme/theme_colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final dynamic onTap;
+  final VoidCallback? onTap;
+  final Color? textColor;
+  final Color? buttonColor;
+
   const CustomButton({
-    super.key,
+    Key? key,
     required this.text,
     required this.onTap,
-  });
+    this.textColor,
+    this.buttonColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Container(
-          height: 50,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: ThemeColors().blue,
+    return TextButton(
+      onPressed: onTap,
+      style: ButtonStyle(
+        backgroundColor:
+            MaterialStateProperty.all<Color>(buttonColor ?? ThemeColors().blue),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          child: Center(
-            child: Text(
-              text,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
+        ),
+      ),
+      child: SizedBox(
+        height: 50,
+        width: double.infinity,
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: textColor ?? Colors.white,
+              fontSize: 16,
             ),
           ),
         ),

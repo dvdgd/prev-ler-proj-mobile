@@ -10,9 +10,13 @@ class CustomAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        message,
-        textAlign: TextAlign.center,
+      title: SingleChildScrollView(
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          maxLines: 15,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       actions: [
         CustomButton(

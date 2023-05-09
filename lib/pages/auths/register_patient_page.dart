@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/entities/user.dart';
-import 'package:menu_lateral/service/auth_service.dart';
-import 'package:menu_lateral/widgets/custom_alert_dialog.dart';
-import 'package:menu_lateral/widgets/custom_async_loading_button.dart';
-import 'package:menu_lateral/widgets/custom_date_picker.dart';
-import 'package:menu_lateral/widgets/custom_password_field.dart';
-import 'package:menu_lateral/widgets/custom_text_field.dart';
+import 'package:prev_ler/entities/user.dart';
+import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/widgets/custom_alert_dialog.dart';
+import 'package:prev_ler/widgets/custom_async_loading_button.dart';
+import 'package:prev_ler/widgets/custom_date_picker.dart';
+import 'package:prev_ler/widgets/custom_password_field.dart';
+import 'package:prev_ler/widgets/custom_text_field.dart';
 
 class RegisterPatientPage extends StatefulWidget {
   const RegisterPatientPage({super.key});
@@ -46,11 +46,11 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
     }
 
     return User(
+      name: name,
+      bornDate: DateTime.parse(bornDate),
       email: email,
       password: password,
       patient: Patient(
-        bornDate: DateTime.parse(bornDate),
-        name: name,
         occupation: occupation,
       ),
     );
@@ -130,7 +130,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                 selectedDate: _selectedBornDateController,
                 context: context,
                 controller: _bornDateController,
-                hintText: 'Data de Nascimento',
+                labelText: 'Data de Nascimento',
                 prefixIcon: const Icon(Icons.date_range_outlined),
               ),
               CustomTextField(

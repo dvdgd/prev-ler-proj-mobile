@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/service/auth_service.dart';
-import 'package:menu_lateral/widgets/custom_alert_dialog.dart';
-import 'package:menu_lateral/widgets/custom_async_loading_button.dart';
-import 'package:menu_lateral/widgets/custom_date_picker.dart';
-import 'package:menu_lateral/widgets/custom_dropdown_button.dart';
-import 'package:menu_lateral/entities/user.dart';
-import 'package:menu_lateral/widgets/custom_password_field.dart';
-import 'package:menu_lateral/widgets/custom_text_field.dart';
+import 'package:prev_ler/pages/auths/build_user_form.dart';
+import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/widgets/custom_alert_dialog.dart';
+import 'package:prev_ler/widgets/custom_async_loading_button.dart';
+import 'package:prev_ler/entities/user.dart';
 
 class RegisterMedicPage extends StatefulWidget {
   const RegisterMedicPage({super.key});
@@ -52,11 +49,11 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
     }
 
     return User(
+      name: name,
+      bornDate: DateTime.parse(bornDate),
       email: email,
       password: password,
       medic: Medic(
-        name: name,
-        bornDate: DateTime.parse(bornDate),
         crmNumber: crmNumber,
         crmState: crmState,
       ),
@@ -115,66 +112,20 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              CustomTextField(
-                controller: _emailController,
-                hintText: 'Email',
-                textInputType: TextInputType.emailAddress,
-                prefixIcon: const Icon(Icons.email_outlined),
-              ),
-              CustomPasswordField(
-                controller: _passwordController,
-                hintText: 'Senha',
-              ),
-              CustomTextField(
-                controller: _nameController,
-                hintText: 'Nome',
-                prefixIcon: const Icon(Icons.text_fields_outlined),
-              ),
-              CustomDatePicker(
+              ...buildUserForm(
                 context: context,
-                controller: _bornDateController,
-                selectedDate: _selectedBornDateController,
-                hintText: 'Data de Nascimento',
-                prefixIcon: const Icon(Icons.date_range_outlined),
+                emailController: _emailController,
+                passwordController: _passwordController,
+                nameController: _nameController,
+                selectedBornDateController: _selectedBornDateController,
+                bornDateController: _bornDateController,
+                isEditing: false,
               ),
-              CustomTextField(
-                controller: _crmNumberController,
-                hintText: 'Numero CRM',
-                textInputType: TextInputType.number,
-                prefixIcon: const Icon(Icons.numbers_outlined),
+              ...buildMedicForm(
+                crmNumberController: _crmNumberController,
+                crmStateController: _crmStateController,
+                isEditing: false,
               ),
-              CustomDropdownButton(
-                  controller: _crmStateController,
-                  hintText: 'Selecione um estado',
-                  list: const [
-                    'AC',
-                    'AL',
-                    'AP',
-                    'AM',
-                    'BA',
-                    'CE',
-                    'DF',
-                    'ES',
-                    'GO',
-                    'MA',
-                    'MT',
-                    'MS',
-                    'MG',
-                    'PA',
-                    'PB',
-                    'PR',
-                    'PE',
-                    'PI',
-                    'RJ',
-                    'RN',
-                    'RS',
-                    'RO',
-                    'RR',
-                    'SC',
-                    'SP',
-                    'SE',
-                    'TO',
-                  ]),
               const SizedBox(height: 20),
               CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',

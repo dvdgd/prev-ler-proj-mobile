@@ -1,6 +1,6 @@
 {
-    "name": "menu_lateral",
-    "short_name": "menu_lateral",
+    "name": "prev_ler",
+    "short_name": "prev_ler",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

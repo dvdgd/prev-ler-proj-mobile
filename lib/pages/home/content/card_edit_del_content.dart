@@ -7,7 +7,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Card(
           color: const Color.fromARGB(255, 227, 232, 237),
           elevation: 3,
@@ -54,15 +54,19 @@ class CustomCard extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[200],
-                            padding: const EdgeInsets.all(15.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
                           ),
-                          child: const Icon(
-                            Icons.delete_forever_outlined,
-                            color: Colors.red,
-                            size: 30,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.delete_forever_outlined,
+                              color: Colors.red,
+                              size: 30,
+                            ),
+                            onPressed: () {},
                           ),
                         ),
                       ),
@@ -75,15 +79,19 @@ class CustomCard extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[200],
-                            padding: const EdgeInsets.all(15.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
                           ),
-                          child: const Icon(
-                            Icons.edit_note_sharp,
-                            color: Color.fromARGB(255, 112, 112, 112),
-                            size: 30,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.edit_note_sharp,
+                              color: Color.fromARGB(255, 112, 112, 112),
+                              size: 30,
+                            ),
+                            onPressed: () {},
                           ),
                         ),
                       ),

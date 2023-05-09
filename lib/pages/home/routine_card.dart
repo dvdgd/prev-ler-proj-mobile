@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class RoutineCardOld extends StatelessWidget {
   final DateTime currentDate;
@@ -32,63 +31,7 @@ class RoutineCardOld extends StatelessWidget {
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                DateFormat('dd/MM/yyyy').format(currentDate),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.delete_outline,
-                  size: 20,
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.edit,
-                  size: 20,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(
-                    'Criado em: 1234',
-                  )
-                ],
-              ),
-              Column(
-                children: const [
-                  Text(
-                    '5',
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
-                  ),
-                  Text(
-                    'Exercícios',
-                  )
-                ],
-              ),
-            ],
-          ),
-        ],
+        children: const [],
       ),
     );
   }

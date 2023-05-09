@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/pages/conteudo/cadastro_conteudo.dart';
-import 'package:menu_lateral/pages/home/home_page.dart';
-
-import 'service/auth_service.dart';
-import 'theme/theme_colors.dart';
-import 'pages/auths/login_page.dart';
+import 'package:prev_ler/pages/auths/login_page.dart';
+import 'package:prev_ler/pages/home/content/management_content_page.dart';
+import 'package:prev_ler/pages/home/home_page.dart';
+import 'package:prev_ler/theme/theme_colors.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -19,7 +17,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     HomePage(),
     HomePage(),
-    ContentPage(),
+    ManagementContentPage(),
   ];
 
   void tappedPage(int index) {
@@ -28,22 +26,21 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  Future<void> _logoutAndNavigateToLoginPage(BuildContext context) async {
-    AuthService().logout();
-    _navigateToLoginPage(context);
-  }
-
+  // ignore: unused_element
   void _navigateToLoginPage(BuildContext context) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const LoginPage()),
+      MaterialPageRoute(builder: (context) => LoginPage()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+        toolbarHeight: 0.1,
+      ),
       body: Stack(
         children: [
           Positioned.fill(
@@ -56,39 +53,6 @@ class _MainPageState extends State<MainPage> {
             child: _buildCardBottom(context),
           ),
         ],
-      ),
-    );
-  }
-
-  PreferredSize _buildAppBar() {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(100),
-      child: Container(
-        // decoration: const BoxDecoration(color: Colors.red),
-        padding: const EdgeInsets.all(15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Expanded(
-              child: Text(
-                'Olá, Fulano',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.notifications_none_outlined),
-            ),
-            const SizedBox(width: 12),
-            IconButton(
-              onPressed: () => _logoutAndNavigateToLoginPage(context),
-              icon: const Icon(Icons.logout),
-            )
-          ],
-        ),
       ),
     );
   }

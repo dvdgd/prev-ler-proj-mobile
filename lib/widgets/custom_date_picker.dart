@@ -4,19 +4,21 @@ import 'package:intl/intl.dart';
 import '../theme/theme_colors.dart';
 
 class CustomDatePicker extends StatelessWidget {
-  final String hintText;
+  final String labelText;
   final TextEditingController controller;
   final TextEditingController selectedDate;
   final BuildContext context;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final bool? enable;
 
   const CustomDatePicker({
     super.key,
-    required this.hintText,
+    required this.labelText,
     required this.controller,
     required this.context,
     required this.selectedDate,
+    this.enable,
     this.prefixIcon,
     this.suffixIcon,
   });
@@ -30,7 +32,7 @@ class CustomDatePicker extends StatelessWidget {
         top: 10,
       ),
       child: Container(
-        height: 50,
+        height: 58,
         width: double.infinity,
         decoration: BoxDecoration(
           color: ThemeColors().grey.withOpacity(0.5),
@@ -39,9 +41,15 @@ class CustomDatePicker extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: TextField(
+            enabled: enable,
+            controller: controller,
+            readOnly: true,
+            style: TextStyle(
+              color: enable != null ? Colors.grey : null,
+            ),
             decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: hintText,
+              labelText: labelText,
               prefixIcon: prefixIcon,
               suffixIcon: IconButton(
                 icon: const Icon(Icons.clear_outlined),
@@ -50,8 +58,6 @@ class CustomDatePicker extends StatelessWidget {
                 },
               ),
             ),
-            controller: controller,
-            readOnly: true,
             onTap: () async {
               final date = await showDatePicker(
                 context: context,

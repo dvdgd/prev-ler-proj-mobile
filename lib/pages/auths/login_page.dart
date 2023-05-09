@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/pages/auths/register_medic_page.dart';
-import 'package:menu_lateral/main_page.dart';
-import 'package:menu_lateral/service/auth_service.dart';
-import 'package:menu_lateral/widgets/custom_alert_dialog.dart';
-import 'package:menu_lateral/widgets/custom_text_field.dart';
-import 'package:menu_lateral/pages/auths/register_patient_page.dart';
-import 'package:menu_lateral/widgets/custom_async_loading_button.dart';
-import 'package:menu_lateral/widgets/custom_password_field.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prev_ler/pages/auths/register_medic_page.dart';
+import 'package:prev_ler/main_page.dart';
+import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/widgets/custom_alert_dialog.dart';
+import 'package:prev_ler/widgets/custom_text_field.dart';
+import 'package:prev_ler/pages/auths/register_patient_page.dart';
+import 'package:prev_ler/widgets/custom_async_loading_button.dart';
+import 'package:prev_ler/widgets/custom_password_field.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPage extends ConsumerWidget {
+  LoginPage({super.key});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
+
   final _passwordController = TextEditingController();
 
-  Future<void> _handleLogin(context) async {
+  Future<void> _handleLogin(BuildContext context, WidgetRef ref) async {
     var email = _emailController.text;
     var password = _passwordController.text;
 
@@ -28,11 +25,16 @@ class _LoginPageState extends State<LoginPage> {
         throw Exception("Email e senha devem ser preenchidos");
       }
 
-      await AuthService().login(email, password);
+      final authService = ref.read(authProvider);
+      await authService.login(email, password);
 
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => const MainPage(),
-      ));
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const MainPage(),
+        ));
+      } else {
+        throw Exception('Nos desculpe, ocorreu um erro inesperado do sistema');
+      }
     } catch (e) {
       showDialog(
         context: context,
@@ -42,21 +44,21 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Container(
             color: Colors.white,
-            child: _buildContent(context),
+            child: _buildContent(context, ref),
           ),
         ),
       ),
     );
   }
 
-  Column _buildContent(BuildContext context) {
+  Column _buildContent(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         const Text(
@@ -89,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
         CustomAsyncLoadingButton(
           text: 'Login',
           action: () async {
-            await _handleLogin(context);
+            await _handleLogin(context, ref);
           },
         ),
         const SizedBox(height: 20),

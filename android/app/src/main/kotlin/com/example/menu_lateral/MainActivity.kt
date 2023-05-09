@@ -1,4 +1,4 @@
-package com.example.menu_lateral
+package com.example.prev_ler
 
 import io.flutter.embedding.android.FlutterActivity
 

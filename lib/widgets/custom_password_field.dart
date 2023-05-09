@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/widgets/custom_text_field.dart';
+import 'package:prev_ler/widgets/custom_text_field.dart';
 
 class CustomPasswordField extends StatefulWidget {
   final TextEditingController controller;

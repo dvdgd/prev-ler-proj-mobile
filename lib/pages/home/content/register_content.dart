@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:menu_lateral/pages/home/home_page.dart';
-import 'package:menu_lateral/widgets/custom_button.dart';
-import 'package:menu_lateral/widgets/custom_dropdown_button.dart';
-import 'package:menu_lateral/widgets/custom_text_field.dart';
+import 'package:prev_ler/pages/home/content/management_content_page.dart';
+import 'package:prev_ler/theme/theme_colors.dart';
+import 'package:prev_ler/widgets/custom_button.dart';
+import 'package:prev_ler/widgets/custom_dropdown_button.dart';
+import 'package:prev_ler/widgets/custom_text_field.dart';
 
-import '../../theme/theme_colors.dart';
+class RegisterContentPage extends StatefulWidget {
+  final String title;
 
-void main() {
-  runApp(const ContentPage());
-}
-
-class ContentPage extends StatefulWidget {
-  const ContentPage({super.key});
+  const RegisterContentPage({
+    super.key,
+    required this.title,
+  });
 
   @override
-  State<ContentPage> createState() => _ContentPageState();
+  State<RegisterContentPage> createState() => _RegisterContentPageState();
 }
 
-class _ContentPageState extends State<ContentPage> {
+class _RegisterContentPageState extends State<RegisterContentPage> {
   final _tituloController = TextEditingController();
   final _subtituloController = TextEditingController();
   final _lesaoController = TextEditingController();
@@ -27,27 +27,36 @@ class _ContentPageState extends State<ContentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
+      ),
       body: Column(
         children: [
-          const Text(
-            'Conteúdo',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-            ),
-          ),
           spaceBetweenFields(),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(height: 15),
                   CustomTextField(
-                      controller: _tituloController, hintText: 'Título'),
+                    controller: _tituloController,
+                    hintText: 'Título',
+                    prefixIcon: const Icon(Icons.title),
+                  ),
                   spaceBetweenFields(),
                   CustomTextField(
                     controller: _subtituloController,
                     hintText: 'Subtítulo',
+                    prefixIcon: const Icon(Icons.subtitles),
                   ),
                   spaceBetweenFields(),
                   CustomDropdownButton(
@@ -62,25 +71,27 @@ class _ContentPageState extends State<ContentPage> {
                       'Lumbago'
                     ],
                   ),
-                  spaceBetweenFields(),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 18.0),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
                     decoration: BoxDecoration(
                       color: ThemeColors().grey.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: TextField(
                           controller: _descricaoController,
                           decoration: const InputDecoration(
-                            hintText: 'Descrição',
+                            prefixIcon: Icon(Icons.description),
+                            labelText: 'Descrição',
                             border: InputBorder.none,
                           ),
                           maxLines: 5),
                     ),
                   ),
-                  spaceBetweenFields(),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 18.0),
                     decoration: BoxDecoration(
@@ -90,13 +101,18 @@ class _ContentPageState extends State<ContentPage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: TextField(
-                          controller: _observacoesController,
-                          decoration: const InputDecoration(
-                            hintText: 'Observações',
-                            border: InputBorder.none,
-                          ),
-                          maxLines: 3),
+                        controller: _observacoesController,
+                        decoration: const InputDecoration(
+                          labelText: 'Observações',
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.zoom_in),
+                        ),
+                        maxLines: 3,
+                      ),
                     ),
+                  ),
+                  const SizedBox(
+                    height: 15,
                   ),
                   spaceBetweenFields(),
                   CustomButton(
@@ -104,7 +120,7 @@ class _ContentPageState extends State<ContentPage> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ContentPage(),
+                        builder: (context) => const ManagementContentPage(),
                       ),
                     ),
                   ),
@@ -119,7 +135,8 @@ class _ContentPageState extends State<ContentPage> {
 
   SizedBox spaceBetweenFields() {
     return const SizedBox(
-      height: 15.0,
+      height: 2.0,
+      width: 2.0,
     );
   }
 }
