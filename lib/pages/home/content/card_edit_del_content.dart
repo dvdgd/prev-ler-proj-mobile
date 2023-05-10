@@ -50,27 +50,50 @@ class CustomCard extends StatelessWidget {
                         flex: 1,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Ação a ser executada quando o botão for pressionado
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Atenção!'),
+                                content: const Text(
+                                    'Deseja realmente apagar este conteúdo?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Cancelar'),
+                                    child: const Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Confirmar'),
+                                    child: const Text('Confirmar'),
+                                  ),
+                                ],
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[200],
+                            fixedSize: const Size.fromHeight(45),
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
                           ),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.delete_forever_outlined,
-                              color: Colors.red,
-                              size: 30,
-                            ),
-                            onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const <Widget>[
+                              Icon(
+                                Icons.delete_forever_outlined,
+                                color: Colors.red,
+                                size: 35,
+                              ),
+                              SizedBox(width: 10),
+                            ],
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 80),
                       Expanded(
                         flex: 1,
                         child: ElevatedButton(
@@ -79,19 +102,23 @@ class CustomCard extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[200],
+                            fixedSize: const Size.fromHeight(45),
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
                           ),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.edit_note_sharp,
-                              color: Color.fromARGB(255, 112, 112, 112),
-                              size: 30,
-                            ),
-                            onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.edit_note_sharp,
+                                color: Colors.grey[700],
+                                size: 35,
+                              ),
+                              const SizedBox(width: 10),
+                            ],
                           ),
                         ),
                       ),
@@ -103,6 +130,34 @@ class CustomCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DialogExample extends StatelessWidget {
+  const DialogExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: const Text('AlertDialog description'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+      child: const Text('Show Dialog'),
     );
   }
 }
