@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/theme/theme_colors.dart';
+import 'package:prev_ler/widgets/custom_button.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({Key? key}) : super(key: key);
@@ -48,58 +50,7 @@ class CustomCard extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 1,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                title: const Center(child: Text('Atenção!')),
-                                content: const Text(
-                                  'Deseja realmente apagar este conteúdo?',
-                                  textAlign: TextAlign.center,
-                                ),
-                                actions: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'Cancelar'),
-                                        child: const Text('Cancelar'),
-                                      ),
-                                      const SizedBox(width: 50),
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'Confirmar'),
-                                        child: const Text('Confirmar'),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[200],
-                            fixedSize: const Size.fromHeight(45),
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
-                              Icon(
-                                Icons.delete_forever_outlined,
-                                color: Colors.red,
-                                size: 35,
-                              ),
-                              SizedBox(width: 10),
-                            ],
-                          ),
-                        ),
+                        child: _buildButton(context),
                       ),
                       const SizedBox(width: 30),
                       Expanded(
@@ -140,32 +91,71 @@ class CustomCard extends StatelessWidget {
       ),
     );
   }
-}
 
-class DialogExample extends StatelessWidget {
-  const DialogExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('AlertDialog Title'),
-          content: const Text('AlertDialog description'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
+  ElevatedButton _buildButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Center(child: Text('Atenção!')),
+            content: const Text(
+              'Deseja realmente apagar este conteúdo?',
+              textAlign: TextAlign.center,
             ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
+            actions: <Widget>[
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 18),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        buttonColor: Colors.pink,
+                        text: 'Cancelar',
+                        textColor: Colors.white,
+                        onTap: () {
+                          Navigator.pop(context, 'Cancelar');
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 30),
+                    Expanded(
+                      child: CustomButton(
+                        buttonColor: ThemeColors().blue,
+                        text: 'Confirmar',
+                        textColor: Colors.white,
+                        onTap: () {
+                          Navigator.pop(context, 'Confirmar');
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.grey[200],
+        fixedSize: const Size.fromHeight(45),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
         ),
       ),
-      child: const Text('Show Dialog'),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const <Widget>[
+          Icon(
+            Icons.delete_forever_outlined,
+            color: Colors.red,
+            size: 35,
+          ),
+          SizedBox(width: 10),
+        ],
+      ),
     );
   }
 }
