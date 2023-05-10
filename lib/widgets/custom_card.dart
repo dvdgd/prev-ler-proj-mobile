@@ -3,18 +3,20 @@ import 'package:prev_ler/theme/theme_colors.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
-  final void Function() onTap;
+  final void Function()? onTap;
   final Color? backgroundColor;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
+  final double? height;
 
   const CustomCard({
-    super.key,
+    Key? key,
     required this.onTap,
     required this.child,
     this.backgroundColor,
     this.margin,
     this.padding,
+    this.height,
   });
 
   @override
@@ -26,19 +28,25 @@ class CustomCard extends StatelessWidget {
       offset: const Offset(1, 2), // Shadow position
     );
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        margin: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          color: backgroundColor ?? ThemeColors().blue,
-          boxShadow: [boxShadow],
+    return Container(
+      margin: margin ?? const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: [boxShadow],
+      ),
+      child: Material(
+        color: backgroundColor ?? ThemeColors().blue,
+        borderRadius: BorderRadius.circular(25),
+        child: InkWell(
+          onTap: onTap,
           borderRadius: BorderRadius.circular(25),
+          child: Container(
+            padding: padding ?? const EdgeInsets.all(20),
+            height: height ?? 130,
+            width: double.infinity,
+            child: child,
+          ),
         ),
-        height: 130,
-        width: double.infinity,
-        child: child,
       ),
     );
   }

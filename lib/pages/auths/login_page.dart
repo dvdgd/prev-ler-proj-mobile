@@ -71,6 +71,8 @@ class LoginPage extends ConsumerWidget {
         const SizedBox(height: 20),
         const Text(
           'Faça o login ou cadastre-se para continuar...',
+          softWrap: true,
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,
             color: Colors.grey,
