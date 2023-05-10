@@ -5,6 +5,7 @@ import 'package:prev_ler/entities/user.dart';
 import 'package:prev_ler/pages/auths/build_user_form.dart';
 import 'package:prev_ler/service/auth_service.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
+import 'package:prev_ler/widgets/page_title.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -30,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
-        title: _buildPageTitle(),
+        title: const PageTitle(title: 'Meu Perfil'),
       ),
       body: Consumer(
         builder: (context, ref, child) {
@@ -42,18 +43,6 @@ class _ProfilePageState extends State<ProfilePage> {
             loading: () => const CircularProgressIndicator(),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildPageTitle() {
-    return const Text(
-      'Meu Perfil',
-      textAlign: TextAlign.start,
-      style: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
       ),
     );
   }

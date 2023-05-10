@@ -82,6 +82,7 @@ List<Widget> buildMedicForm({
     CustomDropdownButton(
       enable: !isEditing,
       controller: crmStateController,
+      prefixIcon: const Icon(Icons.map),
       list: const [
         'AC',
         'AL',

@@ -5,6 +5,7 @@ import 'package:prev_ler/pages/home/routine/routine_page.dart';
 import 'package:prev_ler/widgets/custom_card.dart';
 import 'package:prev_ler/pages/home/profile/profile_page.dart';
 import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/widgets/page_title.dart';
 
 import '../../theme/theme_colors.dart';
 
@@ -44,12 +45,8 @@ class _HomePageState extends State<HomePage> {
         data: (user) {
           final userFirstName = user.name.split(' ')[0];
           return Expanded(
-            child: Text(
-              'Olá, $userFirstName',
-              style: const TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
+            child: PageTitle(
+              title: 'Olá, $userFirstName',
             ),
           );
         },

@@ -3,6 +3,7 @@ import 'package:prev_ler/theme/theme_colors.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
 import 'package:prev_ler/widgets/custom_dropdown_button.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
+import 'package:prev_ler/widgets/page_title.dart';
 
 class RegisterContentPage extends StatefulWidget {
   final String title;
@@ -29,14 +30,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
-        title: Text(
-          widget.title,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-          ),
-        ),
+        title: const PageTitle(title: 'Cadastrar Conteúdo'),
       ),
       body: Column(
         children: [
