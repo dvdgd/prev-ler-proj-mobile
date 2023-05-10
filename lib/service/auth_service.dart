@@ -75,7 +75,7 @@ class AuthService extends ChangeNotifier {
 
     final response = await http.get(
       Uri.parse('$baseUrl/$userId'),
-      headers: headers,
+      headers: {...headers, 'Authorization': 'Bearer $authToken'},
     );
 
     if (response.statusCode != 200) {
