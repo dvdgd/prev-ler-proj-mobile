@@ -6,12 +6,14 @@ class CustomDropdownButton extends StatefulWidget {
   final List list;
   final String hintText;
   final bool? enable;
+  final Widget? prefixIcon;
 
   const CustomDropdownButton({
     super.key,
     required this.controller,
     required this.list,
     required this.hintText,
+    this.prefixIcon,
     this.enable,
   });
 
@@ -65,7 +67,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
             enabled: !isNotEnable,
             labelText: widget.hintText,
             border: InputBorder.none,
-            prefixIcon: const Icon(Icons.map_outlined),
+            prefixIcon: widget.prefixIcon,
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/pages/home/content/management_content_page.dart';
 import 'package:prev_ler/theme/theme_colors.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
 import 'package:prev_ler/widgets/custom_dropdown_button.dart';
@@ -61,6 +60,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                   spaceBetweenFields(),
                   CustomDropdownButton(
                     controller: _lesaoController,
+                    prefixIcon: const Icon(Icons.healing_outlined),
                     hintText: 'Selecionar Lesão',
                     list: const [
                       'Tendinite',
