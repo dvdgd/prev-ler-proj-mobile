@@ -7,9 +7,9 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Card(
-          color: const Color.fromARGB(255, 227, 232, 237),
+          color: const Color.fromARGB(255, 237, 231, 254),
           elevation: 3,
           shape: const RoundedRectangleBorder(
             side: BorderSide(
@@ -21,7 +21,7 @@ class CustomCard extends StatelessWidget {
           child: SizedBox(
             height: 180,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,19 +53,27 @@ class CustomCard extends StatelessWidget {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
-                                title: const Text('Atenção!'),
+                                title: const Center(child: Text('Atenção!')),
                                 content: const Text(
-                                    'Deseja realmente apagar este conteúdo?'),
+                                  'Deseja realmente apagar este conteúdo?',
+                                  textAlign: TextAlign.center,
+                                ),
                                 actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Cancelar'),
-                                    child: const Text('Cancelar'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Confirmar'),
-                                    child: const Text('Confirmar'),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'Cancelar'),
+                                        child: const Text('Cancelar'),
+                                      ),
+                                      const SizedBox(width: 50),
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'Confirmar'),
+                                        child: const Text('Confirmar'),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -93,7 +101,7 @@ class CustomCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 80),
+                      const SizedBox(width: 30),
                       Expanded(
                         flex: 1,
                         child: ElevatedButton(
