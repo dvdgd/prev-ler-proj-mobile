@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/theme/theme_colors.dart';
+import 'package:prev_ler/widgets/custom_button.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({Key? key}) : super(key: key);
@@ -7,9 +9,9 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Card(
-          color: const Color.fromARGB(255, 227, 232, 237),
+          color: const Color.fromARGB(255, 237, 231, 254),
           elevation: 3,
           shape: const RoundedRectangleBorder(
             side: BorderSide(
@@ -21,7 +23,7 @@ class CustomCard extends StatelessWidget {
           child: SizedBox(
             height: 180,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,29 +50,9 @@ class CustomCard extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 1,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Ação a ser executada quando o botão for pressionado
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[200],
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                          ),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.delete_forever_outlined,
-                              color: Colors.red,
-                              size: 30,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ),
+                        child: _buildButton(context),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 30),
                       Expanded(
                         flex: 1,
                         child: ElevatedButton(
@@ -79,19 +61,23 @@ class CustomCard extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[200],
+                            fixedSize: const Size.fromHeight(45),
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
                           ),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.edit_note_sharp,
-                              color: Color.fromARGB(255, 112, 112, 112),
-                              size: 30,
-                            ),
-                            onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.edit_note_sharp,
+                                color: Colors.grey[700],
+                                size: 35,
+                              ),
+                              const SizedBox(width: 10),
+                            ],
                           ),
                         ),
                       ),
@@ -102,6 +88,73 @@ class CustomCard extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  ElevatedButton _buildButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Center(child: Text('Atenção!')),
+            content: const Text(
+              'Deseja realmente apagar este conteúdo?',
+              textAlign: TextAlign.center,
+            ),
+            actions: <Widget>[
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 18),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        buttonColor: Colors.pink,
+                        text: 'Cancelar',
+                        textColor: Colors.white,
+                        onTap: () {
+                          Navigator.pop(context, 'Cancelar');
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 30),
+                    Expanded(
+                      child: CustomButton(
+                        buttonColor: ThemeColors().blue,
+                        text: 'Confirmar',
+                        textColor: Colors.white,
+                        onTap: () {
+                          Navigator.pop(context, 'Confirmar');
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.grey[200],
+        fixedSize: const Size.fromHeight(45),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const <Widget>[
+          Icon(
+            Icons.delete_forever_outlined,
+            color: Colors.red,
+            size: 35,
+          ),
+          SizedBox(width: 10),
+        ],
       ),
     );
   }
