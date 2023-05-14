@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/pages/home/content/management_content_page.dart';
 import 'package:prev_ler/pages/home/home_page.dart';
-import 'package:prev_ler/theme/theme_colors.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -38,39 +37,15 @@ class _MainPageState extends State<MainPage> {
           Positioned.fill(
             child: _pages[currentPage],
           ),
-          Positioned(
-            left: 15,
-            right: 15,
-            bottom: 15,
-            child: _buildCardBottom(context),
-          ),
         ],
       ),
-    );
-  }
-
-  Card _buildCardBottom(BuildContext context) {
-    var borderRadius = BorderRadius.circular(20);
-
-    return Card(
-      elevation: 8,
-      shadowColor: ThemeColors().purpleAccent,
-      shape: RoundedRectangleBorder(
-        borderRadius: borderRadius,
-      ),
-      child: ClipRRect(
-        borderRadius: borderRadius,
-        child: SizedBox(
-          height: 65,
-          child: _buildBottomNavigationBar(context),
-        ),
-      ),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
 
   BottomNavigationBar _buildBottomNavigationBar(BuildContext context) {
     final selectedItemColor = Theme.of(context).primaryColor;
-    final unselectedItemColor = Colors.grey.shade500;
+    final unselectedItemColor = Theme.of(context).disabledColor;
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.shifting,
@@ -78,8 +53,6 @@ class _MainPageState extends State<MainPage> {
       currentIndex: currentPage,
       selectedItemColor: selectedItemColor,
       unselectedItemColor: unselectedItemColor,
-      selectedLabelStyle: TextStyle(color: selectedItemColor),
-      unselectedLabelStyle: TextStyle(color: unselectedItemColor),
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
