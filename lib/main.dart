@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/pages/auths/login_page.dart';
+import 'package:prev_ler/theme/theme_colors.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primarySwatch: Colors.purple,
         useMaterial3: true,
         fontFamily: 'Poppins',
       ),
