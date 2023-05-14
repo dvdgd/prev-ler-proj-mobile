@@ -45,6 +45,7 @@ class AuthService extends ChangeNotifier {
 
     var responseBody = json.decode(response.body);
     await storage.write(key: 'jwt_token', value: responseBody['auth']['token']);
+    await storage.write(key: 'user_password_$email', value: password);
 
     notifyListeners();
     return responseBody;
@@ -62,6 +63,15 @@ class AuthService extends ChangeNotifier {
     }
 
     return jwtToken;
+  }
+
+  Future<String> getUserPassword(String email) async {
+    var userPassword = await storage.read(key: 'user_password_$email');
+    if (userPassword == null) {
+      throw Exception('User not found');
+    }
+
+    return userPassword;
   }
 
   Future<User> getUserData() async {
@@ -83,6 +93,8 @@ class AuthService extends ChangeNotifier {
     }
 
     final responseBody = json.decode(response.body);
+    responseBody['senhaEncriptada'] =
+        await storage.read(key: 'user_password_${responseBody['email']}');
     return User.fromJson(responseBody);
   }
 }

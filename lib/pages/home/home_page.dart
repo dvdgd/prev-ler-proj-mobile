@@ -58,7 +58,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Widget _buildCardContent() {
+  Widget _buildCardContent(
+      int maxActivesRoutinesToday, int maxExercicesToDoToday) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -67,12 +68,10 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 2,
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Hoje',
                     style: TextStyle(
                       fontSize: 20,
@@ -80,8 +79,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                    '3 Rotinas',
-                    style: TextStyle(
+                    '$maxActivesRoutinesToday Rotinas',
+                    style: const TextStyle(
                       fontSize: 25,
                       color: Colors.white,
                     ),
@@ -89,26 +88,24 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            Expanded(
-              child: Column(
-                children: const [
-                  Text(
-                    '15',
-                    style: TextStyle(
-                      height: 1,
-                      color: Colors.white,
-                      fontSize: 50,
-                    ),
+            Column(
+              children: [
+                Text(
+                  '$maxExercicesToDoToday',
+                  style: const TextStyle(
+                    height: 1,
+                    color: Colors.white,
+                    fontSize: 50,
                   ),
-                  Text(
-                    'Exercícios',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  )
-                ],
-              ),
+                ),
+                const Text(
+                  'Exercícios',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                )
+              ],
             )
           ],
         ),
@@ -153,7 +150,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(children: [
                 CustomCard(
                   backgroundColor: ThemeColors().blue,
-                  child: _buildCardContent(),
+                  child: _buildCardContent(4, 13),
                   onTap: () {
                     Navigator.push(
                       context,

@@ -22,6 +22,11 @@ List<Widget> buildUserForm({
       prefixIcon: const Icon(Icons.email_outlined),
       enable: !isEditing,
     ),
+    CustomPasswordField(
+      controller: passwordController,
+      maxLength: 25,
+      labelText: 'Senha',
+    ),
     CustomTextField(
       controller: nameController,
       hintText: 'Nome',
@@ -37,17 +42,6 @@ List<Widget> buildUserForm({
       enable: !isEditing,
     ),
   ];
-
-  if (!isEditing) {
-    formWidgets.insert(
-      1,
-      CustomPasswordField(
-        controller: passwordController,
-        maxLength: 25,
-        hintText: 'Senha',
-      ),
-    );
-  }
 
   return formWidgets;
 }
