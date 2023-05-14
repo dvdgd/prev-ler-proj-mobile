@@ -5,6 +5,7 @@ import 'package:prev_ler/entities/user.dart';
 import 'package:prev_ler/pages/auths/build_user_form.dart';
 import 'package:prev_ler/service/auth_service.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
+import 'package:prev_ler/widgets/custom_outline_button.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -79,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
               isEditing: true,
             ),
             ...userTypeForm,
-            const SizedBox(height: 15),
+            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: _buildOptionsButtons(),
@@ -95,10 +96,11 @@ class _ProfilePageState extends State<ProfilePage> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
-          child: CustomButton(
-            buttonColor: Colors.pink,
+          child: CustomOutlineButton(
             text: 'Cancelar',
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
         ),
         const SizedBox(width: 15),

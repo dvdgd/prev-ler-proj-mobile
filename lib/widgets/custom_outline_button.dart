@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/theme/theme_colors.dart';
 
-class CustomButton extends StatelessWidget {
+class CustomOutlineButton extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
   final Color? textColor;
   final Color? buttonColor;
 
-  const CustomButton({
+  const CustomOutlineButton({
     Key? key,
     required this.text,
     required this.onTap,
@@ -17,14 +17,20 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    final color = buttonColor ?? ThemeColors().blue;
+
+    return OutlinedButton(
       onPressed: onTap,
       style: ButtonStyle(
-        backgroundColor:
-            MaterialStateProperty.all<Color>(buttonColor ?? ThemeColors().blue),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+        side: MaterialStateProperty.all<BorderSide>(
+          BorderSide(
+            color: color,
+            width: 2,
           ),
         ),
       ),
@@ -35,7 +41,14 @@ class CustomButton extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              color: textColor ?? Colors.white,
+              shadows: [
+                Shadow(
+                  color: Colors.grey.shade100,
+                  offset: const Offset(1, 1),
+                  blurRadius: 2,
+                ),
+              ],
+              color: color,
               fontSize: 16,
             ),
           ),

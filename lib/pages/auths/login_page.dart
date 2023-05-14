@@ -86,9 +86,9 @@ class LoginPage extends ConsumerWidget {
         ),
         CustomPasswordField(
           controller: _passwordController,
-          hintText: 'Senha',
+          labelText: 'Senha',
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 40),
         CustomAsyncLoadingButton(
           text: 'Login',
           action: () async {

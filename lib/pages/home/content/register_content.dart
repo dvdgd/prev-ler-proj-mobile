@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/theme/theme_colors.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
 import 'package:prev_ler/widgets/custom_dropdown_button.dart';
+import 'package:prev_ler/widgets/custom_outline_button.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 
@@ -72,7 +73,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                     ),
                     decoration: BoxDecoration(
                       color: ThemeColors().grey.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -90,7 +91,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                     margin: const EdgeInsets.symmetric(horizontal: 18.0),
                     decoration: BoxDecoration(
                       color: ThemeColors().grey.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -106,17 +107,15 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 40,
                   ),
-                  spaceBetweenFields(),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Expanded(
-                          child: CustomButton(
-                            buttonColor: Colors.pink,
+                          child: CustomOutlineButton(
                             text: 'Cancelar',
                             onTap: () {},
                           ),
@@ -131,6 +130,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),

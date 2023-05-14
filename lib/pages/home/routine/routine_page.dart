@@ -40,6 +40,7 @@ class RoutinePage extends StatelessWidget {
     required DateTime createdAt,
   }) {
     return CustomCard(
+      margin: const EdgeInsets.only(right: 5, left: 5, bottom: 10, top: 10),
       backgroundColor: Colors.white,
       onTap: () {},
       child: Row(
@@ -50,9 +51,7 @@ class RoutinePage extends StatelessWidget {
             flex: 3,
             child: _buildTitleColunm(title, createdAt),
           ),
-          Expanded(
-            child: _buildExercicesColumn(numberExercices),
-          )
+          _buildExercicesColumn(numberExercices),
         ],
       ),
     );
@@ -76,7 +75,7 @@ class RoutinePage extends StatelessWidget {
         ),
         SizedBox(
           width: 40,
-          height: 26.6,
+          height: 32,
           child: FittedBox(
             fit: BoxFit.fill,
             child: Switch(

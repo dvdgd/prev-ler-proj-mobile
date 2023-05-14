@@ -122,7 +122,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                 maxLength: 25,
                 prefixIcon: const Icon(Icons.work_history_outlined),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 35),
               CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
                 action: () async {

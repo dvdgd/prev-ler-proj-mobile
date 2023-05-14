@@ -126,7 +126,7 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
                 crmStateController: _crmStateController,
                 isEditing: false,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 35),
               CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
                 action: () async {

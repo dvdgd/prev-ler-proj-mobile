@@ -14,6 +14,8 @@ class PageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
+      softWrap: true,
+      maxLines: 2,
       style: style ??
           const TextStyle(
             color: Colors.black,
