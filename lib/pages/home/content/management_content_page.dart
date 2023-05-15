@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/pages/home/content/card_edit_del_content.dart';
+import 'package:prev_ler/pages/home/content/edit_content.dart';
 import 'package:prev_ler/pages/home/content/register_content.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
 
@@ -50,7 +51,16 @@ class _ManagementContentPageState extends State<ManagementContentPage> {
                     alignment: Alignment.center,
                     child: IconButton(
                       icon: const Icon(Icons.filter_alt),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EditContent(
+                              title: 'Editar Conteúdo',
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   Container(
