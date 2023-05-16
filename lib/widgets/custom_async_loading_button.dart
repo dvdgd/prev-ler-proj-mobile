@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../theme/theme_colors.dart';
-
 class CustomAsyncLoadingButton extends StatefulWidget {
   final String text;
   final Future<void> Function() action;
@@ -29,31 +27,32 @@ class _CustomAsyncLoadingButtonState extends State<CustomAsyncLoadingButton> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: TextButton(
+      child: FilledButton(
         onPressed: () async {
           _changeIsLoading();
           await widget.action();
           _changeIsLoading();
         },
-        style: TextButton.styleFrom(
-          backgroundColor: ThemeColors().blue,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
           ),
-          minimumSize: const Size(double.infinity, 60),
         ),
-        child: Center(
-          child: _isLoading
-              ? const CircularProgressIndicator(
-                  color: Colors.white,
-                )
-              : Text(
-                  widget.text,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+        child: SizedBox(
+          height: 60,
+          width: double.infinity,
+          child: Center(
+            child: _isLoading
+                ? const CircularProgressIndicator()
+                : Text(
+                    widget.text,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );

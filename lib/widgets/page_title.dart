@@ -16,12 +16,7 @@ class PageTitle extends StatelessWidget {
       title,
       softWrap: true,
       maxLines: 2,
-      style: style ??
-          const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 23,
-          ),
+      style: Theme.of(context).textTheme.titleLarge,
     );
   }
 }

@@ -5,14 +5,9 @@ import 'package:prev_ler/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/widgets/custom_async_loading_button.dart';
 import 'package:prev_ler/entities/user.dart';
 
-class RegisterMedicPage extends StatefulWidget {
-  const RegisterMedicPage({super.key});
+class RegisterMedicPage extends StatelessWidget {
+  RegisterMedicPage({super.key});
 
-  @override
-  State<RegisterMedicPage> createState() => _RegisterMedicPageState();
-}
-
-class _RegisterMedicPageState extends State<RegisterMedicPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
@@ -81,37 +76,28 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.background,
           child: Column(
             children: [
-              const Text(
+              Text(
                 'Médico',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20, top: 15),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20, top: 15),
                 child: Text(
                   "Informe seu CRM e estado de origem para garantir a segurança das informações.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                   softWrap: true,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               ...buildUserForm(
                 context: context,
                 emailController: _emailController,
@@ -126,14 +112,14 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
                 crmStateController: _crmStateController,
                 isEditing: false,
               ),
-              const SizedBox(height: 35),
+              const SizedBox(height: 45),
               CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
                 action: () async {
                   await _handleRegister(context);
                 },
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 45),
             ],
           ),
         ),
