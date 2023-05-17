@@ -6,14 +6,9 @@ import 'package:prev_ler/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/widgets/custom_async_loading_button.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
 
-class RegisterPatientPage extends StatefulWidget {
-  const RegisterPatientPage({super.key});
+class RegisterPatientPage extends StatelessWidget {
+  RegisterPatientPage({super.key});
 
-  @override
-  State<RegisterPatientPage> createState() => _RegisterPatientPageState();
-}
-
-class _RegisterPatientPageState extends State<RegisterPatientPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
@@ -77,31 +72,22 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
       ),
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.background,
           child: Column(
             children: [
-              const Text(
+              Text(
                 'Paciente',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20, top: 15),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20, top: 15),
                 child: Text(
                   "Tenha acesso a conteúdos exclusivos desenvolvidos por médicos licenciados para melhorar sua saúde e bem-estar.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                   softWrap: true,
                 ),
@@ -118,11 +104,11 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
               ),
               CustomTextField(
                 controller: _occupationController,
-                hintText: 'Ocupação',
+                labelText: 'Ocupação',
                 maxLength: 25,
                 prefixIcon: const Icon(Icons.work_history_outlined),
               ),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
               CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
                 action: () async {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/theme/theme_colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -17,11 +16,9 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return FilledButton(
       onPressed: onTap,
       style: ButtonStyle(
-        backgroundColor:
-            MaterialStateProperty.all<Color>(buttonColor ?? ThemeColors().blue),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
@@ -34,8 +31,7 @@ class CustomButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(
-              color: textColor ?? Colors.white,
+            style: const TextStyle(
               fontSize: 16,
             ),
           ),

@@ -28,7 +28,7 @@ class _CustomPasswordFieldPageState extends State<CustomPasswordField> {
   Widget build(BuildContext context) {
     return CustomTextField(
       controller: widget.controller,
-      hintText: widget.labelText,
+      labelText: widget.labelText,
       textInputType: TextInputType.visiblePassword,
       prefixIcon: const Icon(Icons.lock_outline),
       obscureText: _obscureText,

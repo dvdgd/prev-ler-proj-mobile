@@ -11,7 +11,7 @@ final headers = {
   'Accept': 'application/json',
 };
 
-Future<Lesion> createLesion(
+Future<Injury> createLesion(
     String idmedico, String nome, String sigla, String descricao) async {
   final response = await http.post(
     Uri.parse(baseUrl),
@@ -27,7 +27,7 @@ Future<Lesion> createLesion(
   );
 
   if (response.statusCode == 201) {
-    return Lesion.fromJson(jsonDecode(response.body));
+    return Injury.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to create lesion.');
   }

@@ -7,16 +7,9 @@ import 'package:prev_ler/pages/home/profile/profile_page.dart';
 import 'package:prev_ler/service/auth_service.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 
-import '../../theme/theme_colors.dart';
-
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   Future<void> _logoutAndNavigateToLoginPage(BuildContext context) async {
     AuthService().logout();
     _navigateToLoginPage(context);
@@ -32,7 +25,7 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const ProfilePage(),
+        builder: (context) => ProfilePage(),
       ),
     );
   }
@@ -44,10 +37,8 @@ class _HomePageState extends State<HomePage> {
       return data.when(
         data: (user) {
           final userFirstName = user.name.split(' ')[0];
-          return Expanded(
-            child: PageTitle(
-              title: 'Olá, $userFirstName',
-            ),
+          return PageTitle(
+            title: 'Olá, $userFirstName',
           );
         },
         error: (_, __) => const Text('Error'),
@@ -56,6 +47,56 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 90,
+        title: _buildUserHello(),
+        actions: [
+          IconButton(
+            onPressed: () => _navigateToProfilePage(context),
+            icon: const Icon(Icons.person),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_none_outlined),
+          ),
+          IconButton(
+            onPressed: () => _logoutAndNavigateToLoginPage(context),
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(children: [
+                  CustomCard(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: _buildCardContent(4, 13),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RoutinePage(),
+                        ),
+                      );
+                    },
+                  ),
+                ]),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildCardContent(
@@ -110,61 +151,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
-        child: Column(children: [
-          Container(
-            padding: const EdgeInsets.all(15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildUserHello(),
-                IconButton(
-                  onPressed: () => _navigateToProfilePage(context),
-                  icon: const Icon(Icons.person),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.notifications_none_outlined),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: () => _logoutAndNavigateToLoginPage(context),
-                  icon: const Icon(Icons.logout),
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.only(bottom: 90),
-              physics: const BouncingScrollPhysics(),
-              child: Column(children: [
-                CustomCard(
-                  backgroundColor: ThemeColors().blue,
-                  child: _buildCardContent(4, 13),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RoutinePage(),
-                      ),
-                    );
-                  },
-                ),
-              ]),
-            ),
-          )
-        ]),
-      ),
     );
   }
 }

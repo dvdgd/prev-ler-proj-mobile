@@ -63,15 +63,18 @@ class Medic {
   String crmNumber;
   String crmState;
   String? situacaoCrm;
+  int? idMedico;
 
   Medic({
     required this.crmNumber,
     required this.crmState,
+    this.idMedico,
     this.situacaoCrm,
   });
 
   Map<String, dynamic> toJson() {
     return {
+      'idMedico': idMedico,
       'numeroCrm': crmNumber,
       'ufCrm': crmState,
       'situacaoCrm': situacaoCrm,
@@ -80,6 +83,7 @@ class Medic {
 
   factory Medic.fromJson(Map<String, dynamic> json) {
     return Medic(
+      idMedico: json['idMedico'],
       crmNumber: json['numeroCrm'],
       crmState: json['ufCrm'],
       situacaoCrm: json['situacaoCrm'],

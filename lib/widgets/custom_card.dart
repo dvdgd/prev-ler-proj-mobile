@@ -1,57 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/theme/theme_colors.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
   final void Function()? onTap;
-  final Color? backgroundColor;
+  final Color backgroundColor;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
-  final double? height;
 
   const CustomCard({
-    super.key,
+    Key? key,
     required this.onTap,
     required this.child,
-    this.backgroundColor,
+    required this.backgroundColor,
     this.margin,
     this.padding,
-    this.height,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final boxShadow = BoxShadow(
-      color: Colors.black.withOpacity(0.7),
-      blurStyle: BlurStyle.normal,
-      blurRadius: 4,
-      offset: const Offset(1, 2), // Shadow position
-    );
+    final borderRadius = BorderRadius.circular(15);
 
-    return Flex(
-      direction: Axis.vertical,
-      children: [
-        Container(
-          margin: margin ?? const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [boxShadow],
-          ),
-          child: Material(
-            color: backgroundColor ?? ThemeColors().blue,
-            borderRadius: BorderRadius.circular(25),
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: BorderRadius.circular(25),
-              child: Container(
-                padding: padding ?? const EdgeInsets.all(20),
-                width: double.infinity,
-                child: child,
-              ),
-            ),
-          ),
+    return Card(
+      margin: margin ?? const EdgeInsets.all(5),
+      color: backgroundColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: borderRadius,
+      ),
+      elevation: 2,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: borderRadius,
+        child: Padding(
+          padding: padding ?? const EdgeInsets.all(20),
+          child: child,
         ),
-      ],
+      ),
     );
   }
 }

@@ -9,7 +9,11 @@ class RoutinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Adicionar'),
+        icon: const Icon(Icons.add),
+        onPressed: () {},
+      ),
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: const PageTitle(title: 'Minhas Rotinas'),
@@ -22,6 +26,7 @@ class RoutinePage extends StatelessWidget {
               itemCount: 3,
               itemBuilder: (context, index) {
                 return _buildCustomCard(
+                  context: context,
                   title: 'Faculdade',
                   numberExercices: 5,
                   createdAt: DateTime.now(),
@@ -35,16 +40,16 @@ class RoutinePage extends StatelessWidget {
   }
 
   CustomCard _buildCustomCard({
+    required BuildContext context,
     required String title,
     required int numberExercices,
     required DateTime createdAt,
   }) {
     return CustomCard(
+      backgroundColor: Theme.of(context).cardColor,
       margin: const EdgeInsets.only(right: 5, left: 5, bottom: 10, top: 10),
-      backgroundColor: Colors.white,
       onTap: () {},
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -90,7 +95,6 @@ class RoutinePage extends StatelessWidget {
 
   Column _buildExercicesColumn(int numberExercices) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
           numberExercices.toString(),
@@ -101,17 +105,9 @@ class RoutinePage extends StatelessWidget {
         ),
         const Text(
           'Exercícios',
-          style: TextStyle(fontSize: 12, height: 1),
-        ),
-        SizedBox(
-          width: 28,
-          height: 28,
-          child: FittedBox(
-            fit: BoxFit.fill,
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_horiz),
-            ),
+          style: TextStyle(
+            fontSize: 14,
+            height: 1,
           ),
         ),
       ],

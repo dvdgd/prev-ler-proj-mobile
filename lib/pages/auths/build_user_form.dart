@@ -17,7 +17,7 @@ List<Widget> buildUserForm({
     CustomTextField(
       controller: emailController,
       textInputType: TextInputType.emailAddress,
-      hintText: 'Email',
+      labelText: 'Email',
       maxLength: 50,
       prefixIcon: const Icon(Icons.email_outlined),
       enable: !isEditing,
@@ -29,7 +29,7 @@ List<Widget> buildUserForm({
     ),
     CustomTextField(
       controller: nameController,
-      hintText: 'Nome',
+      labelText: 'Nome',
       maxLength: 50,
       prefixIcon: const Icon(Icons.person),
     ),
@@ -53,7 +53,7 @@ List<Widget> buildPatientForm({
   return [
     CustomTextField(
       controller: occupationController,
-      hintText: 'Ocupação',
+      labelText: 'Ocupação',
       maxLength: 25,
       prefixIcon: const Icon(Icons.work_history_outlined),
     )
@@ -68,7 +68,7 @@ List<Widget> buildMedicForm({
   return [
     CustomTextField(
       controller: crmNumberController,
-      hintText: 'Numero CRM',
+      labelText: 'Numero CRM',
       textInputType: TextInputType.number,
       prefixIcon: const Icon(Icons.numbers_outlined),
       enable: !isEditing,

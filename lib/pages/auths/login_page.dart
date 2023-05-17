@@ -45,11 +45,12 @@ class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        toolbarHeight: 2,
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.white,
             child: _buildContent(context, ref),
           ),
         ),
@@ -60,110 +61,73 @@ class LoginPage extends ConsumerWidget {
   Column _buildContent(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
-        const Text(
+        Text(
           'Bem vindo!',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
+        const SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            'Faça o login ou cadastre-se para continuar...',
+            softWrap: true,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
-        const SizedBox(height: 20),
-        const Text(
-          'Faça o login ou cadastre-se para continuar...',
-          softWrap: true,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 30),
         CustomTextField(
           controller: _emailController,
-          hintText: 'Email',
+          labelText: 'Email',
           prefixIcon: const Icon(Icons.email_outlined),
         ),
         CustomPasswordField(
           controller: _passwordController,
           labelText: 'Senha',
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 30),
         CustomAsyncLoadingButton(
           text: 'Login',
           action: () async {
             await _handleLogin(context, ref);
           },
         ),
-        const SizedBox(height: 20),
-        _buildSeparator(),
         const SizedBox(height: 15.0),
-        GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const RegisterMedicPage(),
-            ),
-          ),
-          child: Container(
-            height: 50,
-            width: double.infinity,
-            color: Colors.transparent,
-            child: const Center(
-              child: Text('Cadastrar-se como Médico'),
-            ),
-          ),
-        ),
-        const SizedBox(height: 15.0),
-        GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const RegisterPatientPage(),
-            ),
-          ),
-          child: Container(
-            height: 50,
-            width: double.infinity,
-            color: Colors.transparent,
-            child: const Center(
-              child: Text('Cadastrar-se como Paciente'),
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegisterMedicPage(),
+                    ),
+                  );
+                },
+                child: const Center(
+                  child: Text('Registrar médico'),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegisterPatientPage(),
+                    ),
+                  );
+                },
+                child: const Center(
+                  child: Text('Registar paciente'),
+                ),
+              ),
+            ],
           ),
         ),
       ],
-    );
-  }
-
-  Padding _buildSeparator() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: const [
-          Expanded(
-            child: Divider(
-              height: 1,
-              color: Colors.grey,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 5, right: 5),
-            child: Text(
-              'Ou',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 14,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Divider(
-              height: 1,
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

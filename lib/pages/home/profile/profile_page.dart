@@ -5,17 +5,11 @@ import 'package:prev_ler/entities/user.dart';
 import 'package:prev_ler/pages/auths/build_user_form.dart';
 import 'package:prev_ler/service/auth_service.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
-import 'package:prev_ler/widgets/custom_outline_button.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class ProfilePage extends StatelessWidget {
+  ProfilePage({super.key});
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
@@ -25,12 +19,24 @@ class _ProfilePageState extends State<ProfilePage> {
   final _selectedBornDateController = TextEditingController();
   final _occupationController = TextEditingController();
 
+  void _serializeControllers(User user) {
+    _emailController.text = user.email;
+    _passwordController.text = user.password ?? '';
+    _nameController.text = user.name;
+    _bornDateController.text = DateFormat('dd/MM/yyyy').format(user.bornDate);
+    _crmNumberController.text = user.medic?.crmNumber ?? '';
+    _crmStateController.text = user.medic?.crmState ?? '';
+    _selectedBornDateController.text =
+        DateFormat('dd/MM/yyyy').format(user.bornDate);
+    _occupationController.text = user.patient?.occupation ?? '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         scrolledUnderElevation: 0,
         title: const PageTitle(title: 'Meu Perfil'),
       ),
@@ -39,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
           var data = ref.watch(authDataProvider);
 
           return data.when(
-            data: (user) => _buildBody(user),
+            data: (user) => _buildBody(context, user),
             error: (_, __) => const Text('Error'),
             loading: () => const CircularProgressIndicator(),
           );
@@ -48,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  SingleChildScrollView _buildBody(User user) {
+  SingleChildScrollView _buildBody(BuildContext context, User user) {
     final isMedic = user.medic != null;
     final userTypeForm = isMedic
         ? buildMedicForm(
@@ -65,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return SingleChildScrollView(
       child: Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -83,46 +89,14 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: _buildOptionsButtons(),
+              child: CustomButton(
+                text: 'Salvar',
+                onTap: () {},
+              ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  Row _buildOptionsButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-          child: CustomOutlineButton(
-            text: 'Cancelar',
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        const SizedBox(width: 15),
-        Expanded(
-          child: CustomButton(
-            text: 'Salvar',
-            onTap: () {},
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _serializeControllers(User user) {
-    _emailController.text = user.email;
-    _passwordController.text = user.password ?? '';
-    _nameController.text = user.name;
-    _bornDateController.text = DateFormat('dd/MM/yyyy').format(user.bornDate);
-    _crmNumberController.text = user.medic?.crmNumber ?? '';
-    _crmStateController.text = user.medic?.crmState ?? '';
-    _selectedBornDateController.text =
-        DateFormat('dd/MM/yyyy').format(user.bornDate);
-    _occupationController.text = user.patient?.occupation ?? '';
   }
 }
