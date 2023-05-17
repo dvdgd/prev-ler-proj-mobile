@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/service/content_service.dart';
+import 'package:prev_ler/service/lesion_service.dart';
 import 'package:prev_ler/theme/theme_colors.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
-import 'package:prev_ler/widgets/custom_dropdown_button.dart';
 import 'package:prev_ler/widgets/custom_outline_button.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 
-class RegisterContentPage extends StatefulWidget {
+class RegisterLesion extends StatefulWidget {
   final String title;
 
-  const RegisterContentPage({
+  const RegisterLesion({
     super.key,
     required this.title,
   });
 
   @override
-  State<RegisterContentPage> createState() => _RegisterContentPageState();
+  State<RegisterLesion> createState() => _RegisterLesionState();
 }
 
-class _RegisterContentPageState extends State<RegisterContentPage> {
+class _RegisterLesionState extends State<RegisterLesion> {
   final _idmedicoController = TextEditingController();
-  final _idlesaoController = TextEditingController();
-  final _tituloController = TextEditingController();
-  final _subtituloController = TextEditingController();
-  final _lesaoController = TextEditingController();
+  final _nomeController = TextEditingController();
+  final _siglaController = TextEditingController();
   final _descricaoController = TextEditingController();
-  final _observacoesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +30,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
-        title: const PageTitle(title: 'Cadastrar Conteúdo'),
+        title: const PageTitle(title: 'Cadastrar Lesão'),
       ),
       body: Column(
         children: [
@@ -50,35 +46,17 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                     prefixIcon: const Icon(Icons.title),
                   ),
                   CustomTextField(
-                    controller: _idlesaoController,
-                    hintText: 'ID da Lesão',
-                    prefixIcon: const Icon(Icons.title),
-                  ),
-                  CustomTextField(
-                    controller: _tituloController,
-                    hintText: 'Título',
+                    controller: _nomeController,
+                    hintText: 'Nome',
                     prefixIcon: const Icon(Icons.title),
                   ),
                   spaceBetweenFields(),
                   CustomTextField(
-                    controller: _subtituloController,
-                    hintText: 'Subtítulo',
+                    controller: _siglaController,
+                    hintText: 'Sigla',
                     prefixIcon: const Icon(Icons.subtitles),
                   ),
                   spaceBetweenFields(),
-                  CustomDropdownButton(
-                    controller: _lesaoController,
-                    prefixIcon: const Icon(Icons.healing_outlined),
-                    hintText: 'Selecionar Lesão',
-                    list: const [
-                      'Tendinite',
-                      'Bursite',
-                      'Miosites',
-                      'Tenossinovite',
-                      'Sinovite',
-                      'Lumbago'
-                    ],
-                  ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 20,
@@ -100,25 +78,6 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                           maxLines: 5),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 18.0),
-                    decoration: BoxDecoration(
-                      color: ThemeColors().grey.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: TextField(
-                        controller: _observacoesController,
-                        decoration: const InputDecoration(
-                          labelText: 'Observações',
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.zoom_in),
-                        ),
-                        maxLines: 3,
-                      ),
-                    ),
-                  ),
                   const SizedBox(
                     height: 40,
                   ),
@@ -138,13 +97,11 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                           child: CustomButton(
                             text: 'Salvar',
                             onTap: () {
-                              createContent(
+                              createLesion(
                                   _idmedicoController.text,
-                                  _idlesaoController.text,
-                                  _tituloController.text,
-                                  _subtituloController.text,
-                                  _descricaoController.text,
-                                  _observacoesController.text);
+                                  _nomeController.text,
+                                  _siglaController.text,
+                                  _descricaoController.text);
                             },
                           ),
                         ),
