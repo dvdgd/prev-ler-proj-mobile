@@ -27,14 +27,12 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         toolbarHeight: 0.1,
       ),
       body: _pages[currentPage],
       bottomNavigationBar: NavigationBar(
-        elevation: 8,
         selectedIndex: currentPage,
         onDestinationSelected: _tappedPage,
         destinations: const [

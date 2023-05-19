@@ -1,3 +1,6 @@
+import 'package:prev_ler/entities/medic.dart';
+import 'package:prev_ler/entities/patient.dart';
+
 class User {
   String email;
   String name;
@@ -35,54 +38,6 @@ class User {
       patient:
           json['paciente'] != null ? Patient.fromJson(json['paciente']) : null,
       medic: json['medico'] != null ? Medic.fromJson(json['medico']) : null,
-    );
-  }
-}
-
-class Patient {
-  String occupation;
-
-  Patient({
-    required this.occupation,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'ocupacao': occupation,
-    };
-  }
-
-  factory Patient.fromJson(Map<String, dynamic> json) {
-    return Patient(
-      occupation: json['ocupacao'],
-    );
-  }
-}
-
-class Medic {
-  String crmNumber;
-  String crmState;
-  String? situacaoCrm;
-
-  Medic({
-    required this.crmNumber,
-    required this.crmState,
-    this.situacaoCrm,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'numeroCrm': crmNumber,
-      'ufCrm': crmState,
-      'situacaoCrm': situacaoCrm,
-    };
-  }
-
-  factory Medic.fromJson(Map<String, dynamic> json) {
-    return Medic(
-      crmNumber: json['numeroCrm'],
-      crmState: json['ufCrm'],
-      situacaoCrm: json['situacaoCrm'],
     );
   }
 }

@@ -6,6 +6,7 @@ class CustomCard extends StatelessWidget {
   final Color backgroundColor;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
+  final double? elevation;
 
   const CustomCard({
     Key? key,
@@ -14,6 +15,7 @@ class CustomCard extends StatelessWidget {
     required this.backgroundColor,
     this.margin,
     this.padding,
+    this.elevation,
   }) : super(key: key);
 
   @override
