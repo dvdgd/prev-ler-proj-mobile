@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:prev_ler/entities/user.dart';
 import 'package:prev_ler/pages/auths/build_user_form.dart';
-import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/pages/auths/register_medic_page.dart';
 import 'package:prev_ler/pages/main_page.dart';
-import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
 import 'package:prev_ler/pages/auths/register_patient_page.dart';
@@ -69,7 +69,7 @@ class LoginPage extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'Faça o login ou cadastre-se para continuar...',
+            'Faça o lsogin ou cadastre-se para continuar...',
             softWrap: true,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium,

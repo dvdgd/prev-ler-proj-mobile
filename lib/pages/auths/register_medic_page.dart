@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/entities/medic.dart';
 import 'package:prev_ler/pages/auths/build_user_form.dart';
-import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/widgets/custom_async_loading_button.dart';
 import 'package:prev_ler/entities/user.dart';

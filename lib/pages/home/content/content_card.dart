@@ -11,7 +11,7 @@ class ContentCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
         child: CustomCard(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
           onTap: () {},
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

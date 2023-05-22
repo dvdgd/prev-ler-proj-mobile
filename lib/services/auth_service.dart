@@ -43,7 +43,7 @@ class AuthService extends ChangeNotifier {
       throw Exception("Usuario ou senha invalidos");
     }
 
-    var responseBody = json.decode(response.body);
+    final responseBody = json.decode(response.body);
     await storage.write(key: 'jwt_token', value: responseBody['auth']['token']);
     await storage.write(key: 'user_password_$email', value: password);
 

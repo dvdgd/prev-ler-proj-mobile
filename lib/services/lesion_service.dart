@@ -1,18 +1,17 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:prev_ler/entities/injury.dart';
 import 'dart:convert';
 
-import 'package:prev_ler/entities/content.dart';
-
 final String baseUrl =
-    '${dotenv.env['API_BASE_URL'] ?? 'env not found!'}/conteudos';
+    '${dotenv.env['API_BASE_URL'] ?? 'env not found!'}/tipolesoes';
 final headers = {
   'Content-type': 'application/json',
   'Accept': 'application/json',
 };
 
-Future<Content> createContent(String idmedico, String idlesao, String titulo,
-    String subtitulo, String descricao, String observacao) async {
+Future<Injury> createLesion(
+    String idmedico, String nome, String sigla, String descricao) async {
   final response = await http.post(
     Uri.parse(baseUrl),
     headers: <String, String>{
@@ -20,17 +19,15 @@ Future<Content> createContent(String idmedico, String idlesao, String titulo,
     },
     body: jsonEncode(<String, String>{
       'idMedico': idmedico,
-      'idTipoLesao': idlesao,
-      'titulo': titulo,
-      'subtitulo': subtitulo,
+      'nome': nome,
+      'sigla': sigla,
       'descricao': descricao,
-      'observacao': observacao,
     }),
   );
 
   if (response.statusCode == 201) {
-    return Content.fromJson(jsonDecode(response.body));
+    return Injury.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to create content.');
+    throw Exception('Failed to create lesion.');
   }
 }

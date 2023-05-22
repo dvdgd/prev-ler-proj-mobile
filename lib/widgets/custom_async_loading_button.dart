@@ -45,7 +45,9 @@ class _CustomAsyncLoadingButtonState extends State<CustomAsyncLoadingButton> {
           width: double.infinity,
           child: Center(
             child: _isLoading
-                ? const CircularProgressIndicator()
+                ? CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.background,
+                  )
                 : Text(
                     widget.text,
                     style: const TextStyle(

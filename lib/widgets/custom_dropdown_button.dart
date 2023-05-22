@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 
-class CustomDropdownButton extends StatefulWidget {
+class CustomDropdownButton<T> extends StatefulWidget {
   final TextEditingController controller;
-  final List list;
+  final List<DropdownMenuItem<T>> list;
   final String hintText;
   final bool? enable;
   final Widget? prefixIcon;
 
   const CustomDropdownButton({
-    super.key,
+    Key? key,
     required this.controller,
     required this.list,
     required this.hintText,
     this.prefixIcon,
     this.enable,
-  });
+  }) : super(key: key);
 
   @override
-  State<CustomDropdownButton> createState() => _CustomDropdownButtonState();
+  State<CustomDropdownButton<T>> createState() =>
+      _CustomDropdownButtonState<T>();
 }
 
-class _CustomDropdownButtonState extends State<CustomDropdownButton> {
-  String? selectedValue;
+class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
+  T? selectedValue;
   bool showInitValue = false;
 
   @override
@@ -35,11 +36,11 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
     super.initState();
   }
 
-  void _setNewValue(String? newValue) {
+  void _setNewValue(T? newValue) {
     if (newValue != null) {
       setState(() {
         selectedValue = newValue;
-        widget.controller.text = newValue;
+        widget.controller.text = newValue.toString();
       });
     }
   }
@@ -54,14 +55,9 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
         right: 20,
         top: 10,
       ),
-      child: DropdownButtonFormField<String>(
-        value: showInitValue ? widget.controller.text : selectedValue,
-        items: widget.list
-            .map((value) => DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value.toString()),
-                ))
-            .toList(),
+      child: DropdownButtonFormField<T>(
+        value: showInitValue ? widget.controller.text as T? : selectedValue,
+        items: widget.list,
         elevation: 8,
         onChanged: isNotEnable ? null : _setNewValue,
         menuMaxHeight: 300,

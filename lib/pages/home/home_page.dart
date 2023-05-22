@@ -4,7 +4,7 @@ import 'package:prev_ler/pages/auths/login_page.dart';
 import 'package:prev_ler/pages/home/routine/routine_page.dart';
 import 'package:prev_ler/widgets/custom_card.dart';
 import 'package:prev_ler/pages/home/profile/profile_page.dart';
-import 'package:prev_ler/service/auth_service.dart';
+import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 
 class HomePage extends StatelessWidget {
