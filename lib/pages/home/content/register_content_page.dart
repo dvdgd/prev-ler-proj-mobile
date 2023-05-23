@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/entities/content.dart';
+import 'package:prev_ler/services/content_service.dart';
 import 'package:prev_ler/services/injury_service.dart';
 import 'package:prev_ler/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
@@ -10,10 +11,12 @@ import 'package:prev_ler/widgets/page_title.dart';
 
 class RegisterContentPage extends ConsumerWidget {
   final String title;
+  final int idMedic;
 
   RegisterContentPage({
     super.key,
     required this.title,
+    required this.idMedic,
   });
 
   final _titleController = TextEditingController();
@@ -46,19 +49,22 @@ class RegisterContentPage extends ConsumerWidget {
     }
 
     return Content(
-      idMedic: 0,
+      idContent: 0,
+      idMedic: idMedic,
       idInjuryType: int.parse(injuryTypeId),
       title: title,
       subtitle: subtitle,
       description: description,
       observation: observation,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     );
   }
 
   Future<void> _saveContent(BuildContext context, WidgetRef ref) async {
     try {
-      final _ = _getContentFromForm();
-      throw UnimplementedError('_saveContent is not implemented yet!');
+      final content = _getContentFromForm();
+      await ContentService().register(content);
     } catch (e) {
       await showDialog(
         context: context,
@@ -73,7 +79,7 @@ class RegisterContentPage extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
         scrolledUnderElevation: 0,
-        title: const PageTitle(title: 'Cadastrar Conteúdo'),
+        title: PageTitle(title: title),
       ),
       body: LayoutBuilder(builder: (
         BuildContext context,

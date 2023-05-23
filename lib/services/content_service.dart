@@ -33,6 +33,21 @@ class ContentService extends ChangeNotifier {
 
     return UnmodifiableListView(contentsList);
   }
+
+  Future<Map<String, dynamic>> register(Content content) async {
+    final contentJson = content.toJson();
+    final response = await http.post(
+      Uri.parse(_baseUrl),
+      headers: headers,
+      body: jsonEncode(contentJson),
+    );
+
+    if (response.statusCode != 201) {
+      throw Exception(response.body);
+    }
+
+    return json.decode(response.body);
+  }
 }
 
 final contentProvider =
