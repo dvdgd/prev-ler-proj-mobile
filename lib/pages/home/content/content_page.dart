@@ -27,6 +27,7 @@ class ContentPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => RegisterContentPage(
+                          idMedic: user.medic!.idMedic!,
                           title: 'Cadastrar Conteúdo',
                         ),
                       ),
