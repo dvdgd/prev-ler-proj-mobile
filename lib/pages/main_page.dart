@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/pages/home/content/content_page.dart';
 import 'package:prev_ler/pages/home/home_page.dart';
 
+import 'home/content/injury_page.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -13,7 +15,7 @@ class _MainPageState extends State<MainPage> {
   int currentPage = 0;
   final List _pages = [
     const HomePage(),
-    const HomePage(),
+    InjuryPage(),
     const HomePage(),
     ContentPage(),
   ];
