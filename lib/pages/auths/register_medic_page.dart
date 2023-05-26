@@ -50,6 +50,7 @@ class RegisterMedicPage extends StatelessWidget {
       email: email,
       password: password,
       medic: Medic(
+        idMedic: 0,
         crmNumber: crmNumber,
         crmState: crmState,
       ),

@@ -62,9 +62,16 @@ class RegisterContentPage extends ConsumerWidget {
   }
 
   Future<void> _saveContent(BuildContext context, WidgetRef ref) async {
+    final currentContext = context;
     try {
       final content = _getContentFromForm();
       await ContentService().register(content);
+      if (context.mounted) {
+        await showDialog(
+          context: currentContext,
+          builder: (context) => const CustomAlertDialog(message: 'Sucesso!'),
+        );
+      }
     } catch (e) {
       await showDialog(
         context: context,
