@@ -40,9 +40,15 @@ class Injury {
       name: json['nome'],
       abbreviation: json['sigla'],
       description: json['descricao'],
-      createdAt: DateTime.parse(json['dataCriacao'] as String),
-      updatedAt: DateTime.parse(json['dataAtualizacao'] as String),
-      medic: json['medico'] != null ? Medic.fromJson(json['medico']) : null,
+      createdAt: json['dataCriacao'] != null
+          ? DateTime.parse(json['dataCriacao'] as String)
+          : null,
+      updatedAt: json['dataAtualizacao'] != null
+          ? DateTime.parse(json['dataAtualizacao'] as String)
+          : null,
+      medic: json['medico'] != null
+          ? Medic.fromJson(json['medico'] as Map<String, dynamic>)
+          : null,
     );
   }
 }
