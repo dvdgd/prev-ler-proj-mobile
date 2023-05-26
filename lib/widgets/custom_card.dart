@@ -7,12 +7,14 @@ class CustomCard extends StatelessWidget {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final double? elevation;
+  final Clip? clipBehavior;
 
   const CustomCard({
     Key? key,
     required this.onTap,
     required this.child,
     required this.backgroundColor,
+    this.clipBehavior,
     this.margin,
     this.padding,
     this.elevation,
@@ -20,19 +22,19 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(15);
+    final borderRadius = BorderRadius.circular(10);
 
     return Card(
-      margin: margin ?? const EdgeInsets.all(5),
+      clipBehavior: clipBehavior,
       color: backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: borderRadius,
       ),
-      elevation: 2,
+      elevation: elevation ?? 2,
       child: InkWell(
         onTap: onTap,
         borderRadius: borderRadius,
-        child: Padding(
+        child: Container(
           padding: padding ?? const EdgeInsets.all(20),
           child: child,
         ),
