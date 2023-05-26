@@ -11,17 +11,19 @@ import 'package:prev_ler/widgets/page_title.dart';
 
 class RegisterInjury extends ConsumerWidget {
   final String title;
+  final int idMedic;
 
   RegisterInjury({
     super.key,
     required this.title,
+    required this.idMedic,
   });
 
   final _nameController = TextEditingController();
   final _abbreviationController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  Injury _getInjuryFromForm(int idMedic) {
+  Injury _getInjuryFromForm() {
     final name = _nameController.text;
     final abbreviation = _abbreviationController.text;
     final description = _descriptionController.text;
@@ -50,8 +52,7 @@ class RegisterInjury extends ConsumerWidget {
   Future<void> _saveInjury(BuildContext context, WidgetRef ref) async {
     final currentContext = context;
     try {
-      final user = await ref.read(authProvider).getUserData();
-      final injury = _getInjuryFromForm(user.medic!.idMedic!);
+      final injury = _getInjuryFromForm();
       await InjuryService().register(injury);
       if (context.mounted) {
         await showDialog(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/pages/home/content/register_content_page.dart';
+import 'package:prev_ler/pages/home/injury/register_injury.dart';
 import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
 import 'package:prev_ler/widgets/page_title.dart';
@@ -13,22 +14,22 @@ class InjuryPage extends StatelessWidget {
 
   final injuries = [
     Injury(
-        medicId: 1,
+        idMedic: 1,
         name: 'tendinite',
         abbreviation: 'tdd',
         description: 'Inflamação dos tendões'),
     Injury(
-        medicId: 1,
+        idMedic: 1,
         name: 'tendinite',
         abbreviation: 'tdd',
         description: 'Inflamação dos tendões'),
     Injury(
-        medicId: 1,
+        idMedic: 1,
         name: 'tendinite',
         abbreviation: 'tdd',
         description: 'Inflamação dos tendões'),
     Injury(
-        medicId: 1,
+        idMedic: 1,
         name: 'tendinite',
         abbreviation: 'tdd',
         description: 'Inflamação dos tendões')
@@ -51,7 +52,7 @@ class InjuryPage extends StatelessWidget {
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RegisterContentPage(
+                        builder: (context) => RegisterInjury(
                           idMedic: user.medic!.idMedic!,
                           title: 'Cadastrar Lesão',
                         ),
