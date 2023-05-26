@@ -1,32 +1,48 @@
+import 'package:prev_ler/entities/medic.dart';
 
 class Injury {
-  final int medicId;
-  final String name;
-  final String abbreviation;
-  final String description;
+  int? idInjuryType;
+  int idMedic;
+  String name;
+  String abbreviation;
+  String description;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  Medic? medic;
 
-  Injury({
-    required this.medicId,
-    required this.name,
-    required this.abbreviation,
-    required this.description,
-  });
+  Injury(
+      {this.idInjuryType,
+      required this.idMedic,
+      required this.name,
+      required this.abbreviation,
+      required this.description,
+      this.createdAt,
+      this.updatedAt,
+      this.medic});
 
   Map<String, dynamic> toJson() {
     return {
-      'idMedico': medicId,
+      'idTipoLesao': idInjuryType,
+      'idMedico': idMedic,
       'nome': name,
       'sigla': abbreviation,
       'descricao': description,
+      'dataCriacao': createdAt?.toIso8601String(),
+      'dataAtualizacao': updatedAt?.toIso8601String(),
+      'medico': medic?.toJson(),
     };
   }
 
   factory Injury.fromJson(Map<String, dynamic> json) {
     return Injury(
-      medicId: json['idMedico'],
+      idInjuryType: json['idTipoLesao'],
+      idMedic: json['idMedico'],
       name: json['nome'],
       abbreviation: json['sigla'],
       description: json['descricao'],
+      createdAt: DateTime.parse(json['dataCriacao'] as String),
+      updatedAt: DateTime.parse(json['dataAtualizacao'] as String),
+      medic: json['medico'] != null ? Medic.fromJson(json['medico']) : null,
     );
   }
 }
