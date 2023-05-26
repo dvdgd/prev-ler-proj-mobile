@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/pages/auths/login_page.dart';
 import 'package:prev_ler/pages/home/routine/routine_page.dart';
+import 'package:prev_ler/services/darkmode_notifier.dart';
 import 'package:prev_ler/widgets/custom_card.dart';
 import 'package:prev_ler/pages/home/profile/profile_page.dart';
 import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   Future<void> _logoutAndNavigateToLoginPage(BuildContext context) async {
@@ -50,7 +51,9 @@ class HomePage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final darkMode = ref.watch(darkModeProvider);
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 90,
@@ -58,11 +61,23 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () => _navigateToProfilePage(context),
-            icon: const Icon(Icons.person),
+            icon: const Icon(Icons.person_outline),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              throw UnimplementedError(
+                'Notifications IconButton is not implemented yet!',
+              );
+            },
             icon: const Icon(Icons.notifications_none_outlined),
+          ),
+          IconButton(
+            onPressed: () {
+              ref.read(darkModeProvider.notifier).toggle();
+            },
+            icon: darkMode
+                ? const Icon(Icons.light_mode_outlined)
+                : const Icon(Icons.light_mode),
           ),
           IconButton(
             onPressed: () => _logoutAndNavigateToLoginPage(context),
