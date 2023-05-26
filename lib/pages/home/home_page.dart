@@ -76,8 +76,8 @@ class HomePage extends ConsumerWidget {
               ref.read(darkModeProvider.notifier).toggle();
             },
             icon: darkMode
-                ? const Icon(Icons.light_mode_outlined)
-                : const Icon(Icons.light_mode),
+                ? const Icon(Icons.light_mode)
+                : const Icon(Icons.light_mode_outlined),
           ),
           IconButton(
             onPressed: () => _logoutAndNavigateToLoginPage(context),
