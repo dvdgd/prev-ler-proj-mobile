@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/pages/home/content/content_page.dart';
+import 'package:prev_ler/pages/home/exercise/exercise_page.dart';
 import 'package:prev_ler/pages/home/home_page.dart';
 import 'package:prev_ler/pages/home/injury/injury_page.dart';
 
@@ -15,7 +16,7 @@ class _MainPageState extends State<MainPage> {
   final List _pages = [
     const HomePage(),
     InjuryPage(),
-    const HomePage(),
+    ExercisePage(),
     ContentPage(),
   ];
 
