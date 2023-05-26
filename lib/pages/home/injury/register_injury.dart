@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prev_ler/entities/injury.dart';
-import 'package:prev_ler/entities/medic.dart';
-import 'package:prev_ler/services/auth_service.dart';
+import 'package:prev_ler/entities/injury_type.dart';
 import 'package:prev_ler/services/injury_service.dart';
 import 'package:prev_ler/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
@@ -23,7 +21,7 @@ class RegisterInjury extends ConsumerWidget {
   final _abbreviationController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  Injury _getInjuryFromForm() {
+  InjuryType _getInjuryFromForm() {
     final name = _nameController.text;
     final abbreviation = _abbreviationController.text;
     final description = _descriptionController.text;
@@ -38,7 +36,7 @@ class RegisterInjury extends ConsumerWidget {
       throw Exception('Por favor, preencha o a descrição da lesão');
     }
 
-    return Injury(
+    return InjuryType(
       idInjuryType: 0,
       idMedic: idMedic,
       name: name,

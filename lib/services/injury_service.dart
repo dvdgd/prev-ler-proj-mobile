@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:prev_ler/entities/injury.dart';
 import 'package:prev_ler/entities/injury_type.dart';
 
 class InjuryService extends ChangeNotifier {
@@ -35,7 +34,7 @@ class InjuryService extends ChangeNotifier {
     return UnmodifiableListView(injuriesList);
   }
 
-  Future<Map<String, dynamic>> register(Injury injury) async {
+  Future<Map<String, dynamic>> register(InjuryType injury) async {
     final injuryJson = injury.toJson();
     final response = await http.post(
       Uri.parse(_baseUrl),

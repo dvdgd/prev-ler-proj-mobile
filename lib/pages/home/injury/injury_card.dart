@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/entities/injury.dart';
+import 'package:prev_ler/entities/injury_type.dart';
 import 'package:prev_ler/widgets/custom_button.dart';
 import 'package:prev_ler/widgets/custom_card.dart';
 
 class InjuryCard extends StatelessWidget {
   const InjuryCard({Key? key, required this.injury}) : super(key: key);
 
-  final Injury injury;
+  final InjuryType injury;
 
   @override
   Widget build(BuildContext context) {
