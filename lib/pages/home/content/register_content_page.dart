@@ -65,7 +65,8 @@ class RegisterContentPage extends ConsumerWidget {
     final currentContext = context;
     try {
       final content = _getContentFromForm();
-      await ContentService().register(content);
+      final contentServiceProvider = ref.read(contentProvider);
+      await contentServiceProvider.register(content);
       if (context.mounted) {
         await showDialog(
           context: currentContext,

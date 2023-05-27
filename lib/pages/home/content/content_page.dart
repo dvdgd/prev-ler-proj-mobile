@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prev_ler/entities/content.dart';
 import 'package:prev_ler/pages/home/content/content_card.dart';
 import 'package:prev_ler/pages/home/content/register_content_page.dart';
 import 'package:prev_ler/services/auth_service.dart';
+import 'package:prev_ler/services/content_service.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 import 'package:prev_ler/widgets/search_app_bar.dart';
 
@@ -31,34 +33,6 @@ class ContentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Consumer(
-        builder: (context, ref, child) {
-          final data = ref.watch(authDataProvider);
-          return data.when(
-            data: (user) {
-              if (user.medic != null) {
-                return FloatingActionButton.extended(
-                  label: const Text('Adicionar'),
-                  icon: const Icon(Icons.add),
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RegisterContentPage(
-                        idMedic: user.medic!.idMedic!,
-                        title: 'Cadastrar Conteúdo',
-                      ),
-                    ),
-                  ),
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-            error: (_, __) => const Text("Error"),
-            loading: () => const CircularProgressIndicator(),
-          );
-        },
-      ),
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -94,14 +68,27 @@ class ContentPage extends StatelessWidget {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate(const [
-              ContentCard(),
-              ContentCard(),
-              ContentCard(),
-              ContentCard(),
-              ContentCard(),
-            ]),
+          Consumer(
+            builder: (context, ref, child) {
+              final data = ref.watch(contentDataProvider);
+              return data.when(
+                data: (contents) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return ContentCard(content: contents[index]);
+                      },
+                      childCount: contents.length,
+                    ),
+                  );
+                },
+                error: (_, __) =>
+                    const SliverToBoxAdapter(child: Text("Error")),
+                loading: () => const SliverToBoxAdapter(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
           ),
         ],
       ),
