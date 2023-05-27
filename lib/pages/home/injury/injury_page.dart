@@ -1,37 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prev_ler/entities/injury_type.dart';
+import 'package:prev_ler/pages/home/injury/injury_card.dart';
 import 'package:prev_ler/pages/home/injury/register_injury.dart';
 import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 import 'package:prev_ler/widgets/search_app_bar.dart';
-
-import '../../../entities/injury.dart';
-import 'injury_card.dart';
 
 class InjuryPage extends StatelessWidget {
   InjuryPage({super.key});
   final _searchController = TextEditingController();
 
   final injuries = [
-    Injury(
+    InjuryType(
       idMedic: 1,
       name: 'tendinite 1',
       abbreviation: 'tdd',
       description: 'Inflamação dos tendões',
     ),
-    Injury(
+    InjuryType(
       idMedic: 1,
       name: 'tendinite',
       abbreviation: 'tdd',
       description: 'Inflamação dos tendões',
     ),
-    Injury(
+    InjuryType(
       idMedic: 1,
       name: 'tendinite',
       abbreviation: 'tdd',
       description: 'Inflamação dos tendões',
     ),
-    Injury(
+    InjuryType(
       idMedic: 1,
       name: 'tendinite',
       abbreviation: 'tdd',
