@@ -51,7 +51,8 @@ class RegisterInjury extends ConsumerWidget {
     final currentContext = context;
     try {
       final injury = _getInjuryFromForm();
-      await InjuryService().register(injury);
+      final injuryServiceProvider = ref.read(injuryProvider);
+      await injuryServiceProvider.register(injury);
       if (context.mounted) {
         await showDialog(
           context: currentContext,

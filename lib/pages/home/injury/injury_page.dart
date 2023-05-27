@@ -1,42 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prev_ler/entities/injury_type.dart';
 import 'package:prev_ler/pages/home/injury/injury_card.dart';
 import 'package:prev_ler/pages/home/injury/register_injury.dart';
 import 'package:prev_ler/services/auth_service.dart';
+import 'package:prev_ler/services/injury_service.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 import 'package:prev_ler/widgets/search_app_bar.dart';
+import 'package:flutter/rendering.dart';
 
 class InjuryPage extends StatelessWidget {
   InjuryPage({super.key});
   final _searchController = TextEditingController();
-
-  final injuries = [
-    InjuryType(
-      idMedic: 1,
-      name: 'tendinite 1',
-      abbreviation: 'tdd',
-      description: 'Inflamação dos tendões',
-    ),
-    InjuryType(
-      idMedic: 1,
-      name: 'tendinite',
-      abbreviation: 'tdd',
-      description: 'Inflamação dos tendões',
-    ),
-    InjuryType(
-      idMedic: 1,
-      name: 'tendinite',
-      abbreviation: 'tdd',
-      description: 'Inflamação dos tendões',
-    ),
-    InjuryType(
-      idMedic: 1,
-      name: 'tendinite',
-      abbreviation: 'tdd',
-      description: 'Inflamação dos tendões',
-    )
-  ];
 
   _buildAddButton(BuildContext context, int idMedic) {
     return IconButton(
@@ -97,13 +71,27 @@ class InjuryPage extends StatelessWidget {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              InjuryCard(injury: injuries[0]),
-              InjuryCard(injury: injuries[1]),
-              InjuryCard(injury: injuries[2]),
-              InjuryCard(injury: injuries[3]),
-            ]),
+          Consumer(
+            builder: (context, ref, child) {
+              final data = ref.watch(injuryDataProvider);
+              return data.when(
+                data: (injuries) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return InjuryCard(injury: injuries[index]);
+                      },
+                      childCount: injuries.length,
+                    ),
+                  );
+                },
+                error: (_, __) =>
+                    const SliverToBoxAdapter(child: Text("Error")),
+                loading: () => const SliverToBoxAdapter(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
           ),
         ],
       ),
