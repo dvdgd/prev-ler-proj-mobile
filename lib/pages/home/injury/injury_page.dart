@@ -6,7 +6,6 @@ import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/services/injury_service.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 import 'package:prev_ler/widgets/search_app_bar.dart';
-import 'package:flutter/rendering.dart';
 
 class InjuryPage extends StatelessWidget {
   InjuryPage({super.key});
