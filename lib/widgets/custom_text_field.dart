@@ -7,7 +7,7 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final dynamic onSubmitted;
+  final dynamic onTap;
   final List<FilteringTextInputFormatter>? inputFormatters;
   final TextInputType? textInputType;
   final int? maxLength;
@@ -16,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsets? margin;
   final InputBorder? border;
   final int? maxLines;
+  final dynamic onChanged;
 
   const CustomTextField({
     super.key,
@@ -25,7 +26,7 @@ class CustomTextField extends StatelessWidget {
     this.border,
     this.prefixIcon,
     this.suffixIcon,
-    this.onSubmitted,
+    this.onTap,
     this.inputFormatters,
     this.textInputType,
     this.maxLength,
@@ -33,6 +34,7 @@ class CustomTextField extends StatelessWidget {
     this.enable,
     this.margin,
     this.maxLines,
+    this.onChanged,
   });
 
   @override
@@ -49,7 +51,8 @@ class CustomTextField extends StatelessWidget {
         keyboardType: textInputType,
         obscureText: obscureText ?? false,
         controller: controller,
-        onSubmitted: onSubmitted,
+        onTap: onTap,
+        onChanged: onChanged,
         style: TextStyle(
           color: enable != null && enable == false
               ? Theme.of(context).disabledColor
@@ -58,7 +61,10 @@ class CustomTextField extends StatelessWidget {
         enabled: enable,
         maxLines: maxLines ?? 1,
         decoration: InputDecoration(
-          border: InputBorder.none,
+          border: UnderlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
           filled: true,
           hintText: hintText,
           labelText: labelText,

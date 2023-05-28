@@ -23,6 +23,7 @@ class CustomPasswordField extends StatefulWidget {
 
 class _CustomPasswordFieldPageState extends State<CustomPasswordField> {
   bool _obscureText = true;
+  bool _showVisibleButton = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +34,30 @@ class _CustomPasswordFieldPageState extends State<CustomPasswordField> {
       prefixIcon: const Icon(Icons.lock_outline),
       obscureText: _obscureText,
       maxLength: widget.maxLength,
-      suffixIcon: IconButton(
+      onChanged: _onChangeValue,
+      suffixIcon: suffixIcon(),
+    );
+  }
+
+  void _onChangeValue(value) {
+    if (widget.controller.text.isEmpty) {
+      setState(() => {_showVisibleButton = false});
+    } else if (_showVisibleButton == false) {
+      setState(() => {_showVisibleButton = true});
+    }
+  }
+
+  IconButton? suffixIcon() {
+    if (_showVisibleButton) {
+      return IconButton(
         icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
         onPressed: () {
           setState(() {
             _obscureText = !_obscureText;
           });
         },
-      ),
-    );
+      );
+    }
+    return null;
   }
 }
