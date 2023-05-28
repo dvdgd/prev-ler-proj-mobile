@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/entities/content.dart';
+import 'package:prev_ler/pages/home/content/content_page.dart';
 import 'package:prev_ler/services/content_service.dart';
 import 'package:prev_ler/services/injury_service.dart';
 import 'package:prev_ler/widgets/custom_alert_dialog.dart';
@@ -70,13 +71,25 @@ class RegisterContentPage extends ConsumerWidget {
       if (context.mounted) {
         await showDialog(
           context: currentContext,
-          builder: (context) => const CustomAlertDialog(message: 'Sucesso!'),
+          builder: (context) => CustomAlertDialog(
+            message: 'Sucesso!',
+            onTap: () async {
+              await Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => ContentPage()),
+                (route) => false,
+              );
+            },
+          ),
         );
       }
     } catch (e) {
       await showDialog(
         context: context,
-        builder: (context) => CustomAlertDialog(message: e.toString()),
+        builder: (context) => CustomAlertDialog(
+          message: e.toString(),
+          onTap: () => Navigator.of(context).pop(),
+        ),
       );
     }
   }

@@ -4,8 +4,13 @@ import 'custom_button.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final String message;
+  final dynamic onTap;
 
-  const CustomAlertDialog({super.key, required this.message});
+  const CustomAlertDialog({
+    super.key,
+    required this.message,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,7 @@ class CustomAlertDialog extends StatelessWidget {
       actions: [
         CustomButton(
           text: 'OK',
-          onTap: () => Navigator.of(context).pop(),
+          onTap: onTap,
         ),
       ],
     );
