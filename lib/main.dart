@@ -18,7 +18,6 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.dark,
       theme: ThemeData(
         colorSchemeSeed: Colors.deepPurple,
         brightness: darkMode ? Brightness.dark : Brightness.light,
