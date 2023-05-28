@@ -62,7 +62,7 @@ class ContentPage extends StatelessWidget {
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(68),
               child: SearchBar(
-                hintText: "Buscar lesão",
+                hintText: "Buscar Conteúdo",
                 searchController: _searchController,
                 action: () {},
               ),
