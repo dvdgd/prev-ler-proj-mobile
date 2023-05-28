@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:prev_ler/widgets/custom_text_field.dart';
 
-class CustomDatePicker extends StatelessWidget {
+class CustomDatePicker extends StatefulWidget {
   final String labelText;
   final TextEditingController controller;
   final TextEditingController selectedDate;
@@ -22,55 +23,51 @@ class CustomDatePicker extends StatelessWidget {
   });
 
   @override
+  State<CustomDatePicker> createState() => _CustomDatePickerState();
+}
+
+class _CustomDatePickerState extends State<CustomDatePicker> {
+  @override
   Widget build(BuildContext context) {
-    final isNotEnable = enable != null && enable == false;
-
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 10,
-      ),
-      child: Container(
-        height: 58,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: TextField(
-          enabled: enable,
-          controller: controller,
-          style: TextStyle(
-            color: isNotEnable ? Colors.grey.shade400 : null,
-          ),
-          decoration: InputDecoration(
-            filled: true,
-            border: InputBorder.none,
-            labelText: labelText,
-            prefixIcon: prefixIcon,
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.clear_outlined),
-              onPressed: () {
-                controller.text = '';
-              },
-            ),
-          ),
-          onTap: () async {
-            final date = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(1990),
-              lastDate: DateTime(2035),
-            );
-
-            if (date != null) {
-              selectedDate.text = date.toString();
-              controller.text = DateFormat('dd/MM/yyyy').format(date);
-            }
-          },
-        ),
-      ),
+    return CustomTextField(
+      enable: widget.enable,
+      controller: widget.controller,
+      labelText: widget.labelText,
+      prefixIcon: widget.prefixIcon,
+      suffixIcon: _suffixIcon(),
+      onTap: _onTap,
     );
+  }
+
+  IconButton? _suffixIcon() {
+    if (widget.controller.text.isEmpty) {
+      return null;
+    }
+
+    return IconButton(
+      icon: const Icon(Icons.clear_outlined),
+      onPressed: () {
+        setState(() {
+          widget.selectedDate.text = '';
+          widget.controller.text = '';
+        });
+      },
+    );
+  }
+
+  _onTap() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1990),
+      lastDate: DateTime(2035),
+    );
+
+    if (date != null) {
+      setState(() {
+        widget.selectedDate.text = date.toString();
+        widget.controller.text = DateFormat('dd/MM/yyyy').format(date);
+      });
+    }
   }
 }

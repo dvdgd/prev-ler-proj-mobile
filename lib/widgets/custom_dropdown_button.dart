@@ -65,7 +65,10 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
           filled: true,
           enabled: !isNotEnable,
           labelText: widget.hintText,
-          border: InputBorder.none,
+          border: UnderlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
           prefixIcon: widget.prefixIcon,
         ),
       ),

@@ -69,7 +69,7 @@ class LoginPage extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'Faça o lsogin ou cadastre-se para continuar...',
+            'Faça o login ou cadastre-se para continuar...',
             softWrap: true,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium,
