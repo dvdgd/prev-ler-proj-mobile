@@ -45,7 +45,7 @@ class ContentService extends ChangeNotifier {
     if (response.statusCode != 201) {
       throw Exception(response.body);
     }
-
+    notifyListeners();
     return json.decode(response.body);
   }
 }
