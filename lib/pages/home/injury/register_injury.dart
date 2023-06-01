@@ -75,34 +75,37 @@ class RegisterInjury extends ConsumerWidget {
         scrolledUnderElevation: 0,
         title: PageTitle(title: title),
       ),
-      body: Column(children: [
-        CustomTextField(
-          controller: _nameController,
-          labelText: 'Nome',
-          prefixIcon: const Icon(Icons.text_fields),
-          // prefixIcon: Icon(Icons.),
-        ),
-        CustomTextField(
-          controller: _abbreviationController,
-          labelText: 'Sigla',
-          prefixIcon: const Icon(Icons.text_fields),
-        ),
-        CustomTextField(
-          controller: _descriptionController,
-          labelText: 'Descrição',
-          prefixIcon: const Icon(Icons.description),
-          maxLines: 5,
-        ),
-        const SizedBox(height: 40),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomButton(
-            text: 'Salvar',
-            onTap: () => _saveInjury(context, ref),
+      body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(children: [
+          CustomTextField(
+            controller: _nameController,
+            labelText: 'Nome',
+            prefixIcon: const Icon(Icons.text_fields),
+            // prefixIcon: Icon(Icons.),
           ),
-        ),
-        const SizedBox(height: 40),
-      ]),
+          CustomTextField(
+            controller: _abbreviationController,
+            labelText: 'Sigla',
+            prefixIcon: const Icon(Icons.text_fields),
+          ),
+          CustomTextField(
+            controller: _descriptionController,
+            labelText: 'Descrição',
+            prefixIcon: const Icon(Icons.description),
+            maxLines: 5,
+          ),
+          const SizedBox(height: 40),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: CustomButton(
+              text: 'Salvar',
+              onTap: () => _saveInjury(context, ref),
+            ),
+          ),
+          const SizedBox(height: 40),
+        ]),
+      ),
     );
   }
 }

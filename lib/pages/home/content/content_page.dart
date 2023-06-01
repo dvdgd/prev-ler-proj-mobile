@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prev_ler/entities/content.dart';
 import 'package:prev_ler/pages/home/content/content_card.dart';
 import 'package:prev_ler/pages/home/content/register_content_page.dart';
 import 'package:prev_ler/services/auth_service.dart';
