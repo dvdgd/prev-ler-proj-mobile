@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/entities/content.dart';
 import 'package:prev_ler/pages/home/content/content_page.dart';
+import 'package:prev_ler/pages/main_page.dart';
 import 'package:prev_ler/services/content_service.dart';
 import 'package:prev_ler/services/injury_service.dart';
 import 'package:prev_ler/widgets/custom_alert_dialog.dart';
@@ -76,7 +77,11 @@ class RegisterContentPage extends ConsumerWidget {
             onTap: () async {
               await Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => ContentPage()),
+                MaterialPageRoute(
+                  builder: (context) => MainPage(
+                    page: ContentPage(),
+                  ),
+                ),
                 (route) => false,
               );
             },

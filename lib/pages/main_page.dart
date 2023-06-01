@@ -5,7 +5,9 @@ import 'package:prev_ler/pages/home/home_page.dart';
 import 'package:prev_ler/pages/home/injury/injury_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({super.key, this.page});
+
+  final dynamic page;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -13,7 +15,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int currentPage = 0;
-  final List _pages = [
+
+  final List<Widget> _pages = [
     const HomePage(),
     InjuryPage(),
     ExercisePage(),
@@ -24,6 +27,17 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       currentPage = index;
     });
+  }
+
+  @override
+  void initState() {
+    final searchElement = _pages.indexWhere(
+      (page) => page.toString() == widget.page.toString(),
+    );
+    final index = searchElement >= 0 ? searchElement : 0;
+
+    currentPage = index;
+    super.initState();
   }
 
   @override
