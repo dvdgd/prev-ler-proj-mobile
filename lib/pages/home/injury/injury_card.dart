@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/entities/injury_type.dart';
 import 'package:prev_ler/widgets/custom_card.dart';
 
+import '../../../widgets/custom_option_button.dart';
+
 class InjuryCard extends StatelessWidget {
   const InjuryCard({Key? key, required this.injury}) : super(key: key);
 
@@ -15,7 +17,9 @@ class InjuryCard extends StatelessWidget {
         child: CustomCard(
           padding: const EdgeInsets.all(0),
           backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-          onTap: () {},
+          onTap: () {
+            _showOptions(context, key);
+          },
           child: SizedBox(
             width: double.infinity,
             child: Column(
@@ -44,6 +48,37 @@ class InjuryCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showOptions(BuildContext context, ref) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return BottomSheet(
+          onClosing: () {},
+          builder: (context) {
+            return Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  OptionButton(
+                    title: 'Editar',
+                    pressedFunction: () {},
+                    icon: const Icon(Icons.edit_outlined),
+                  ),
+                  OptionButton(
+                    title: 'Deletar',
+                    pressedFunction: () {},
+                    icon: const Icon(Icons.delete_forever_outlined),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
