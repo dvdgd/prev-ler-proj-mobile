@@ -1,7 +1,7 @@
 import 'package:prev_ler/entities/medic.dart';
 
 class InjuryType {
-  int? idInjuryType;
+  int idInjuryType;
   int idMedic;
   String name;
   String abbreviation;
@@ -11,7 +11,7 @@ class InjuryType {
   Medic? medic;
 
   InjuryType(
-      {this.idInjuryType,
+      {required this.idInjuryType,
       required this.idMedic,
       required this.name,
       required this.abbreviation,

@@ -48,6 +48,16 @@ class InjuryService extends ChangeNotifier {
     notifyListeners();
     return json.decode(response.body);
   }
+
+  Future<void> deleteById(int numInjury) async {
+    final response = await http.delete(Uri.parse('$_baseUrl/$numInjury'));
+
+    if (response.statusCode != 204) {
+      throw Exception(
+          "Não é possível deletar este tipo de lesão pois ele está ligado a um conteúdo.");
+    }
+    notifyListeners();
+  }
 }
 
 final injuryProvider =

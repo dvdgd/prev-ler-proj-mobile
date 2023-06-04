@@ -78,7 +78,7 @@ class InjuryPage extends StatelessWidget {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        return InjuryCard(injury: injuries[index]);
+                        return InjuryCard(injuryType: injuries[index]);
                       },
                       childCount: injuries.length,
                     ),

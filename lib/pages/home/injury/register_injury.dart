@@ -99,7 +99,7 @@ class RegisterInjury extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: CustomButton(
-              text: 'Salvar',
+              text: 'Cadastrar',
               onTap: () => _saveInjury(context, ref),
             ),
           ),
