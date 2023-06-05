@@ -7,14 +7,16 @@ import 'package:prev_ler/widgets/custom_button.dart';
 import 'package:prev_ler/widgets/custom_text_field.dart';
 import 'package:prev_ler/widgets/page_title.dart';
 
-class RegisterInjury extends ConsumerWidget {
+class UpdateInjury extends ConsumerWidget {
   final String title;
   final int idMedic;
+  final InjuryType injuryType;
 
-  RegisterInjury({
+  UpdateInjury({
     super.key,
     required this.title,
     required this.idMedic,
+    required this.injuryType,
   });
 
   final _nameController = TextEditingController();
@@ -47,7 +49,7 @@ class RegisterInjury extends ConsumerWidget {
     );
   }
 
-  Future<void> _saveInjury(BuildContext context, WidgetRef ref) async {
+  Future<void> _updateInjury(BuildContext context, WidgetRef ref) async {
     final currentContext = context;
     try {
       final injury = _getInjuryFromForm();
@@ -69,6 +71,7 @@ class RegisterInjury extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    _serializeControllers(injuryType);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -80,9 +83,9 @@ class RegisterInjury extends ConsumerWidget {
         child: Column(children: [
           CustomTextField(
             controller: _nameController,
+            textInputType: TextInputType.name,
             labelText: 'Nome',
             prefixIcon: const Icon(Icons.text_fields),
-            // prefixIcon: Icon(Icons.),
           ),
           CustomTextField(
             controller: _abbreviationController,
@@ -99,13 +102,19 @@ class RegisterInjury extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: CustomButton(
-              text: 'Cadastrar',
-              onTap: () => _saveInjury(context, ref),
+              text: 'Atualizar',
+              onTap: () => _updateInjury(context, ref),
             ),
           ),
           const SizedBox(height: 40),
         ]),
       ),
     );
+  }
+
+  void _serializeControllers(InjuryType injuryType) {
+    _nameController.text = injuryType.name;
+    _abbreviationController.text = injuryType.abbreviation;
+    _descriptionController.text = injuryType.description;
   }
 }

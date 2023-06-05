@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/entities/injury_type.dart';
+import 'package:prev_ler/pages/home/injury/update_injury.dart';
 import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/services/injury_service.dart';
 import 'package:prev_ler/widgets/custom_card.dart';
@@ -24,7 +25,7 @@ class InjuryCard extends ConsumerWidget {
           onTap: () {
             authData.when(
               data: (user) => user.medic != null
-                  ? _showOptions(context, ref)
+                  ? _showOptions(context, ref, user.medic!.idMedic!)
                   : const SizedBox.shrink(),
               error: (_, __) => const Text("Error"),
               loading: () => const CircularProgressIndicator(),
@@ -61,7 +62,7 @@ class InjuryCard extends ConsumerWidget {
     );
   }
 
-  void _showOptions(BuildContext context, WidgetRef ref) {
+  void _showOptions(BuildContext context, WidgetRef ref, int idMedic) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -75,7 +76,19 @@ class InjuryCard extends ConsumerWidget {
                 children: [
                   OptionButton(
                     title: 'Editar',
-                    pressedFunction: () {},
+                    pressedFunction: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateInjury(
+                            idMedic: idMedic,
+                            title: 'Atualizar Lesão',
+                            injuryType: injuryType,
+                          ),
+                        ),
+                      );
+                    },
                     icon: const Icon(Icons.edit_outlined),
                   ),
                   OptionButton(
