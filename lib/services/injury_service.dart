@@ -34,12 +34,12 @@ class InjuryService extends ChangeNotifier {
     return UnmodifiableListView(injuriesList);
   }
 
-  Future<Map<String, dynamic>> register(InjuryType injury) async {
-    final injuryJson = injury.toJson();
+  Future<Map<String, dynamic>> register(InjuryType injuryType) async {
+    final injuryJson = injuryType.toJson();
     final response = await http.post(
       Uri.parse(_baseUrl),
       headers: headers,
-      body: jsonEncode(injuryJson),
+      body: (injuryJson),
     );
 
     if (response.statusCode != 201) {
@@ -47,6 +47,19 @@ class InjuryService extends ChangeNotifier {
     }
     notifyListeners();
     return json.decode(response.body);
+  }
+
+  Future<void> update(InjuryType injuryType) async {
+    final response = await http.put(
+      Uri.parse('$_baseUrl/${injuryType.idInjuryType}'),
+      body: injuryType.toJson(),
+      headers: headers,
+    );
+
+    if (response.statusCode != 204) {
+      throw Exception(response.body);
+    }
+    notifyListeners();
   }
 
   Future<void> deleteById(int numInjury) async {

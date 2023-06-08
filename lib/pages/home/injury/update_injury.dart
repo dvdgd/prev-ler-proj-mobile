@@ -39,7 +39,7 @@ class UpdateInjury extends ConsumerWidget {
     }
 
     return InjuryType(
-      idInjuryType: 0,
+      idInjuryType: injuryType.idInjuryType,
       idMedic: idMedic,
       name: name,
       abbreviation: abbreviation,
@@ -54,7 +54,7 @@ class UpdateInjury extends ConsumerWidget {
     try {
       final injury = _getInjuryFromForm();
       final injuryServiceProvider = ref.read(injuryProvider);
-      await injuryServiceProvider.register(injury);
+      await injuryServiceProvider.update(injury);
       if (context.mounted) {
         await showDialog(
           context: currentContext,

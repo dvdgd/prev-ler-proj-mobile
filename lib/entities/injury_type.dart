@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:prev_ler/entities/medic.dart';
 
 class InjuryType {
@@ -20,7 +22,7 @@ class InjuryType {
       this.updatedAt,
       this.medic});
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'idTipoLesao': idInjuryType,
       'idMedico': idMedic,
@@ -31,6 +33,10 @@ class InjuryType {
       'dataAtualizacao': updatedAt?.toIso8601String(),
       'medico': medic?.toJson(),
     };
+  }
+
+  String toJson() {
+    return jsonEncode(toMap());
   }
 
   factory InjuryType.fromJson(Map<String, dynamic> json) {
