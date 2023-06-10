@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/entities/injury_type.dart';
+import 'package:prev_ler/pages/home/injury/injury_read_page.dart';
 import 'package:prev_ler/pages/home/injury/update_injury.dart';
 import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/services/injury_service.dart';
@@ -24,9 +25,10 @@ class InjuryCard extends ConsumerWidget {
           backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
           onTap: () {
             authData.when(
-              data: (user) => user.medic != null
+              data: (user) => user.medic != null &&
+                      injuryType.idMedic == user.medic!.idMedic
                   ? _showOptions(context, ref, user.medic!.idMedic!)
-                  : const SizedBox.shrink(),
+                  : _navigateToInjuryDetailsPage(context),
               error: (_, __) => const Text("Error"),
               loading: () => const CircularProgressIndicator(),
             );
@@ -75,6 +77,14 @@ class InjuryCard extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   OptionButton(
+                    title: 'Visualizar',
+                    pressedFunction: () {
+                      Navigator.of(context).pop();
+                      _navigateToInjuryDetailsPage(context);
+                    },
+                    icon: const Icon(Icons.remove_red_eye_outlined),
+                  ),
+                  OptionButton(
                     title: 'Editar',
                     pressedFunction: () {
                       Navigator.of(context).pop();
@@ -108,6 +118,15 @@ class InjuryCard extends ConsumerWidget {
           },
         );
       },
+    );
+  }
+
+  void _navigateToInjuryDetailsPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => InjuryRead(injuryType),
+      ),
     );
   }
 }
