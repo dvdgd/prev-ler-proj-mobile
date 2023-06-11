@@ -48,6 +48,29 @@ class ContentService extends ChangeNotifier {
     notifyListeners();
     return json.decode(response.body);
   }
+
+  Future<void> update(Content content) async {
+    final contentJson = content.toJson();
+    final response = await http.put(
+      Uri.parse('$_baseUrl/${content.idContent}'),
+      body: jsonEncode(contentJson),
+      headers: headers,
+    );
+
+    if (response.statusCode != 204) {
+      throw Exception("Conteúdo não pôde ser editado");
+    }
+    notifyListeners();
+  }
+
+  Future<void> delete(int id) async {
+    final response = await http.delete(Uri.parse('$_baseUrl/$id'));
+
+    if (response.statusCode != 204) {
+      throw Exception("Conteúdo não pôde ser excluído");
+    }
+    notifyListeners();
+  }
 }
 
 final contentProvider =

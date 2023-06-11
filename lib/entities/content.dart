@@ -2,7 +2,7 @@ import 'package:prev_ler/entities/injury_type.dart';
 import 'package:prev_ler/entities/medic.dart';
 
 class Content {
-  int? idContent;
+  int idContent;
   int idMedic;
   int idInjuryType;
   String title;
@@ -15,7 +15,7 @@ class Content {
   InjuryType? injuryType;
 
   Content({
-    this.idContent,
+    required this.idContent,
     required this.idMedic,
     required this.idInjuryType,
     required this.title,
