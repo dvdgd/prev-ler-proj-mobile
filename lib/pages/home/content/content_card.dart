@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prev_ler/entities/content.dart';
+import 'package:prev_ler/pages/home/content/content_page.dart';
 import 'package:prev_ler/pages/home/content/read_content_page.dart';
 import 'package:prev_ler/pages/home/content/edit_content_page.dart';
+import 'package:prev_ler/pages/main_page.dart';
 import 'package:prev_ler/services/auth_service.dart';
 import 'package:prev_ler/services/content_service.dart';
+import 'package:prev_ler/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/widgets/custom_card.dart';
 import 'package:prev_ler/widgets/custom_option_button.dart';
 
@@ -85,7 +88,7 @@ class ContentCard extends ConsumerWidget {
                       Navigator.of(context).pop();
                       _navigateToContentRead(context);
                     },
-                    icon: const Icon(Icons.edit_outlined),
+                    icon: const Icon(Icons.remove_red_eye_outlined),
                   ),
                   OptionButton(
                     title: 'Editar',
@@ -106,10 +109,9 @@ class ContentCard extends ConsumerWidget {
                   ),
                   OptionButton(
                     title: 'Deletar',
-                    pressedFunction: () {
+                    pressedFunction: () async {
                       Navigator.of(context).pop();
-                      final contentServiceProvider = ref.read(contentProvider);
-                      contentServiceProvider.delete(content.idContent);
+                      _deleteContent(context, ref);
                     },
                     icon: const Icon(Icons.delete_forever_outlined),
                   ),
@@ -129,5 +131,40 @@ class ContentCard extends ConsumerWidget {
         builder: (context) => ContentRead(content),
       ),
     );
+  }
+
+  void _deleteContent(BuildContext context, WidgetRef ref) async {
+    try {
+      final currentContext = context;
+      final contentServiceProvider = ref.read(contentProvider);
+      contentServiceProvider.delete(content.idContent);
+      if (context.mounted) {
+        await showDialog(
+          context: currentContext,
+          builder: (context) => CustomAlertDialog(
+            message: 'Sucesso!',
+            onTap: () async {
+              await Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(
+                    page: ContentPage(),
+                  ),
+                ),
+                (route) => false,
+              );
+            },
+          ),
+        );
+      }
+    } catch (e) {
+      await showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          message: e.toString(),
+          onTap: () => Navigator.of(context).pop(),
+        ),
+      );
+    }
   }
 }
