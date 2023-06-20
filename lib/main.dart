@@ -4,6 +4,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:prev_ler/src/modules/auth/auth_controller.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_service.dart';
+import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
+import 'package:prev_ler/src/modules/exercises/shared/exercises_service.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_service.dart';
 import 'package:prev_ler/src/modules/register_user/register_user_controller.dart';
@@ -28,14 +30,25 @@ void main() async {
       providers: [
         Provider(create: (_) => SecureStore(const FlutterSecureStorage())),
         Provider(create: (_) => ClientHttp()),
-        Provider(create: (ctx) => UserService(ctx.read(), ctx.read())),
-        Provider(create: (ctx) => ContentsServiceImpl(ctx.read())),
-        Provider(create: (ctx) => InjuriesServiceImpl(ctx.read())),
+        Provider(
+          create: (ctx) => UserService(
+            ctx.read<ClientHttp>(),
+            ctx.read<SecureStore>(),
+          ),
+        ),
+        Provider(create: (ctx) => ContentsServiceImpl(ctx.read<ClientHttp>())),
+        Provider(create: (ctx) => InjuriesServiceImpl(ctx.read<ClientHttp>())),
+        Provider(create: (ctx) => ExercisesServiceImpl(ctx.read<ClientHttp>())),
         ChangeNotifierProvider(
           create: (_) => DarkModeController(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => UserController(ctx.read<UserService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => ExercisesController(
+            ctx.read<ExercisesServiceImpl>(),
+          ),
         ),
         ChangeNotifierProvider(
           create: (ctx) => AuthController(

@@ -1,6 +1,5 @@
 import 'package:prev_ler/src/shared/entities/exercise.dart';
 
-// TODO: Implement toMap and fromMap methods
 class NotificationData {
   int idNotification;
   int idRoutine;
@@ -21,4 +20,31 @@ class NotificationData {
     required this.sent,
     this.exercise,
   });
+
+  factory NotificationData.fromMap(Map<String, dynamic> map) {
+    return NotificationData(
+      idNotification: map['idNotificacao'],
+      idRoutine: map['idRotina'],
+      idExercise: map['idExercicio'],
+      title: map['titulo'],
+      message: map['mensagem'],
+      time: map['hora'],
+      sent: map['enviado'],
+      exercise:
+          map['exercicio'] != null ? Exercise.fromMap(map['exercicio']) : null,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'idNotificacao': idNotification,
+      'idRotina': idRoutine,
+      'idExercicio': idExercise,
+      'titulo': title,
+      'mensagem': message,
+      'hora': time,
+      'enviado': sent,
+      'exercicio': exercise?.toMap(),
+    };
+  }
 }

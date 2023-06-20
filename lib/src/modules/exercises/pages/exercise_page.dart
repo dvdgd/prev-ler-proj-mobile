@@ -1,17 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:prev_ler/src/modules/exercises/exercise_card.dart';
+import 'package:prev_ler/src/modules/exercises/components/exercise_card.dart';
+import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
+import 'package:prev_ler/src/shared/enums/state_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/my_search_app_bar.dart';
+import 'package:provider/provider.dart';
 
-class ExercisePage extends StatelessWidget {
-  ExercisePage({super.key});
+class ExercisePage extends StatefulWidget {
+  const ExercisePage({super.key});
 
+  @override
+  State<ExercisePage> createState() => _ExercisePageState();
+}
+
+class _ExercisePageState extends State<ExercisePage> {
   final _searchController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+
+    final controller = context.read<ExercisesController>();
+
+    if (controller.state == StateEnum.idle) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await controller.fetchAll();
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final controller = context.watch<ExercisesController>();
+
+    final exercises = controller.exercises;
+
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),

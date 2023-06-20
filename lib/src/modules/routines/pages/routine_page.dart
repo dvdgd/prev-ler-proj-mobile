@@ -17,6 +17,7 @@ final testRoutine = Routine(
   endTime: "9:00 AM",
   active: true,
   createdAt: DateTime.now(),
+  duration: const Duration(hours: 2),
   exercises: [
     Exercise(
       idExercise: 1,
@@ -28,8 +29,8 @@ final testRoutine = Routine(
       encodedGif: "stretching.gif",
       precautions: "Avoid overstretching",
       observations: "Monitor any discomfort",
-      createdAt: "2023-06-17T04:02:35.347Z",
-      updatedAt: "2023-06-17T04:02:35.347Z",
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
       medic: Medic(
         idMedic: 1,
         crmNumber: "123456",
@@ -102,8 +103,8 @@ final testRoutine = Routine(
         encodedGif: "stretching.gif",
         precautions: "Avoid overstretching",
         observations: "Monitor any discomfort",
-        createdAt: "2023-06-17T04:02:35.347Z",
-        updatedAt: "2023-06-17T04:02:35.347Z",
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       ),
     ),
   ],

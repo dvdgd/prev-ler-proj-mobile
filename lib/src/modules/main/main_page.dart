@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/contents/pages/contents_page.dart';
-import 'package:prev_ler/src/modules/exercises/exercise_page.dart';
+import 'package:prev_ler/src/modules/exercises/pages/exercise_page.dart';
 import 'package:prev_ler/src/modules/home/home_page.dart';
 import 'package:prev_ler/src/modules/injuries/pages/injury_page.dart';
 
@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
     const HomePage(),
     const InjuryPage(),
-    ExercisePage(),
+    const ExercisePage(),
     const ContentsPage(),
   ];
 

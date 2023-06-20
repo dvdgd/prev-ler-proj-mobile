@@ -1,7 +1,6 @@
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
 
-// TODO: Implement toMap and fromMap methods
 class Exercise {
   int idExercise;
   int idMedic;
@@ -12,13 +11,13 @@ class Exercise {
   String encodedGif;
   String precautions;
   String observations;
-  String createdAt;
-  String? updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   Medic? medic;
   InjuryType? injuryType;
 
   Exercise({
-    required this.idExercise,
+    this.idExercise = 0,
     required this.idMedic,
     required this.idInjuryType,
     required this.name,
@@ -27,9 +26,49 @@ class Exercise {
     required this.encodedGif,
     required this.precautions,
     required this.observations,
-    required this.createdAt,
+    this.createdAt,
     this.updatedAt,
     this.medic,
     this.injuryType,
   });
+
+  factory Exercise.fromMap(Map<String, dynamic> map) {
+    return Exercise(
+      idExercise: map['idExercicio'],
+      idMedic: map['idMedico'],
+      idInjuryType: map['idTipoLesao'],
+      name: map['nome'],
+      description: map['descricao'],
+      instructions: map['instrucoes'],
+      encodedGif: map['encodedGif'],
+      precautions: map['precaucoes'],
+      observations: map['observacoes'],
+      medic: map['medico'] != null ? Medic.fromMap(map['medico']) : null,
+      createdAt: map['dataCriacao'] != null
+          ? DateTime.parse(map['dataCriacao'])
+          : null,
+      updatedAt: map['dataAtualizacao'] != null
+          ? DateTime.parse(map['dataAtualizacao'])
+          : null,
+      injuryType: map['tipoLesao'] != null
+          ? InjuryType.fromMap(map['tipoLesao'])
+          : null,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "idExercicio": idExercise,
+      "idMedico": idMedic,
+      "idTipoLesao": idInjuryType,
+      "nome": name,
+      "descricao": description,
+      "instrucoes": instructions,
+      "encodedGif": encodedGif,
+      "precaucoes": precautions,
+      "observacoes": observations,
+      "dataCriacao": createdAt,
+      "dataAtualizacao": updatedAt,
+    };
+  }
 }
