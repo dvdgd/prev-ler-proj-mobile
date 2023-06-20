@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:prev_ler/src/modules/auth/auth_controller.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
@@ -56,7 +55,7 @@ void main() async {
           create: (ctx) => ContentsController(ctx.read<ContentsServiceImpl>()),
         ),
       ],
-      child: const riverpod.ProviderScope(child: MyMaterialApp()),
+      child: const MyMaterialApp(),
     ),
   );
 }
