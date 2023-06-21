@@ -16,6 +16,7 @@ class RegisterMedicPage extends StatelessWidget {
   final _crmNumberController = TextEditingController();
   final _crmStateController = TextEditingController();
   final _selectedBornDateController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   User _validateForm() {
     final email = _emailController.text;
@@ -100,25 +101,34 @@ class RegisterMedicPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              ...buildUserForm(
-                context: context,
-                emailController: _emailController,
-                passwordController: _passwordController,
-                nameController: _nameController,
-                selectedBornDateController: _selectedBornDateController,
-                bornDateController: _bornDateController,
-                isEditing: false,
-              ),
-              ...buildMedicForm(
-                crmNumberController: _crmNumberController,
-                crmStateController: _crmStateController,
-                isEditing: false,
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    ...buildUserForm(
+                      context: context,
+                      emailController: _emailController,
+                      passwordController: _passwordController,
+                      nameController: _nameController,
+                      selectedBornDateController: _selectedBornDateController,
+                      bornDateController: _bornDateController,
+                      isEditing: false,
+                    ),
+                    ...buildMedicForm(
+                      crmNumberController: _crmNumberController,
+                      crmStateController: _crmStateController,
+                      isEditing: false,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 45),
               CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
                 action: () async {
-                  await _handleRegister(context);
+                  formKey.currentState!.validate()
+                      ? _handleRegister(context)
+                      : null;
                 },
               ),
               const SizedBox(height: 45),

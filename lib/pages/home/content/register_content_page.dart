@@ -14,6 +14,7 @@ import 'package:prev_ler/widgets/page_title.dart';
 class RegisterContentPage extends ConsumerWidget {
   final String title;
   final int idMedic;
+  final formKey = GlobalKey<FormState>();
 
   RegisterContentPage({
     super.key,
@@ -33,22 +34,6 @@ class RegisterContentPage extends ConsumerWidget {
     final description = _descriptionController.text;
     final observation = _observationController.text;
     final injuryTypeId = _injuryTypeController.text;
-
-    if (title.isEmpty) {
-      throw Exception('Título não pode ser vazio');
-    }
-    if (subtitle.isEmpty) {
-      throw Exception('O subtítulo é obrigatório');
-    }
-    if (injuryTypeId.isEmpty) {
-      throw Exception('Por favor, preencha o tipo de lesão');
-    }
-    if (description.isEmpty) {
-      throw Exception('Preencha a descrição');
-    }
-    if (observation.isEmpty) {
-      throw Exception('A observação não pode ser vazia');
-    }
 
     return Content(
       idContent: 0,
@@ -107,82 +92,97 @@ class RegisterContentPage extends ConsumerWidget {
         scrolledUnderElevation: 0,
         title: PageTitle(title: title),
       ),
-      body: LayoutBuilder(builder: (
-        BuildContext context,
-        BoxConstraints constraints,
-      ) {
+      body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
         return RefreshIndicator(
           onRefresh: () async => await ref.refresh(injuryDataProvider.future),
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              children: [
-                const SizedBox(height: 15),
-                CustomTextField(
-                  controller: _titleController,
-                  labelText: 'Título',
-                  prefixIcon: const Icon(Icons.title),
-                ),
-                CustomTextField(
-                  controller: _subtitleController,
-                  labelText: 'Subtítulo',
-                  prefixIcon: const Icon(Icons.subtitles),
-                ),
-                Consumer(
-                  builder: (context, ref, child) {
-                    final data = ref.watch(injuryDataProvider);
-
-                    return data.when(
-                      data: (injuries) {
-                        return CustomDropdownButton(
-                          controller: _injuryTypeController,
-                          prefixIcon: const Icon(Icons.healing_outlined),
-                          hintText: 'Selecionar Lesão',
-                          list: [
-                            for (var item in injuries)
-                              DropdownMenuItem<int>(
-                                value: item.idInjuryType,
-                                child: Text(
-                                  item.name,
-                                ),
-                              ),
-                          ],
-                        );
-                      },
-                      error: (e, __) {
-                        Navigator.of(context).pop();
-                        return Text(e.toString());
-                      },
-                      loading: () => const CustomTextField(
-                        prefixIcon: Icon(Icons.healing_outlined),
-                        hintText: 'Selecionar Lesão',
-                      ),
-                    );
-                  },
-                ),
-                CustomTextField(
-                  controller: _descriptionController,
-                  labelText: 'Descrição',
-                  prefixIcon: const Icon(Icons.description),
-                  maxLines: 5,
-                ),
-                CustomTextField(
-                  controller: _observationController,
-                  labelText: 'Observações',
-                  prefixIcon: const Icon(Icons.zoom_in),
-                  maxLines: 3,
-                  maxLength: 4,
-                ),
-                const SizedBox(height: 40),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: CustomButton(
-                    text: 'Salvar',
-                    onTap: () => _saveContent(context, ref),
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    validator: (text) => text == null || text.isEmpty
+                        ? 'Título não pode ser vazio'
+                        : null,
+                    controller: _titleController,
+                    labelText: 'Título',
+                    prefixIcon: const Icon(Icons.title),
                   ),
-                ),
-                const SizedBox(height: 40),
-              ],
+                  CustomTextField(
+                    validator: (text) => text == null || text.isEmpty
+                        ? 'Subtítulo não pode ser vazio'
+                        : null,
+                    controller: _subtitleController,
+                    labelText: 'Subtítulo',
+                    prefixIcon: const Icon(Icons.subtitles),
+                  ),
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final data = ref.watch(injuryDataProvider);
+
+                      return data.when(
+                        data: (injuries) {
+                          return CustomDropdownButton(
+                            controller: _injuryTypeController,
+                            prefixIcon: const Icon(Icons.healing_outlined),
+                            hintText: 'Selecionar Lesão',
+                            list: [
+                              for (var item in injuries)
+                                DropdownMenuItem<int>(
+                                  value: item.idInjuryType,
+                                  child: Text(
+                                    item.name,
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                        error: (e, __) {
+                          Navigator.of(context).pop();
+                          return Text(e.toString());
+                        },
+                        loading: () => const CustomTextField(
+                          prefixIcon: Icon(Icons.healing_outlined),
+                          hintText: 'Selecionar Lesão',
+                        ),
+                      );
+                    },
+                  ),
+                  CustomTextField(
+                    validator: (text) => text == null || text.isEmpty
+                        ? 'Descrição não pode ser vazia'
+                        : null,
+                    controller: _descriptionController,
+                    labelText: 'Descrição',
+                    prefixIcon: const Icon(Icons.description),
+                    maxLines: 5,
+                  ),
+                  CustomTextField(
+                    validator: (text) => text == null || text.isEmpty
+                        ? 'Observação não pode ser vazia'
+                        : null,
+                    controller: _observationController,
+                    labelText: 'Observações',
+                    prefixIcon: const Icon(Icons.zoom_in),
+                    maxLines: 3,
+                    maxLength: 4,
+                  ),
+                  const SizedBox(height: 40),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: CustomButton(
+                      text: 'Salvar',
+                      onTap: () => formKey.currentState!.validate()
+                          ? _saveContent(context, ref)
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
           ),
         );

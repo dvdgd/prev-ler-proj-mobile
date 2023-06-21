@@ -15,6 +15,8 @@ List<Widget> buildUserForm({
 }) {
   List<Widget> formWidgets = [
     CustomTextField(
+      validator: (text) =>
+          text == null || text.isEmpty ? 'O email não pode ser vazio' : null,
       controller: emailController,
       textInputType: TextInputType.emailAddress,
       labelText: 'Email',
@@ -23,11 +25,15 @@ List<Widget> buildUserForm({
       enable: !isEditing,
     ),
     CustomPasswordField(
+      validator: (text) =>
+          text == null || text.isEmpty ? 'A senha não pode ser vazia' : null,
       controller: passwordController,
       maxLength: 25,
       labelText: 'Senha',
     ),
     CustomTextField(
+      validator: (text) =>
+          text == null || text.isEmpty ? 'O nome não pode ficar vazio' : null,
       controller: nameController,
       labelText: 'Nome',
       maxLength: 50,
@@ -52,6 +58,9 @@ List<Widget> buildPatientForm({
 }) {
   return [
     CustomTextField(
+      validator: (text) => text == null || text.isEmpty
+          ? 'A ocupação não pode ficar vazia'
+          : null,
       controller: occupationController,
       labelText: 'Ocupação',
       maxLength: 25,
@@ -67,6 +76,8 @@ List<Widget> buildMedicForm({
 }) {
   return [
     CustomTextField(
+      validator: (text) =>
+          text == null || text.isEmpty ? 'O CRM não pode ficar vazio' : null,
       controller: crmNumberController,
       labelText: 'Numero CRM',
       textInputType: TextInputType.number,

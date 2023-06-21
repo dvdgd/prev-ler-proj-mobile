@@ -16,6 +16,7 @@ class RegisterPatientPage extends StatelessWidget {
   final _bornDateController = TextEditingController();
   final _selectedBornDateController = TextEditingController();
   final _occupationController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   User _validateForm() {
     final email = _emailController.text;
@@ -94,27 +95,34 @@ class RegisterPatientPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              ...buildUserForm(
-                context: context,
-                emailController: _emailController,
-                passwordController: _passwordController,
-                nameController: _nameController,
-                selectedBornDateController: _selectedBornDateController,
-                bornDateController: _bornDateController,
-                isEditing: false,
-              ),
-              CustomTextField(
-                controller: _occupationController,
-                labelText: 'Ocupação',
-                maxLength: 25,
-                prefixIcon: const Icon(Icons.work_history_outlined),
-              ),
-              const SizedBox(height: 30),
-              CustomAsyncLoadingButton(
-                text: 'Cadastrar-se',
-                action: () async {
-                  await _handleRegister(context);
-                },
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    ...buildUserForm(
+                      context: context,
+                      emailController: _emailController,
+                      passwordController: _passwordController,
+                      nameController: _nameController,
+                      selectedBornDateController: _selectedBornDateController,
+                      bornDateController: _bornDateController,
+                      isEditing: false,
+                    ),
+                    ...buildPatientForm(
+                      occupationController: _occupationController,
+                      isEditing: false,
+                    ),
+                    const SizedBox(height: 30),
+                    CustomAsyncLoadingButton(
+                      text: 'Cadastrar-se',
+                      action: () async {
+                        formKey.currentState!.validate()
+                            ? _handleRegister(context)
+                            : null;
+                      },
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 25),
             ],
