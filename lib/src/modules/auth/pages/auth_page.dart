@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/auth/auth_controller.dart';
-import 'package:prev_ler/src/modules/auth/auth_request_model.dart';
+import 'package:prev_ler/src/modules/auth/shared/auth_controller.dart';
+import 'package:prev_ler/src/modules/auth/shared/auth_request_model.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_password_field.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';

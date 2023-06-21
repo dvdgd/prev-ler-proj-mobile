@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/auth/auth_page.dart';
+import 'package:prev_ler/src/modules/auth/pages/auth_page.dart';
+import 'package:prev_ler/src/modules/auth/pages/register_medic_page.dart';
+import 'package:prev_ler/src/modules/auth/pages/register_patient_page.dart';
 import 'package:prev_ler/src/modules/contents/pages/content_register_page.dart';
 import 'package:prev_ler/src/modules/home/home_page.dart';
 import 'package:prev_ler/src/modules/injuries/pages/register_injury.dart';
 import 'package:prev_ler/src/modules/main/main_page.dart';
 import 'package:prev_ler/src/modules/profile/profile_page.dart';
-import 'package:prev_ler/src/modules/register_user/register_medic_page.dart';
-import 'package:prev_ler/src/modules/register_user/register_patient_page.dart';
 import 'package:prev_ler/src/modules/routines/pages/routine_page.dart';
 import 'package:prev_ler/src/shared/controllers/dark_mode_controller.dart';
 import 'package:provider/provider.dart';

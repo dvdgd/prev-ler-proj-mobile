@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/register_user/register_user_controller.dart';
+import 'package:prev_ler/src/modules/auth/shared/register_user_controller.dart';
 import 'package:prev_ler/src/shared/entities/patient.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/build_user_form.dart';

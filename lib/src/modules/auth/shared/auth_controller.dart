@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/auth/auth_request_model.dart';
+import 'package:prev_ler/src/modules/auth/shared/auth_request_model.dart';
 import 'package:prev_ler/src/shared/http/client_http.dart';
 import 'package:prev_ler/src/shared/services/user_service.dart';
 
