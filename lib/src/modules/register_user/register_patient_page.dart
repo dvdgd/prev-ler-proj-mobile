@@ -5,7 +5,6 @@ import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/build_user_form.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPatientPage extends StatefulWidget {
