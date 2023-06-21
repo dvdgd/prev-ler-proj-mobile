@@ -22,6 +22,7 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
   final _crmNumberController = TextEditingController();
   final _crmStateController = TextEditingController();
   final _selectedBornDateController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   late final RegisterUserController controller;
 
@@ -69,25 +70,6 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
     final crmNumber = _crmNumberController.text;
     final crmState = _crmStateController.text;
 
-    if (email.isEmpty) {
-      throw Exception('Email não pode ser vazio');
-    }
-    if (password.isEmpty) {
-      throw Exception('A senha é obrigatória');
-    }
-    if (name.isEmpty) {
-      throw Exception('Por favor, preencha seu nome');
-    }
-    if (bornDate.isEmpty) {
-      throw Exception('Selecione uma data de nascimento');
-    }
-    if (crmNumber.isEmpty) {
-      throw Exception('Email não pode ser vazio');
-    }
-    if (crmState.isEmpty) {
-      throw Exception('Email não pode ser vazio');
-    }
-
     return User(
       name: name,
       bornDate: DateTime.parse(bornDate),
@@ -126,24 +108,35 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
                 ),
               ),
               const SizedBox(height: 30),
-              ...buildUserForm(
-                context: context,
-                emailController: _emailController,
-                passwordController: _passwordController,
-                nameController: _nameController,
-                selectedBornDateController: _selectedBornDateController,
-                bornDateController: _bornDateController,
-                isEditing: false,
-              ),
-              ...buildMedicForm(
-                crmNumberController: _crmNumberController,
-                crmStateController: _crmStateController,
-                isEditing: false,
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    ...buildUserForm(
+                      context: context,
+                      emailController: _emailController,
+                      passwordController: _passwordController,
+                      nameController: _nameController,
+                      selectedBornDateController: _selectedBornDateController,
+                      bornDateController: _bornDateController,
+                      isEditing: false,
+                    ),
+                    ...buildMedicForm(
+                      crmNumberController: _crmNumberController,
+                      crmStateController: _crmStateController,
+                      isEditing: false,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 45),
               CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
-                action: () => controller.register(_validateForm()),
+                action: () async {
+                  formKey.currentState!.validate()
+                      ? controller.register(_validateForm())
+                      : null;
+                },
               ),
               const SizedBox(height: 45),
             ],

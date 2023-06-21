@@ -7,6 +7,7 @@ class CustomPasswordField extends StatefulWidget {
   final Widget? prefixIcon;
   final int? maxLength;
   final bool? obscureText;
+  final String? Function(String? text)? validator;
 
   const CustomPasswordField({
     super.key,
@@ -15,6 +16,7 @@ class CustomPasswordField extends StatefulWidget {
     this.maxLength,
     this.obscureText,
     this.prefixIcon,
+    this.validator,
   });
 
   @override
@@ -28,6 +30,7 @@ class _CustomPasswordFieldPageState extends State<CustomPasswordField> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
+      validator: widget.validator,
       controller: widget.controller,
       labelText: widget.labelText,
       textInputType: TextInputType.visiblePassword,

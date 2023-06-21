@@ -22,6 +22,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
   final _bornDateController = TextEditingController();
   final _selectedBornDateController = TextEditingController();
   final _occupationController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   late final RegisterUserController controller;
   @override
@@ -67,22 +68,6 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
     final bornDate = _selectedBornDateController.text;
     final occupation = _occupationController.text;
 
-    if (email.isEmpty) {
-      throw Exception('Email não pode ser vazio');
-    }
-    if (password.isEmpty) {
-      throw Exception('A senha é obrigatória');
-    }
-    if (name.isEmpty) {
-      throw Exception('Por favor, preencha seu nome');
-    }
-    if (bornDate.isEmpty) {
-      throw Exception('Selecione uma data de nascimento');
-    }
-    if (occupation.isEmpty) {
-      throw Exception('Ocupação não pode ser vazia');
-    }
-
     return User(
       name: name,
       bornDate: DateTime.parse(bornDate),
@@ -119,25 +104,34 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              ...buildUserForm(
-                context: context,
-                emailController: _emailController,
-                passwordController: _passwordController,
-                nameController: _nameController,
-                selectedBornDateController: _selectedBornDateController,
-                bornDateController: _bornDateController,
-                isEditing: false,
-              ),
-              CustomTextField(
-                controller: _occupationController,
-                labelText: 'Ocupação',
-                maxLength: 25,
-                prefixIcon: const Icon(Icons.work_history_outlined),
-              ),
-              const SizedBox(height: 30),
-              CustomAsyncLoadingButton(
-                text: 'Cadastrar-se',
-                action: () => controller.register(_validateForm()),
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    ...buildUserForm(
+                      context: context,
+                      emailController: _emailController,
+                      passwordController: _passwordController,
+                      nameController: _nameController,
+                      selectedBornDateController: _selectedBornDateController,
+                      bornDateController: _bornDateController,
+                      isEditing: false,
+                    ),
+                    ...buildPatientForm(
+                      occupationController: _occupationController,
+                      isEditing: false,
+                    ),
+                    const SizedBox(height: 30),
+                    CustomAsyncLoadingButton(
+                      text: 'Cadastrar-se',
+                      action: () async {
+                        formKey.currentState!.validate()
+                            ? controller.register(_validateForm())
+                            : null;
+                      },
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 25),
             ],

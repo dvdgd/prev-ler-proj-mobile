@@ -31,6 +31,8 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
   final _descriptionController = TextEditingController();
   final _observationController = TextEditingController();
 
+  final formKey = GlobalKey<FormState>();
+
   late final ContentsController controller;
   late final Medic medic;
 
@@ -83,22 +85,6 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
     final observation = _observationController.text;
     final injuryTypeId = _injuryTypeController.text;
 
-    if (title.isEmpty) {
-      throw Exception('Título não pode ser vazio');
-    }
-    if (subtitle.isEmpty) {
-      throw Exception('O subtítulo é obrigatório');
-    }
-    if (injuryTypeId.isEmpty) {
-      throw Exception('Por favor, preencha o tipo de lesão');
-    }
-    if (description.isEmpty) {
-      throw Exception('Preencha a descrição');
-    }
-    if (observation.isEmpty) {
-      throw Exception('A observação não pode ser vazia');
-    }
-
     return Content(
       idMedic: medic.idMedic,
       idInjuryType: int.parse(injuryTypeId),
@@ -126,11 +112,17 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
             children: [
               const SizedBox(height: 15),
               CustomTextField(
+                validator: (text) => text == null || text.isEmpty
+                    ? 'Título não pode ser vazio'
+                    : null,
                 controller: _titleController,
                 labelText: 'Título',
                 prefixIcon: const Icon(Icons.title),
               ),
               CustomTextField(
+                validator: (text) => text == null || text.isEmpty
+                    ? 'Subtítulo não pode ser vazio'
+                    : null,
                 controller: _subtitleController,
                 labelText: 'Subtítulo',
                 prefixIcon: const Icon(Icons.subtitles),
@@ -140,12 +132,18 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                 idInjuryType: widget.content?.injuryType?.idInjuryType,
               ),
               CustomTextField(
+                validator: (text) => text == null || text.isEmpty
+                    ? 'Descrição não pode ser vazia'
+                    : null,
                 controller: _descriptionController,
                 labelText: 'Descrição',
                 prefixIcon: const Icon(Icons.description),
                 maxLines: 5,
               ),
               CustomTextField(
+                validator: (text) => text == null || text.isEmpty
+                    ? 'Observação não pode ser vazia'
+                    : null,
                 controller: _observationController,
                 labelText: 'Observações',
                 prefixIcon: const Icon(Icons.zoom_in),
@@ -155,9 +153,15 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
               const SizedBox(height: 40),
               CustomAsyncLoadingButton(
                 text: 'Salvar',
-                action: () => widget.content == null
-                    ? controller.create(_getContentFromForm())
-                    : controller.update(_getContentFromForm()),
+                action: () async {
+                  if (!formKey.currentState!.validate()) {
+                    return;
+                  }
+                  if (widget.content == null) {
+                    return controller.create(_getContentFromForm());
+                  }
+                  return controller.update(_getContentFromForm());
+                },
               ),
               const SizedBox(height: 40),
             ],

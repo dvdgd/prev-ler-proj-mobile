@@ -17,6 +17,7 @@ class CustomTextField extends StatelessWidget {
   final InputBorder? border;
   final int? maxLines;
   final dynamic onChanged;
+  final String? Function(String? text)? validator;
 
   const CustomTextField({
     super.key,
@@ -35,6 +36,7 @@ class CustomTextField extends StatelessWidget {
     this.margin,
     this.maxLines,
     this.onChanged,
+    this.validator,
   });
 
   @override
@@ -46,7 +48,9 @@ class CustomTextField extends StatelessWidget {
             right: 21,
             top: 10,
           ),
-      child: TextField(
+      child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: validator,
         inputFormatters: inputFormatters,
         keyboardType: textInputType,
         obscureText: obscureText ?? false,
