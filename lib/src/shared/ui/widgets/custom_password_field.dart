@@ -28,6 +28,21 @@ class _CustomPasswordFieldPageState extends State<CustomPasswordField> {
   bool _showVisibleButton = false;
 
   @override
+  void initState() {
+    super.initState();
+    _checkVisibleButton(null);
+  }
+
+  void _checkVisibleButton(_) {
+    final controllerText = widget.controller.text;
+    if (controllerText.isEmpty) {
+      setState(() => _showVisibleButton = false);
+    } else if (controllerText.isNotEmpty && _showVisibleButton == false) {
+      setState(() => _showVisibleButton = true);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomTextField(
       validator: widget.validator,
@@ -37,17 +52,9 @@ class _CustomPasswordFieldPageState extends State<CustomPasswordField> {
       prefixIcon: const Icon(Icons.lock_outline),
       obscureText: _obscureText,
       maxLength: widget.maxLength,
-      onChanged: _onChangeValue,
+      onChanged: _checkVisibleButton,
       suffixIcon: suffixIcon(),
     );
-  }
-
-  void _onChangeValue(value) {
-    if (widget.controller.text.isEmpty) {
-      setState(() => _showVisibleButton = false);
-    } else if (_showVisibleButton == false) {
-      setState(() => _showVisibleButton = true);
-    }
   }
 
   IconButton? suffixIcon() {

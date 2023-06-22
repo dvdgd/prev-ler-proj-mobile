@@ -16,26 +16,30 @@ class ExercisesServiceImpl extends ExerciseService {
   ExercisesServiceImpl(this.clientHttp);
 
   @override
-  Future<void> create(Exercise newExercise) {
+  Future<void> create(Exercise newExercise) async {
     // TODO: implement create
     throw UnimplementedError();
   }
 
   @override
-  Future<List<Exercise>> fetchAll() {
-    // TODO: implement fetchAll
+  Future<List<Exercise>> fetchAll() async {
+    // TODO: implement create
+    // final responseBody = await clientHttp.fetch(uri: Uri.parse(baseUrl));
     throw UnimplementedError();
   }
 
   @override
-  Future<void> delete(Exercise exercise) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<void> delete(Exercise exercise) async {
+    final id = exercise.idExercise;
+    await clientHttp.delete(uri: Uri.parse('$baseUrl/$id'));
   }
 
   @override
-  Future<void> update(Exercise newExercise) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<void> update(Exercise newExercise) async {
+    final id = newExercise.idExercise;
+    await clientHttp.put(
+      uri: Uri.parse('$baseUrl/$id'),
+      data: newExercise.toMap(),
+    );
   }
 }

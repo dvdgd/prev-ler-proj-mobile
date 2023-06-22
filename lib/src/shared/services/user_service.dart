@@ -19,6 +19,17 @@ class UserService {
     );
   }
 
+  Future<Map<String, String>> getBearerHeader() async {
+    final bearer = await secureStorage.getBearer();
+    return {'Authorization': 'Bearer $bearer'};
+  }
+
+  Future<dynamic> getCurrentUserId() async {
+    final authToken = await secureStorage.getBearer();
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(authToken);
+    return decodedToken['nameid'];
+  }
+
   Future<Map<String, dynamic>> login(String email, String password) async {
     final responseBody = await clientHttp.post(
       data: {'email': email, 'senha': password},
@@ -34,13 +45,14 @@ class UserService {
   }
 
   Future<User> getUserData() async {
-    final authToken = await secureStorage.getBearer();
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(authToken);
-    var userId = decodedToken['nameid'];
+    final results = await Future.wait([getBearerHeader(), getCurrentUserId()]);
+
+    final bearerHeader = results[0];
+    final userId = results[1];
 
     final responseBody = await clientHttp.fetch(
       uri: Uri.parse('$baseUrl/$userId'),
-      headers: {'Authorization': 'Bearer $authToken'},
+      headers: bearerHeader,
     );
 
     responseBody['senhaEncriptada'] = await secureStorage.getPassword();
@@ -51,7 +63,16 @@ class UserService {
     await secureStorage.deleteBearerAndPassword();
   }
 
-  Future<void> updateUser(User newUser) {
-    throw UnimplementedError();
+  Future<void> updateUser(User newUser) async {
+    final results = await Future.wait([getBearerHeader(), getCurrentUserId()]);
+
+    final bearerHeader = results[0];
+    final id = results[1];
+
+    await clientHttp.put(
+      uri: Uri.parse('$baseUrl/$id'),
+      data: newUser.toMap(),
+      headers: bearerHeader,
+    );
   }
 }

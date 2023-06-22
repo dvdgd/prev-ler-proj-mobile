@@ -1,0 +1,1 @@
+enum UserType { medic, patient }

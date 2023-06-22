@@ -1,69 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:prev_ler/src/modules/home/components/dark_mode_button.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
-import 'package:prev_ler/src/shared/entities/user.dart';
-import 'package:prev_ler/src/shared/ui/components/build_user_form.dart';
+import 'package:prev_ler/src/shared/enums/user_type.dart';
+import 'package:prev_ler/src/shared/ui/components/my_loading_page.dart';
 import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
+import 'package:prev_ler/src/shared/ui/components/user_form.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
-
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _nameController = TextEditingController();
-  final _bornDateController = TextEditingController();
-  final _crmNumberController = TextEditingController();
-  final _crmStateController = TextEditingController();
-  final _selectedBornDateController = TextEditingController();
-  final _occupationController = TextEditingController();
-
-  void _serializeControllers(User user) {
-    _emailController.text = user.email;
-    _passwordController.text = user.password ?? '';
-    _nameController.text = user.name;
-    _bornDateController.text = DateFormat('dd/MM/yyyy').format(user.bornDate);
-    _crmNumberController.text = user.medic?.crmNumber ?? '';
-    _crmStateController.text = user.medic?.crmState ?? '';
-    _selectedBornDateController.text =
-        DateFormat('dd/MM/yyyy').format(user.bornDate);
-    _occupationController.text = user.patient?.occupation ?? '';
-  }
-
-  _userForm(bool isMedic, BuildContext context) {
-    var widgetList = <Widget>[];
-
-    final baseUserForm = buildUserForm(
-      context: context,
-      emailController: _emailController,
-      passwordController: _passwordController,
-      nameController: _nameController,
-      selectedBornDateController: _selectedBornDateController,
-      bornDateController: _bornDateController,
-      isEditing: true,
-    );
-
-    widgetList.addAll(baseUserForm);
-
-    late final List<Widget> userTypeForm;
-    if (isMedic) {
-      userTypeForm = buildMedicForm(
-        crmNumberController: _crmNumberController,
-        crmStateController: _crmStateController,
-        isEditing: true,
-      );
-    } else {
-      userTypeForm = buildPatientForm(
-        occupationController: _occupationController,
-        isEditing: true,
-      );
-    }
-
-    widgetList.addAll(userTypeForm);
-    return widgetList;
-  }
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +16,10 @@ class ProfilePage extends StatelessWidget {
     final user = controller.user;
 
     if (user == null) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const MyLoadingPage();
     }
 
     final isMedic = user.medic != null;
-    final userForm = _userForm(isMedic, context);
-    _serializeControllers(user);
 
     return Scaffold(
       appBar: AppBar(
@@ -92,12 +33,11 @@ class ProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 15),
-            ...userForm,
-            const SizedBox(height: 40),
-            CustomAsyncLoadingButton(
-              text: 'Salvar',
-              action: () => controller.updateUser(user),
+            UserForm(
+              action: controller.updateUser,
+              userType: isMedic ? UserType.medic : UserType.patient,
             ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
