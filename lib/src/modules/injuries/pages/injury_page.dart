@@ -55,6 +55,11 @@ class _InjuryPageState extends State<InjuryPage> {
               SliverFillRemaining(
                 child: Center(child: Text(errorMessage)),
               ),
+            if (injuries.isEmpty)
+              const SliverFillRemaining(
+                child: Center(
+                    child: Text('Não existem conteúdos a serem exibidos.')),
+              ),
             if (userInjuries.isNotEmpty)
               SliverList(
                 delegate: SliverChildListDelegate([
