@@ -4,7 +4,7 @@ class CustomDropdownButton<T> extends StatefulWidget {
   final TextEditingController controller;
   final List<DropdownMenuItem<T>> list;
   final String hintText;
-  final bool? enable;
+  final bool enable;
   final Widget? prefixIcon;
   final T? initValue;
 
@@ -14,7 +14,7 @@ class CustomDropdownButton<T> extends StatefulWidget {
     required this.list,
     required this.hintText,
     this.prefixIcon,
-    this.enable,
+    this.enable = true,
     this.initValue,
   }) : super(key: key);
 
@@ -49,7 +49,7 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final isNotEnable = widget.enable != null && widget.enable == false;
+    final notEnable = widget.enable == false;
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -61,11 +61,11 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
         value: widget.initValue,
         items: widget.list,
         elevation: 8,
-        onChanged: isNotEnable ? null : _setNewValue,
+        onChanged: notEnable ? null : _setNewValue,
         menuMaxHeight: 300,
         decoration: InputDecoration(
           filled: true,
-          enabled: !isNotEnable,
+          enabled: !notEnable,
           labelText: widget.hintText,
           border: UnderlineInputBorder(
             borderRadius: BorderRadius.circular(12),

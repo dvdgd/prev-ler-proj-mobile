@@ -36,6 +36,7 @@ class ProfilePage extends StatelessWidget {
             UserForm(
               action: controller.updateUser,
               userType: isMedic ? UserType.medic : UserType.patient,
+              user: user,
             ),
             const SizedBox(height: 40),
           ],

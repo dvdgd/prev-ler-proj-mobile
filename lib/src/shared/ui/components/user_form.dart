@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
 import 'package:prev_ler/src/shared/entities/patient.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
@@ -42,7 +43,11 @@ class _UserFormState extends State<UserForm> {
 
   @override
   void initState() {
-    enableFields = widget.user == null ? true : false;
+    final user = widget.user;
+    enableFields = user == null ? true : false;
+    if (user != null) {
+      _serializeControllers(user);
+    }
     super.initState();
   }
 
@@ -62,6 +67,18 @@ class _UserFormState extends State<UserForm> {
       medic: Medic(crmNumber: crmNumber, crmState: crmState),
       patient: Patient(occupation: 'Médico'),
     );
+  }
+
+  void _serializeControllers(User user) {
+    _emailController.text = user.email;
+    _passwordController.text = user.password ?? '';
+    _nameController.text = user.name;
+    _bornDateController.text = DateFormat('dd/MM/yyyy').format(user.bornDate);
+    _crmNumberController.text = user.medic?.crmNumber ?? '';
+    _crmStateController.text = user.medic?.crmState ?? '';
+    _selectedBornDateController.text =
+        DateFormat('dd/MM/yyyy').format(user.bornDate);
+    _occupationController.text = user.patient?.occupation ?? '';
   }
 
   @override
@@ -150,6 +167,7 @@ class _UserFormState extends State<UserForm> {
         ),
         CustomDropdownButton(
           hintText: 'Selecione um estado',
+          initValue: widget.user?.medic?.crmState,
           controller: _crmStateController,
           prefixIcon: const Icon(Icons.map),
           enable: enableFields,
