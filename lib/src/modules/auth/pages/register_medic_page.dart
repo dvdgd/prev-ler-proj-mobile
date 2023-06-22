@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/auth/shared/register_user_controller.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
+import 'package:prev_ler/src/shared/entities/patient.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/build_user_form.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
 import 'package:provider/provider.dart';
 
@@ -50,15 +50,10 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
         ),
       );
     } else if (controller.state == RegisterUserState.success) {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await showDialog(
-          context: context,
-          builder: (context) => CustomAlertDialog(
-            message: 'Sucesso!',
-            onTap: () => Navigator.of(context).pushReplacementNamed('/'),
-          ),
-        );
-      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Cadastrado com sucesso.')),
+      );
+      Navigator.of(context).pop();
     }
   }
 
@@ -75,11 +70,8 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
       bornDate: DateTime.parse(bornDate),
       email: email,
       password: password,
-      medic: Medic(
-        idMedic: 0,
-        crmNumber: crmNumber,
-        crmState: crmState,
-      ),
+      medic: Medic(crmNumber: crmNumber, crmState: crmState),
+      patient: Patient(occupation: 'Médico'),
     );
   }
 
@@ -133,7 +125,7 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
               CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
                 action: () async {
-                  formKey.currentState!.validate()
+                  return formKey.currentState!.validate()
                       ? controller.register(_validateForm())
                       : null;
                 },

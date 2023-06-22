@@ -3,7 +3,6 @@ import 'package:prev_ler/src/modules/auth/shared/register_user_controller.dart';
 import 'package:prev_ler/src/shared/entities/patient.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/build_user_form.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_alert_dialog.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
 import 'package:provider/provider.dart';
 
@@ -48,15 +47,10 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
         ),
       );
     } else if (controller.state == RegisterUserState.success) {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await showDialog(
-          context: context,
-          builder: (context) => CustomAlertDialog(
-            message: 'Sucesso!',
-            onTap: () => Navigator.of(context).pushReplacementNamed('/'),
-          ),
-        );
-      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Cadastrado com sucesso.')),
+      );
+      Navigator.of(context).pop();
     }
   }
 
@@ -124,7 +118,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                     CustomAsyncLoadingButton(
                       text: 'Cadastrar-se',
                       action: () async {
-                        formKey.currentState!.validate()
+                        return formKey.currentState!.validate()
                             ? controller.register(_validateForm())
                             : null;
                       },
