@@ -133,9 +133,10 @@ class _RegisterMedicPageState extends State<RegisterMedicPage> {
               CustomAsyncLoadingButton(
                 text: 'Cadastrar-se',
                 action: () async {
-                  formKey.currentState!.validate()
-                      ? controller.register(_validateForm())
-                      : null;
+                  if (!formKey.currentState!.validate()) {
+                    return;
+                  }
+                  controller.register(_validateForm());
                 },
               ),
               const SizedBox(height: 45),

@@ -124,9 +124,10 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                     CustomAsyncLoadingButton(
                       text: 'Cadastrar-se',
                       action: () async {
-                        formKey.currentState!.validate()
-                            ? controller.register(_validateForm())
-                            : null;
+                        if (!formKey.currentState!.validate()) {
+                          return;
+                        }
+                        controller.register(_validateForm());
                       },
                     ),
                   ],

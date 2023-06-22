@@ -10,6 +10,7 @@ class CustomDatePicker extends StatefulWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool? enable;
+  final String? Function(String? text)? validator;
 
   const CustomDatePicker({
     super.key,
@@ -20,6 +21,7 @@ class CustomDatePicker extends StatefulWidget {
     this.enable,
     this.prefixIcon,
     this.suffixIcon,
+    this.validator,
   });
 
   @override
@@ -30,6 +32,8 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
+      readOnly: true,
+      validator: widget.validator,
       enable: widget.enable,
       controller: widget.controller,
       labelText: widget.labelText,
