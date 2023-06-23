@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_service.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
-import 'package:prev_ler/src/shared/enums/state_controller.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class ExercisesController extends ChangeNotifier {
   StateEnum state = StateEnum.idle;

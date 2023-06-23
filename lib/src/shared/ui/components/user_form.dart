@@ -10,6 +10,7 @@ import 'package:prev_ler/src/shared/ui/widgets/custom_password_field.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
 import 'package:prev_ler/src/shared/utils/constants.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
+import 'package:string_validator/string_validator.dart' as validator;
 
 class UserForm extends StatefulWidget {
   const UserForm({
@@ -90,9 +91,18 @@ class _UserFormState extends State<UserForm> {
       key: _formKey,
       child: Column(children: [
         CustomTextField(
-          validator: (text) => text == null || text.isEmpty
-              ? 'O email não pode ser vazio'
-              : null,
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return 'O email não pode ser vazio';
+            }
+            if (text.length < 6) {
+              return 'Informe pelo menos 6 caracteres';
+            }
+            if (!validator.isEmail(text)) {
+              return 'Insira um email válido';
+            }
+            return null;
+          },
           controller: _emailController,
           textInputType: TextInputType.emailAddress,
           labelText: 'Email',
@@ -101,23 +111,41 @@ class _UserFormState extends State<UserForm> {
           enable: enableFields,
         ),
         CustomPasswordField(
-          validator: (text) => text == null || text.isEmpty
-              ? 'A senha não pode ser vazia'
-              : null,
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return 'A senha não pode ser vazia';
+            }
+            if (text.length < 8) {
+              return 'Informe pelo menos 8 caracteres';
+            }
+            if (!RegExp(r'[^a-zA-Z0-9]').hasMatch(text)) {
+              return 'Informe ao menos um caractere especial ';
+            }
+            return null;
+          },
           controller: _passwordController,
           maxLength: 25,
           labelText: 'Senha',
         ),
         CustomTextField(
-          validator: (text) => text == null || text.isEmpty
-              ? 'O nome não pode ficar vazio'
-              : null,
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return 'O nome não pode ficar vazio';
+            }
+            return null;
+          },
           controller: _nameController,
           labelText: 'Nome',
           maxLength: 50,
           prefixIcon: const Icon(Icons.person),
         ),
         CustomDatePicker(
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return 'A data não pode ficar vazia';
+            }
+            return null;
+          },
           selectedDate: _selectedBornDateController,
           context: context,
           controller: _bornDateController,
@@ -144,9 +172,12 @@ class _UserFormState extends State<UserForm> {
 
   List<Widget> get _patientForms => [
         CustomTextField(
-          validator: (text) => text == null || text.isEmpty
-              ? 'A ocupação não pode ficar vazia'
-              : null,
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return 'Ocupação não pode ser vazia';
+            }
+            return null;
+          },
           controller: _occupationController,
           labelText: 'Ocupação',
           maxLength: 25,
@@ -156,9 +187,12 @@ class _UserFormState extends State<UserForm> {
 
   List<Widget> get _medicForms => [
         CustomTextField(
-          validator: (text) => text == null || text.isEmpty
-              ? 'O CRM não pode ficar vazio'
-              : null,
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return 'O CRM não pode ficar vazio';
+            }
+            return null;
+          },
           controller: _crmNumberController,
           labelText: 'Numero CRM',
           textInputType: TextInputType.number,
@@ -166,6 +200,7 @@ class _UserFormState extends State<UserForm> {
           enable: enableFields,
         ),
         CustomDropdownButton(
+          validator: (value) => value == null ? 'Selecione um estado' : null,
           hintText: 'Selecione um estado',
           initValue: widget.user?.medic?.crmState,
           controller: _crmStateController,

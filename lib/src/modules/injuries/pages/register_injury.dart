@@ -31,6 +31,8 @@ class _RegisterInjuryState extends State<RegisterInjury> {
   late final Medic medic;
   late final InjuriesController controller;
 
+  final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -78,16 +80,6 @@ class _RegisterInjuryState extends State<RegisterInjury> {
     final abbreviation = _abbreviationController.text;
     final description = _descriptionController.text;
 
-    if (name.isEmpty) {
-      throw Exception('Nome não pode ser vazio');
-    }
-    if (abbreviation.isEmpty) {
-      throw Exception('A abreviação é obrigatório');
-    }
-    if (description.isEmpty) {
-      throw Exception('Por favor, preencha o a descrição da lesão');
-    }
-
     return InjuryType(
       idInjuryType: widget.injury?.idInjuryType ?? 0,
       idMedic: medic.idMedic,
@@ -108,33 +100,58 @@ class _RegisterInjuryState extends State<RegisterInjury> {
         title: PageTitle(title: widget.title),
       ),
       body: SingleChildScrollView(
-        child: Column(children: [
-          CustomTextField(
-            controller: _nameController,
-            labelText: 'Nome',
-            prefixIcon: const Icon(Icons.text_fields),
-            // prefixIcon: Icon(Icons.),
-          ),
-          CustomTextField(
-            controller: _abbreviationController,
-            labelText: 'Sigla',
-            prefixIcon: const Icon(Icons.text_fields),
-          ),
-          CustomTextField(
-            controller: _descriptionController,
-            labelText: 'Descrição',
-            prefixIcon: const Icon(Icons.description),
-            maxLines: 5,
-          ),
-          const SizedBox(height: 40),
-          CustomAsyncLoadingButton(
-            text: 'Salvar',
-            action: () async => widget.injury == null
-                ? await controller.create(_getInjuryFromForm())
-                : await controller.update(_getInjuryFromForm()),
-          ),
-          const SizedBox(height: 40),
-        ]),
+        child: Form(
+          key: formKey,
+          child: Column(children: [
+            CustomTextField(
+              validator: (text) => text == null || text.isEmpty
+                  ? 'Nome não pode ser vazio'
+                  : null,
+              controller: _nameController,
+              labelText: 'Nome',
+              prefixIcon: const Icon(Icons.text_fields),
+            ),
+            CustomTextField(
+              validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return 'Sigla não pode ser vazia';
+                }
+                return null;
+              },
+              controller: _abbreviationController,
+              labelText: 'Sigla',
+              prefixIcon: const Icon(Icons.text_fields),
+              maxLength: 8,
+            ),
+            CustomTextField(
+              validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return 'Descrição não pode ser vazia';
+                }
+                return null;
+              },
+              controller: _descriptionController,
+              labelText: 'Descrição',
+              prefixIcon: const Icon(Icons.description),
+              maxLines: 5,
+              maxLength: 300,
+            ),
+            const SizedBox(height: 40),
+            CustomAsyncLoadingButton(
+              text: 'Salvar',
+              action: () async {
+                if (!formKey.currentState!.validate()) {
+                  return;
+                }
+                if (widget.injury == null) {
+                  return controller.create(_getInjuryFromForm());
+                }
+                return controller.update(_getInjuryFromForm());
+              },
+            ),
+            const SizedBox(height: 40),
+          ]),
+        ),
       ),
     );
   }
