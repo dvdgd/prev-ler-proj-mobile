@@ -7,6 +7,7 @@ class CustomDropdownButton<T> extends StatefulWidget {
   final bool enable;
   final Widget? prefixIcon;
   final T? initValue;
+  final String? Function(T?)? validator;
 
   const CustomDropdownButton({
     Key? key,
@@ -16,6 +17,7 @@ class CustomDropdownButton<T> extends StatefulWidget {
     this.prefixIcon,
     this.enable = true,
     this.initValue,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -58,6 +60,8 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
         top: 10,
       ),
       child: DropdownButtonFormField<T>(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: widget.validator,
         value: widget.initValue,
         items: widget.list,
         elevation: 8,

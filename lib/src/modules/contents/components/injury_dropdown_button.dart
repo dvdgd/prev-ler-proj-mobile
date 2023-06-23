@@ -10,10 +10,12 @@ class InjuryDropdownButton extends StatefulWidget {
     super.key,
     required this.injuryTypeController,
     this.idInjuryType,
+    this.validator,
   });
 
   final int? idInjuryType;
   final TextEditingController injuryTypeController;
+  final String? Function(int?)? validator;
 
   @override
   State<InjuryDropdownButton> createState() => _InjuryDropdownButtonState();
@@ -73,6 +75,7 @@ class _InjuryDropdownButtonState extends State<InjuryDropdownButton> {
     }
 
     return CustomDropdownButton(
+      validator: widget.validator,
       controller: widget.injuryTypeController,
       prefixIcon: const Icon(Icons.healing_outlined),
       hintText: 'Selecionar Lesão',

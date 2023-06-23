@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:prev_ler/src/modules/contents/components/injury_dropdown_button.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
@@ -108,6 +109,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Form(
+          key: formKey,
           child: Column(
             children: [
               const SizedBox(height: 15),
@@ -128,27 +130,35 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                 prefixIcon: const Icon(Icons.subtitles),
               ),
               InjuryDropdownButton(
+                validator: (value) =>
+                    value == null ? 'Selecione uma lesão' : null,
                 injuryTypeController: _injuryTypeController,
                 idInjuryType: widget.content?.injuryType?.idInjuryType,
               ),
               CustomTextField(
-                validator: (text) => text == null || text.isEmpty
-                    ? 'Descrição não pode ser vazia'
-                    : null,
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Descrição não pode ser vazia';
+                  }
+                  return null;
+                },
                 controller: _descriptionController,
                 labelText: 'Descrição',
                 prefixIcon: const Icon(Icons.description),
                 maxLines: 5,
+                maxLength: 300,
               ),
               CustomTextField(
-                validator: (text) => text == null || text.isEmpty
-                    ? 'Observação não pode ser vazia'
-                    : null,
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    'Observação não pode ser vazia';
+                  }
+                },
                 controller: _observationController,
                 labelText: 'Observações',
                 prefixIcon: const Icon(Icons.zoom_in),
                 maxLines: 3,
-                maxLength: 4,
+                maxLength: 150,
               ),
               const SizedBox(height: 40),
               CustomAsyncLoadingButton(
