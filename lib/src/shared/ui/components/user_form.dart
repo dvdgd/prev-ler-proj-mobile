@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
 import 'package:prev_ler/src/shared/entities/patient.dart';
@@ -192,6 +193,9 @@ class _UserFormState extends State<UserForm> {
           controller: _crmNumberController,
           labelText: 'Numero CRM',
           textInputType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+          ],
           prefixIcon: const Icon(Icons.numbers_outlined),
           enable: enableFields,
         ),
