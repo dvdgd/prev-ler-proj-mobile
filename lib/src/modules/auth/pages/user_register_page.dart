@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/auth/shared/register_user_controller.dart';
-import 'package:prev_ler/src/shared/enums/user_type.dart';
 import 'package:prev_ler/src/shared/ui/components/user_form.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
 class AuthRegisterPage extends StatefulWidget {

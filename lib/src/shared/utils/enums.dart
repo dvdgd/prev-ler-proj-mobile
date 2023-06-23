@@ -4,3 +4,8 @@ enum StateEnum {
   error,
   idle,
 }
+
+enum UserType {
+  medic,
+  patient,
+}

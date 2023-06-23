@@ -3,13 +3,13 @@ import 'package:intl/intl.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
 import 'package:prev_ler/src/shared/entities/patient.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
-import 'package:prev_ler/src/shared/enums/user_type.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_date_picker.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_dropdown_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_password_field.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
 import 'package:prev_ler/src/shared/utils/constants.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class UserForm extends StatefulWidget {
   const UserForm({

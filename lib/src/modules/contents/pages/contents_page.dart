@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/contents/components/content_card.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
-import 'package:prev_ler/src/shared/enums/state_controller.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/my_silver_page_app_bar.dart';

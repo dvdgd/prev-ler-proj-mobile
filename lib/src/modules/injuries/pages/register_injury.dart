@@ -3,10 +3,10 @@ import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
-import 'package:prev_ler/src/shared/enums/state_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
 class RegisterInjury extends StatefulWidget {

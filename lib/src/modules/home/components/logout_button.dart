@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
-import 'package:prev_ler/src/shared/enums/state_controller.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
 class LogoutButton extends StatefulWidget {

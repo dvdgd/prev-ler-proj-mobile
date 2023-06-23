@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_service.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
-import 'package:prev_ler/src/shared/enums/state_controller.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class InjuriesController extends ChangeNotifier {
   final InjuriesService service;

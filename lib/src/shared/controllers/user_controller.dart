@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
-import 'package:prev_ler/src/shared/enums/state_controller.dart';
 import 'package:prev_ler/src/shared/services/user_service.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class UserController extends ChangeNotifier {
   final UserService authService;

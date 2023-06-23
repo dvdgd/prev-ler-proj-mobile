@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/injuries/components/injury_card.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
-import 'package:prev_ler/src/shared/enums/state_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/my_search_app_bar.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
 class InjuryPage extends StatefulWidget {

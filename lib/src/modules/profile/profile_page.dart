@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/home/components/dark_mode_button.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
-import 'package:prev_ler/src/shared/enums/user_type.dart';
 import 'package:prev_ler/src/shared/ui/components/my_loading_page.dart';
 import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/user_form.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
