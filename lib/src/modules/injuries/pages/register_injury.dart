@@ -65,6 +65,9 @@ class _RegisterInjuryState extends State<RegisterInjury> {
 
   void _handleAuthStateChange() {
     if (controller.state == StateEnum.success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Sucesso!')),
+      );
       Navigator.of(context).pop();
     }
 

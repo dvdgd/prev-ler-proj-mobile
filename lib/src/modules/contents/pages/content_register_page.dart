@@ -69,6 +69,9 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
 
   void _handleAuthStateChange() {
     if (controller.state == StateEnum.success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Sucesso!')),
+      );
       Navigator.of(context).pop();
     }
 
@@ -151,8 +154,9 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
               CustomTextField(
                 validator: (text) {
                   if (text == null || text.isEmpty) {
-                    'Observação não pode ser vazia';
+                    return 'Observação não pode ser vazia';
                   }
+                  return null;
                 },
                 controller: _observationController,
                 labelText: 'Observações',

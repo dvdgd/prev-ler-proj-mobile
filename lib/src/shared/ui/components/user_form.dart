@@ -106,7 +106,6 @@ class _UserFormState extends State<UserForm> {
           controller: _emailController,
           textInputType: TextInputType.emailAddress,
           labelText: 'Email',
-          maxLength: 50,
           prefixIcon: const Icon(Icons.email_outlined),
           enable: enableFields,
         ),
@@ -124,7 +123,6 @@ class _UserFormState extends State<UserForm> {
             return null;
           },
           controller: _passwordController,
-          maxLength: 25,
           labelText: 'Senha',
         ),
         CustomTextField(
@@ -136,7 +134,6 @@ class _UserFormState extends State<UserForm> {
           },
           controller: _nameController,
           labelText: 'Nome',
-          maxLength: 50,
           prefixIcon: const Icon(Icons.person),
         ),
         CustomDatePicker(
@@ -180,7 +177,6 @@ class _UserFormState extends State<UserForm> {
           },
           controller: _occupationController,
           labelText: 'Ocupação',
-          maxLength: 25,
           prefixIcon: const Icon(Icons.work_history_outlined),
         )
       ];
