@@ -2,7 +2,6 @@ import 'package:prev_ler/src/shared/entities/day_of_week.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/entities/notification.dart';
 
-// TODO: Implement toMap and fromMap methods
 class Routine {
   int idRoutine;
   int idPatient;
