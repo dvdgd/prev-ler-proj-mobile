@@ -26,4 +26,19 @@ class ExercisesController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> create(Exercise exercise) async {
+    state = StateEnum.loading;
+    notifyListeners();
+
+    try {
+      await service.create(exercise);
+      state = StateEnum.success;
+    } catch (e) {
+      errorMessage = e.toString();
+      state = StateEnum.error;
+    } finally {
+      notifyListeners();
+    }
+  }
 }

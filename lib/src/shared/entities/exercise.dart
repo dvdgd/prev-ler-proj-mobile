@@ -8,7 +8,7 @@ class Exercise {
   String name;
   String description;
   String instructions;
-  String encodedGif;
+  String image;
   String precautions;
   String observations;
   DateTime? createdAt;
@@ -23,7 +23,7 @@ class Exercise {
     required this.name,
     required this.description,
     required this.instructions,
-    required this.encodedGif,
+    required this.image,
     required this.precautions,
     required this.observations,
     this.createdAt,
@@ -40,7 +40,7 @@ class Exercise {
       name: map['nome'],
       description: map['descricao'],
       instructions: map['instrucoes'],
-      encodedGif: map['encodedGif'],
+      image: map['encodedGif'],
       precautions: map['precaucoes'],
       observations: map['observacoes'],
       medic: map['medico'] != null ? Medic.fromMap(map['medico']) : null,
@@ -64,7 +64,7 @@ class Exercise {
       "nome": name,
       "descricao": description,
       "instrucoes": instructions,
-      "encodedGif": encodedGif,
+      "encodedGif": image,
       "precaucoes": precautions,
       "observacoes": observations,
       "dataCriacao": createdAt,
