@@ -1,28 +1,50 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class ClientHttp {
-  final headers = {
-    'Content-type': 'application/json; charset=utf-8',
-    'Accept': 'application/json',
-  };
+  final Dio dio = Dio();
+
+  ClientHttp() {
+    dio.options.contentType = 'application/json; charset=utf-8';
+    dio.options.responseType = ResponseType.json;
+    dio.options.connectTimeout = const Duration(seconds: 10);
+  }
+
+  Future<Response> _requestWrapper(Future<Response> Function() request) async {
+    try {
+      return await request();
+    } on DioException catch (e) {
+      debugPrint(e.toString());
+      debugPrintStack();
+      if (e.type == DioExceptionType.connectionTimeout) {
+        throw Exception('Tempo de conexão com o servidor expirado.');
+      }
+      throw Exception('Ocorreu um erro inexperado na requisição.');
+    } catch (e) {
+      debugPrint(e.toString());
+      debugPrintStack();
+      throw Exception('Ocorreu um erro inexperado na requisição.');
+    }
+  }
 
   Future<T> fetch<T>({
     required Uri uri,
     Map<String, dynamic>? queryParams,
     Map<String, String>? headers,
   }) async {
-    final response = await http.get(uri, headers: {
-      ...this.headers,
-      ...?headers,
-    });
+    final response = await _requestWrapper(() => dio.get(
+          uri.toString(),
+          queryParameters: queryParams,
+          options: Options(headers: headers),
+        ));
 
     if (response.statusCode != 200) {
       throw Exception("Erro na requisição");
     }
 
-    return json.decode(response.body);
+    return response.data;
   }
 
   Future<T> post<T>({
@@ -30,21 +52,21 @@ class ClientHttp {
     required Map data,
     Map<String, String>? headers,
   }) async {
-    final response = await http.post(
-      headers: {
-        ...this.headers,
-        ...?headers,
-      },
-      uri,
-      body: json.encode(data),
-    );
+    final json = jsonEncode(data);
+    final response = await _requestWrapper(() => dio.post(
+          uri.toString(),
+          data: data,
+          options: Options(
+            headers: headers,
+          ),
+        ));
 
     final statusCode = response.statusCode;
-    if (statusCode >= 400 && statusCode <= 500) {
+    if (statusCode == null || statusCode >= 400 && statusCode <= 500) {
       throw Exception("Erro na criação");
     }
 
-    return json.decode(response.body);
+    return response.data;
   }
 
   Future<void> put({
@@ -52,11 +74,11 @@ class ClientHttp {
     required Map data,
     Map<String, String>? headers,
   }) async {
-    final response = await http.put(
-      uri,
-      body: json.encode(data),
-      headers: {...this.headers, ...?headers},
-    );
+    final response = await _requestWrapper(() => dio.put(
+          uri.toString(),
+          data: data,
+          options: Options(headers: headers),
+        ));
 
     if (response.statusCode != 204) {
       throw Exception('Falha ao atualizar');
@@ -67,10 +89,9 @@ class ClientHttp {
     required Uri uri,
     Map<String, String>? headers,
   }) async {
-    final response = await http.delete(uri, headers: {
-      ...this.headers,
-      ...?headers,
-    });
+    final response = await _requestWrapper(
+      () => dio.delete(uri.toString(), options: Options(headers: headers)),
+    );
 
     if (response.statusCode != 204) {
       throw Exception("Falha ao deletar");
