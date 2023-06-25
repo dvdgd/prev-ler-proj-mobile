@@ -13,6 +13,7 @@ import 'package:prev_ler/src/my_material_app.dart';
 import 'package:prev_ler/src/shared/controllers/dark_mode_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/http/client_http.dart';
+import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/services/secure_store.dart';
 import 'package:prev_ler/src/shared/services/user_service.dart';
 import 'package:provider/provider.dart';
@@ -30,15 +31,21 @@ void main() async {
       providers: [
         Provider(create: (_) => SecureStore(const FlutterSecureStorage())),
         Provider(create: (_) => ClientHttp()),
+        Provider(create: (_) => FileConverter()),
+        Provider(create: (ctx) => ContentsServiceImpl(ctx.read<ClientHttp>())),
+        Provider(create: (ctx) => InjuriesServiceImpl(ctx.read<ClientHttp>())),
+        Provider(
+          create: (ctx) => ExercisesServiceImpl(
+            ctx.read<ClientHttp>(),
+            ctx.read<FileConverter>(),
+          ),
+        ),
         Provider(
           create: (ctx) => UserService(
             ctx.read<ClientHttp>(),
             ctx.read<SecureStore>(),
           ),
         ),
-        Provider(create: (ctx) => ContentsServiceImpl(ctx.read<ClientHttp>())),
-        Provider(create: (ctx) => InjuriesServiceImpl(ctx.read<ClientHttp>())),
-        Provider(create: (ctx) => ExercisesServiceImpl(ctx.read<ClientHttp>())),
         ChangeNotifierProvider(
           create: (_) => DarkModeController(),
         ),

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/contents/components/content_card.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
-import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
+import 'package:prev_ler/src/shared/ui/components/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/ui/components/my_silver_page_app_bar.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_loading_sliver.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
 class ContentsPage extends StatefulWidget {
@@ -120,23 +121,11 @@ class _ContentsPageState extends State<ContentsPage> {
           ),
         ],
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(76),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SearchAnchor.bar(
-              barElevation: const MaterialStatePropertyAll(1),
-              barHintText: "Buscar Conteúdo",
-              onTap: () {},
-              suggestionsBuilder: (ctx, controller) {
-                return [
-                  const Center(
-                    child: Text(
-                      'Não foi encontrado histórico de pesquisa',
-                    ),
-                  ),
-                ];
-              },
-            ),
+          preferredSize: const Size.fromHeight(68),
+          child: MySearchBar(
+            hintText: 'Buscar Conteúdo',
+            searchController: TextEditingController(),
+            action: () {},
           ),
         ),
       );
