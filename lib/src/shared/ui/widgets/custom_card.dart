@@ -10,15 +10,15 @@ class CustomCard extends StatelessWidget {
   final Clip? clipBehavior;
 
   const CustomCard({
-    Key? key,
-    required this.onTap,
+    super.key,
+    this.onTap,
     required this.child,
     required this.backgroundColor,
     this.clipBehavior,
     this.margin,
     this.padding,
     this.elevation,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

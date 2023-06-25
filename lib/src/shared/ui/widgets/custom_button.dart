@@ -14,13 +14,6 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton(
       onPressed: onTap,
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-        ),
-      ),
       child: SizedBox(
         height: 60,
         width: double.infinity,

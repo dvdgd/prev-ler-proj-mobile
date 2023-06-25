@@ -75,6 +75,7 @@ class _AuthPageState extends State<AuthPage> {
                 controller: _emailController,
                 labelText: 'Email',
                 prefixIcon: const Icon(Icons.email_outlined),
+                textInputType: TextInputType.emailAddress,
               ),
               CustomPasswordField(
                 controller: _passwordController,

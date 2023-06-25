@@ -59,17 +59,28 @@ class _InjuryDropdownButtonState extends State<InjuryDropdownButton> {
 
     if (controller.state == StateEnum.loading ||
         controller.state == StateEnum.idle) {
-      return const CustomTextField(
-        prefixIcon: Icon(Icons.healing_outlined),
-        hintText: 'Loading...',
-        enable: false,
+      return const Column(
+        children: [
+          CustomTextField(
+            prefixIcon: Icon(Icons.healing_outlined),
+            labelText: 'Loading...',
+            enable: false,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 21),
+            child: LinearProgressIndicator(),
+          ),
+        ],
       );
     }
 
     if (injuries.isEmpty) {
-      return const CustomTextField(
-        prefixIcon: Icon(Icons.healing_outlined),
-        hintText: 'Cadastre um Tipo de Lesão primeiro.',
+      return CustomTextField(
+        validator: (text) => text == null || text.isEmpty
+            ? 'Cadastre uma lesão primeiro.'
+            : null,
+        prefixIcon: const Icon(Icons.healing_outlined),
+        labelText: 'Selecionar Lesão.',
         enable: false,
       );
     }

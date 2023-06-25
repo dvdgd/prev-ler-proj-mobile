@@ -144,9 +144,10 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                   return null;
                 },
                 controller: _descriptionController,
+                textInputType: TextInputType.multiline,
                 labelText: 'Descrição',
                 prefixIcon: const Icon(Icons.description),
-                maxLines: 5,
+                maxLines: 10,
                 maxLength: 300,
               ),
               CustomTextField(
@@ -159,7 +160,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                 controller: _observationController,
                 labelText: 'Observações',
                 prefixIcon: const Icon(Icons.zoom_in),
-                maxLines: 3,
+                maxLines: 5,
                 maxLength: 150,
               ),
               const SizedBox(height: 40),

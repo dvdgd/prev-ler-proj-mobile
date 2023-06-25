@@ -10,7 +10,7 @@ class CustomDropdownButton<T> extends StatefulWidget {
   final String? Function(T?)? validator;
 
   const CustomDropdownButton({
-    Key? key,
+    super.key,
     required this.controller,
     required this.list,
     required this.hintText,
@@ -18,7 +18,7 @@ class CustomDropdownButton<T> extends StatefulWidget {
     this.enable = true,
     this.initValue,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomDropdownButton<T>> createState() =>
@@ -31,21 +31,16 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
 
   @override
   void initState() {
-    if (widget.controller.text.isNotEmpty) {
-      setState(() {
-        showInitValue = true;
-      });
-    }
-
     super.initState();
+    if (widget.controller.text.isNotEmpty) {
+      setState(() => showInitValue = true);
+    }
   }
 
   void _setNewValue(T? newValue) {
     if (newValue != null) {
-      setState(() {
-        selectedValue = newValue;
-        widget.controller.text = newValue.toString();
-      });
+      setState(() => selectedValue = newValue);
+      widget.controller.text = newValue.toString();
     }
   }
 
@@ -58,6 +53,7 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
         left: 20,
         right: 20,
         top: 10,
+        bottom: 20,
       ),
       child: DropdownButtonFormField<T>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -71,10 +67,6 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
           filled: true,
           enabled: !notEnable,
           labelText: widget.hintText,
-          border: UnderlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none,
-          ),
           prefixIcon: widget.prefixIcon,
         ),
       ),

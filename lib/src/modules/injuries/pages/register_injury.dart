@@ -123,7 +123,7 @@ class _RegisterInjuryState extends State<RegisterInjury> {
               },
               controller: _abbreviationController,
               labelText: 'Sigla',
-              prefixIcon: const Icon(Icons.text_fields),
+              prefixIcon: const Icon(Icons.abc),
               maxLength: 8,
             ),
             CustomTextField(
@@ -136,6 +136,7 @@ class _RegisterInjuryState extends State<RegisterInjury> {
               controller: _descriptionController,
               labelText: 'Descrição',
               prefixIcon: const Icon(Icons.description),
+              textInputType: TextInputType.multiline,
               maxLines: 5,
               maxLength: 300,
             ),

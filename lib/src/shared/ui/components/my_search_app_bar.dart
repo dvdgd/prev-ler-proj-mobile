@@ -15,15 +15,13 @@ class MySearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: CustomTextField(
-        hintText: hintText,
-        controller: searchController,
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: action,
-        ),
+    return CustomTextField(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      hintText: hintText,
+      controller: searchController,
+      suffixIcon: IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: action,
       ),
     );
   }
