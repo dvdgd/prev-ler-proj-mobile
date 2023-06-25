@@ -3,7 +3,9 @@ import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart'
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
+import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/ui/components/injury_dropdown_button.dart';
+import 'package:prev_ler/src/shared/ui/components/my_image_picker.dart';
 import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
@@ -18,13 +20,24 @@ class ExerciseRegisterPage extends StatefulWidget {
 }
 
 class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
+  final _formKey = GlobalKey<FormState>();
   late final ExercisesController controller;
+  late final FileConverter converter;
   late final Medic medic;
+
+  final _nameController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _instructionsController = TextEditingController();
+  final _precautionsController = TextEditingController();
+  final _observationsController = TextEditingController();
+  final _injuryTypeController = TextEditingController();
+  final _imagePath = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
+    converter = context.read<FileConverter>();
     controller = context.read<ExercisesController>();
     controller.addListener(_handleControllerChangeState);
     final medic = context.read<UserController>().user?.medic;
@@ -59,14 +72,7 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
     }
   }
 
-  final _nameController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _instructionsController = TextEditingController();
-  final _precautionsController = TextEditingController();
-  final _observationsController = TextEditingController();
-  final _injuryTypeController = TextEditingController();
-
-  Exercise _getExerciseFromForm() {
+  Future<Exercise> _getExerciseFromForm() async {
     final name = _nameController.text;
     final description = _descriptionController.text;
     final instructions = _instructionsController.text;
@@ -80,64 +86,115 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
       name: name,
       description: description,
       instructions: instructions,
-      image: 'teste',
+      image: await converter.fileToBase64(_imagePath.text),
       precautions: precautions,
       observations: observations,
       createdAt: DateTime.now(),
     );
   }
 
+  List<Widget> get divider => [
+        const SizedBox(height: 15),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Divider(),
+        ),
+        const SizedBox(height: 20),
+      ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
-        title: const PageTitle(title: 'Cadastrar Exercício'),
+        title: const PageTitle(title: 'Novo Exercício'),
       ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Form(
+          key: _formKey,
           child: Column(children: [
+            const SizedBox(height: 40),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Crie um exercício para facilitar um paciente com a sua rotina para previnir as Lesões por Esforço Repetitivo (LER).',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+            const SizedBox(height: 40),
+            MyImagePicker(
+              imagePathController: _imagePath,
+              text: const Text(
+                'Selecione uma imagem contendo o passo a passo de um exercício.',
+                textAlign: TextAlign.center,
+              ),
+            ),
+            ...divider,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Preencha as demais informações acerca do exercício.',
+                textAlign: TextAlign.left,
+              ),
+            ),
             const SizedBox(height: 15),
             CustomTextField(
+              labelText: 'Nome*',
+              validator: (text) =>
+                  text == null || text.isEmpty ? 'Campo obrigatório' : null,
               controller: _nameController,
-              labelText: 'Nome',
               prefixIcon: const Icon(Icons.text_format),
             ),
             InjuryDropdownButton(injuryTypeController: _injuryTypeController),
             CustomTextField(
-              controller: _descriptionController,
-              labelText: 'Descrição',
-              prefixIcon: const Icon(Icons.description),
-              maxLines: 10,
-              maxLength: 200,
-            ),
-            CustomTextField(
+              labelText: 'Instruções*',
+              validator: (text) =>
+                  text == null || text.isEmpty ? 'Campo obrigatório' : null,
               controller: _instructionsController,
-              labelText: 'Instruções',
               prefixIcon: const Icon(Icons.integration_instructions),
-              maxLines: 5,
               maxLength: 200,
             ),
             CustomTextField(
-              controller: _precautionsController,
+              labelText: 'Descrição*',
+              controller: _descriptionController,
+              validator: (text) =>
+                  text == null || text.isEmpty ? 'Campo obrigatório' : null,
+              prefixIcon: const Icon(Icons.description),
+              maxLength: 200,
+            ),
+            ...divider,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Caso o exercício tenha alguma precaução a ser informada ou alguma observação descreva nos campos abaixo.',
+                textAlign: TextAlign.left,
+              ),
+            ),
+            const SizedBox(height: 15),
+            CustomTextField(
               labelText: 'Precauções',
+              controller: _precautionsController,
               prefixIcon: const Icon(Icons.warning_rounded),
-              maxLines: 5,
               maxLength: 200,
             ),
             CustomTextField(
+              labelText: 'Observações',
               textInputType: TextInputType.multiline,
               controller: _observationsController,
-              labelText: 'Observações',
               prefixIcon: const Icon(Icons.remove_red_eye),
-              maxLines: 5,
               maxLength: 200,
             ),
             const SizedBox(height: 40),
             CustomAsyncLoadingButton(
               text: 'Salvar',
-              action: () => controller.create(_getExerciseFromForm()),
+              action: () async {
+                if (_formKey.currentState!.validate()) {
+                  await controller.create(
+                    await _getExerciseFromForm(),
+                  );
+                }
+              },
             ),
             const SizedBox(height: 40),
           ]),

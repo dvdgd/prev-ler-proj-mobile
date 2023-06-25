@@ -22,15 +22,17 @@ class ExercisesServiceImpl extends ExerciseService {
 
   @override
   Future<void> create(Exercise newExercise) async {
-    // TODO: implement create
-    throw UnimplementedError();
+    await clientHttp.post(uri: Uri.parse(baseUrl), data: newExercise.toMap());
   }
 
   @override
   Future<List<Exercise>> fetchAll() async {
-    // TODO: implement create
-    // final responseBody = await clientHttp.fetch(uri: Uri.parse(baseUrl));
-    throw UnimplementedError();
+    final responseBody = await clientHttp.fetch<List<Map<String, dynamic>>>(
+      uri: Uri.parse(baseUrl),
+    );
+
+    final exercises = responseBody.map((e) => Exercise.fromMap(e));
+    return exercises.toList();
   }
 
   @override
