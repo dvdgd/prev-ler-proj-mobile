@@ -35,7 +35,6 @@ class _RoutineCardState extends State<RoutineCard> {
   Widget build(BuildContext context) {
     return CustomCard(
       backgroundColor: Theme.of(context).cardColor,
-      margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
       onTap: () {
         showModalBottomSheet(
           context: context,

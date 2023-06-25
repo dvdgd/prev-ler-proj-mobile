@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +50,6 @@ class ClientHttp {
     required Map data,
     Map<String, String>? headers,
   }) async {
-    final json = jsonEncode(data);
     final response = await _requestWrapper(() => dio.post(
           uri.toString(),
           data: data,

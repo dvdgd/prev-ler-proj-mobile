@@ -4,7 +4,6 @@ class CustomCard extends StatelessWidget {
   final Widget child;
   final void Function()? onTap;
   final Color backgroundColor;
-  final EdgeInsets? margin;
   final EdgeInsets? padding;
   final double? elevation;
   final Clip? clipBehavior;
@@ -15,7 +14,6 @@ class CustomCard extends StatelessWidget {
     required this.child,
     required this.backgroundColor,
     this.clipBehavior,
-    this.margin,
     this.padding,
     this.elevation,
   });
