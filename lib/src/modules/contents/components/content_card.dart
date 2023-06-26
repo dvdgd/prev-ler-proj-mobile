@@ -4,8 +4,8 @@ import 'package:prev_ler/src/modules/contents/pages/content_register_page.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
-import 'package:prev_ler/src/shared/ui/components/my_crud_options_buttons.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_card.dart';
+import 'package:prev_ler/src/shared/ui/components/crud_options_buttons.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_option_button.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,8 @@ class _ContentCardState extends State<ContentCard> {
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
-        child: CustomCard(
+        child: MyCard(
+          padding: const EdgeInsets.all(20),
           backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
           onTap: () {
             final medicContent = widget.content.idMedic == medic?.idMedic;
@@ -85,7 +86,7 @@ class _ContentCardState extends State<ContentCard> {
       context: context,
       enableDrag: true,
       builder: (context) {
-        return MyCrudOptionsButtons(options: optionsButtons);
+        return CrudOptionsButtons(options: optionsButtons);
       },
     );
   }

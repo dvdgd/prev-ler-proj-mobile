@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
-import 'package:prev_ler/src/shared/ui/components/my_crud_options_buttons.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_card.dart';
+import 'package:prev_ler/src/shared/ui/components/crud_options_buttons.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_option_button.dart';
 
 class RoutineCard extends StatefulWidget {
@@ -33,12 +33,13 @@ class _RoutineCardState extends State<RoutineCard> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomCard(
+    return MyCard(
       backgroundColor: Theme.of(context).cardColor,
+      padding: const EdgeInsets.all(20),
       onTap: () {
         showModalBottomSheet(
           context: context,
-          builder: (_) => MyCrudOptionsButtons(options: [
+          builder: (_) => CrudOptionsButtons(options: [
             MyOptionButton(
               title: 'Visualizar',
               icon: const Icon(Icons.remove_red_eye_outlined),

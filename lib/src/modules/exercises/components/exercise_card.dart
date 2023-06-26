@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_card.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 
 class ExerciseCard extends StatelessWidget {
   const ExerciseCard({
@@ -17,7 +17,7 @@ class ExerciseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 180,
-      child: CustomCard(
+      child: MyCard(
         elevation: 2,
         clipBehavior: Clip.antiAlias,
         backgroundColor: Theme.of(context).cardColor,

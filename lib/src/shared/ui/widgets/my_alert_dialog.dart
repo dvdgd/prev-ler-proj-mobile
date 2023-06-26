@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'custom_button.dart';
+import 'my_filled_button.dart';
 
-class CustomAlertDialog extends StatelessWidget {
+class MyAlertDiaLog extends StatelessWidget {
   final String message;
   final VoidCallback? onTap;
 
-  const CustomAlertDialog({
+  const MyAlertDiaLog({
     super.key,
     required this.message,
     this.onTap,
@@ -24,7 +24,7 @@ class CustomAlertDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        CustomButton(
+        MyFilledButton(
           text: 'OK',
           onTap: onTap ?? () => Navigator.of(context).pop(),
         ),

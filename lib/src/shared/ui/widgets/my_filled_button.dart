@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomButton extends StatelessWidget {
+class MyFilledButton extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
 
-  const CustomButton({
+  const MyFilledButton({
     super.key,
     required this.text,
     required this.onTap,

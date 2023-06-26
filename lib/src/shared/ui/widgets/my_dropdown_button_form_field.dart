@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomDropdownButton<T> extends StatefulWidget {
+class MyDropdownButtonFormField<T> extends StatefulWidget {
   final TextEditingController controller;
   final List<DropdownMenuItem<T>> list;
   final String hintText;
@@ -9,7 +9,7 @@ class CustomDropdownButton<T> extends StatefulWidget {
   final T? initValue;
   final String? Function(T?)? validator;
 
-  const CustomDropdownButton({
+  const MyDropdownButtonFormField({
     super.key,
     required this.controller,
     required this.list,
@@ -21,11 +21,12 @@ class CustomDropdownButton<T> extends StatefulWidget {
   });
 
   @override
-  State<CustomDropdownButton<T>> createState() =>
-      _CustomDropdownButtonState<T>();
+  State<MyDropdownButtonFormField<T>> createState() =>
+      _MyDropdownButtonFormFieldState<T>();
 }
 
-class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
+class _MyDropdownButtonFormFieldState<T>
+    extends State<MyDropdownButtonFormField<T>> {
   T? selectedValue;
   bool showInitValue = false;
 

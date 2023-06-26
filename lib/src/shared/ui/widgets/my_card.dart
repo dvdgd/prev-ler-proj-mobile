@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomCard extends StatelessWidget {
+class MyCard extends StatelessWidget {
   final Widget child;
   final void Function()? onTap;
   final Color backgroundColor;
@@ -8,7 +8,7 @@ class CustomCard extends StatelessWidget {
   final double? elevation;
   final Clip? clipBehavior;
 
-  const CustomCard({
+  const MyCard({
     super.key,
     this.onTap,
     required this.child,
@@ -33,7 +33,7 @@ class CustomCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: borderRadius,
         child: Container(
-          padding: padding ?? const EdgeInsets.all(20),
+          padding: padding,
           child: child,
         ),
       ),

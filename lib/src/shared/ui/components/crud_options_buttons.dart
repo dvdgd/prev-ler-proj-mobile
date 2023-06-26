@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyCrudOptionsButtons extends StatelessWidget {
-  const MyCrudOptionsButtons({
+class CrudOptionsButtons extends StatelessWidget {
+  const CrudOptionsButtons({
     super.key,
     required this.options,
   });

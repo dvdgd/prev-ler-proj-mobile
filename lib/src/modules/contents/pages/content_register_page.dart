@@ -4,9 +4,9 @@ import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
 import 'package:prev_ler/src/shared/ui/components/injury_dropdown_button.dart';
-import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
+import 'package:prev_ler/src/shared/ui/components/page_title.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
@@ -114,7 +114,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
           child: Column(
             children: [
               const SizedBox(height: 15),
-              CustomTextField(
+              MyTextFormField(
                 validator: (text) => text == null || text.isEmpty
                     ? 'Título não pode ser vazio'
                     : null,
@@ -122,7 +122,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                 labelText: 'Título',
                 prefixIcon: const Icon(Icons.title),
               ),
-              CustomTextField(
+              MyTextFormField(
                 validator: (text) => text == null || text.isEmpty
                     ? 'Subtítulo não pode ser vazio'
                     : null,
@@ -136,7 +136,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                 injuryTypeController: _injuryTypeController,
                 idInjuryType: widget.content?.injuryType?.idInjuryType,
               ),
-              CustomTextField(
+              MyTextFormField(
                 validator: (text) {
                   if (text == null || text.isEmpty) {
                     return 'Descrição não pode ser vazia';
@@ -150,7 +150,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                 maxLines: 10,
                 maxLength: 300,
               ),
-              CustomTextField(
+              MyTextFormField(
                 validator: (text) {
                   if (text == null || text.isEmpty) {
                     return 'Observação não pode ser vazia';
@@ -164,7 +164,7 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                 maxLength: 150,
               ),
               const SizedBox(height: 40),
-              CustomAsyncLoadingButton(
+              MyFilledLoadingButton(
                 text: 'Salvar',
                 action: () async {
                   if (!formKey.currentState!.validate()) {

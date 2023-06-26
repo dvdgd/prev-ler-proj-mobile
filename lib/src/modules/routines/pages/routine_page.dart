@@ -6,7 +6,7 @@ import 'package:prev_ler/src/shared/entities/injury_type.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
 import 'package:prev_ler/src/shared/entities/notification.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
-import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
+import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 
 final testRoutine = Routine(
   idRoutine: 1,

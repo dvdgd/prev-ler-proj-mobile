@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_dropdown_button.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_dropdown_button_form_field.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +61,7 @@ class _InjuryDropdownButtonState extends State<InjuryDropdownButton> {
         controller.state == StateEnum.idle) {
       return const Column(
         children: [
-          CustomTextField(
+          MyTextFormField(
             prefixIcon: Icon(Icons.healing_outlined),
             labelText: 'Loading...',
             enable: false,
@@ -75,7 +75,7 @@ class _InjuryDropdownButtonState extends State<InjuryDropdownButton> {
     }
 
     if (injuries.isEmpty) {
-      return CustomTextField(
+      return MyTextFormField(
         validator: (text) => text == null || text.isEmpty
             ? 'Cadastre uma lesão primeiro.'
             : null,
@@ -85,7 +85,7 @@ class _InjuryDropdownButtonState extends State<InjuryDropdownButton> {
       );
     }
 
-    return CustomDropdownButton(
+    return MyDropdownButtonFormField(
       validator: widget.validator,
       controller: widget.injuryTypeController,
       prefixIcon: const Icon(Icons.healing_outlined),

@@ -4,8 +4,8 @@ import 'package:prev_ler/src/modules/exercises/components/exercise_card.dart';
 import 'package:prev_ler/src/modules/exercises/pages/exercise_register_page.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
-import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
-import 'package:prev_ler/src/shared/ui/components/my_search_app_bar.dart';
+import 'package:prev_ler/src/shared/ui/components/page_title.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 

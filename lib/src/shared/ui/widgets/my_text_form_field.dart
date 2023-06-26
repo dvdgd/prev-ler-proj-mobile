@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomTextField extends StatelessWidget {
+class MyTextFormField extends StatelessWidget {
   final dynamic onTap;
   final dynamic onChanged;
   final bool readOnly;
@@ -20,7 +20,7 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final String? Function(String? text)? validator;
 
-  const CustomTextField({
+  const MyTextFormField({
     super.key,
     this.controller,
     this.labelText,

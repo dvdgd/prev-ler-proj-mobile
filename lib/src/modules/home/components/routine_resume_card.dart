@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_card.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 
-class RoutineCardResume extends StatelessWidget {
-  const RoutineCardResume({super.key});
+class RoutineResumeCard extends StatelessWidget {
+  const RoutineResumeCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,10 +10,11 @@ class RoutineCardResume extends StatelessWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(children: [
-          CustomCard(
+          MyCard(
+            padding: const EdgeInsets.all(20),
             backgroundColor: Theme.of(context).primaryColor,
             child: _buildCardContent(4, 13),
-            onTap: () => Navigator.of(context).pushNamed('/routine'),
+            onTap: () => Navigator.of(context).pushNamed('/routines'),
           ),
         ]),
       ),

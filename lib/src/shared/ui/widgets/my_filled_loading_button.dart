@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class CustomAsyncLoadingButton extends StatefulWidget {
+class MyFilledLoadingButton extends StatefulWidget {
   final String text;
   final Future<void> Function() action;
 
-  const CustomAsyncLoadingButton({
+  const MyFilledLoadingButton({
     super.key,
     required this.text,
     required this.action,
   });
 
   @override
-  State<StatefulWidget> createState() => _CustomAsyncLoadingButtonState();
+  State<StatefulWidget> createState() => _MyFilledLoadingButtonState();
 }
 
-class _CustomAsyncLoadingButtonState extends State<CustomAsyncLoadingButton> {
+class _MyFilledLoadingButtonState extends State<MyFilledLoadingButton> {
   late bool _isLoading = false;
 
   void _changeIsLoading() {

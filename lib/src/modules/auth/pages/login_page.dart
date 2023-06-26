@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/auth/shared/auth_controller.dart';
 import 'package:prev_ler/src/modules/auth/shared/auth_request_model.dart';
 import 'package:prev_ler/src/modules/home/components/dark_mode_button.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_password_field.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
+import 'package:prev_ler/src/shared/ui/components/password_field.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {
@@ -71,18 +71,18 @@ class _AuthPageState extends State<AuthPage> {
                 ),
               ),
               const SizedBox(height: 30),
-              CustomTextField(
+              MyTextFormField(
                 controller: _emailController,
                 labelText: 'Email',
                 prefixIcon: const Icon(Icons.email_outlined),
                 textInputType: TextInputType.emailAddress,
               ),
-              CustomPasswordField(
+              PasswordField(
                 controller: _passwordController,
                 labelText: 'Senha',
               ),
               const SizedBox(height: 30),
-              CustomAsyncLoadingButton(
+              MyFilledLoadingButton(
                 text: 'Login',
                 action: () => controller.login(
                   AuthRequestModel(

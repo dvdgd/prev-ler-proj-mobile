@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
+import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 
 class SliverPageSearchAppBar extends StatelessWidget {
   const SliverPageSearchAppBar({

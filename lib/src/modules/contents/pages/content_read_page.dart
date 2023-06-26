@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
-import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
+import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 
 class ContentRead extends StatelessWidget {
   const ContentRead(this.content, {super.key});

@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
 import 'package:prev_ler/src/shared/entities/patient.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_date_picker.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_dropdown_button.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_password_field.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
+import 'package:prev_ler/src/shared/ui/components/password_field.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_date_picker.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_dropdown_button_form_field.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:prev_ler/src/shared/utils/constants.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:string_validator/string_validator.dart' as validator;
@@ -91,7 +91,7 @@ class _UserFormState extends State<UserForm> {
     return Form(
       key: _formKey,
       child: Column(children: [
-        CustomTextField(
+        MyTextFormField(
           validator: (text) {
             if (text == null || text.isEmpty) {
               return 'O email não pode ser vazio';
@@ -110,7 +110,7 @@ class _UserFormState extends State<UserForm> {
           prefixIcon: const Icon(Icons.email_outlined),
           enable: enableFields,
         ),
-        CustomPasswordField(
+        PasswordField(
           validator: (text) {
             if (text == null || text.isEmpty) {
               return 'A senha não pode ser vazia';
@@ -126,7 +126,7 @@ class _UserFormState extends State<UserForm> {
           controller: _passwordController,
           labelText: 'Senha',
         ),
-        CustomTextField(
+        MyTextFormField(
           validator: (text) {
             if (text == null || text.isEmpty) {
               return 'O nome não pode ficar vazio';
@@ -137,7 +137,7 @@ class _UserFormState extends State<UserForm> {
           labelText: 'Nome',
           prefixIcon: const Icon(Icons.person),
         ),
-        CustomDatePicker(
+        MyDatePicker(
           validator: (text) {
             if (text == null || text.isEmpty) {
               return 'A data não pode ficar vazia';
@@ -154,7 +154,7 @@ class _UserFormState extends State<UserForm> {
         if (isMedic) ..._medicForms,
         if (!isMedic) ..._patientForms,
         const SizedBox(height: 30),
-        CustomAsyncLoadingButton(
+        MyFilledLoadingButton(
           text: buttonText,
           action: () async {
             final isFormValid = _formKey.currentState!.validate();
@@ -169,7 +169,7 @@ class _UserFormState extends State<UserForm> {
   }
 
   List<Widget> get _patientForms => [
-        CustomTextField(
+        MyTextFormField(
           validator: (text) {
             if (text == null || text.isEmpty) {
               return 'Ocupação não pode ser vazia';
@@ -183,7 +183,7 @@ class _UserFormState extends State<UserForm> {
       ];
 
   List<Widget> get _medicForms => [
-        CustomTextField(
+        MyTextFormField(
           validator: (text) {
             if (text == null || text.isEmpty) {
               return 'O CRM não pode ficar vazio';
@@ -199,7 +199,7 @@ class _UserFormState extends State<UserForm> {
           prefixIcon: const Icon(Icons.numbers_outlined),
           enable: enableFields,
         ),
-        CustomDropdownButton(
+        MyDropdownButtonFormField(
           validator: (value) => value == null ? 'Selecione um estado' : null,
           hintText: 'Selecione um estado',
           initValue: widget.user?.medic?.crmState,

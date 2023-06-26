@@ -4,8 +4,8 @@ import 'package:prev_ler/src/modules/injuries/pages/register_injury.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
-import 'package:prev_ler/src/shared/ui/components/my_crud_options_buttons.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_card.dart';
+import 'package:prev_ler/src/shared/ui/components/crud_options_buttons.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_option_button.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class _InjuryCardState extends State<InjuryCard> {
     return Center(
       child: Container(
         margin: const EdgeInsets.only(top: 10, right: 10, left: 10),
-        child: CustomCard(
+        child: MyCard(
           padding: const EdgeInsets.all(0),
           backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
           onTap: () {
@@ -84,7 +84,7 @@ class _InjuryCardState extends State<InjuryCard> {
       context: context,
       enableDrag: true,
       builder: (context) {
-        return MyCrudOptionsButtons(options: optionsButtons);
+        return CrudOptionsButtons(options: optionsButtons);
       },
     );
   }

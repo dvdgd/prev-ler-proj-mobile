@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 
 class MySearchBar extends StatelessWidget {
   final Function() action;
@@ -15,7 +15,7 @@ class MySearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomTextField(
+    return MyTextFormField(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       hintText: hintText,
       controller: searchController,

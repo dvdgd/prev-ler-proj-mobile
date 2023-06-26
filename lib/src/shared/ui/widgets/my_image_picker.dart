@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_card.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 
 class MyImagePicker extends StatefulWidget {
   const MyImagePicker({
@@ -43,7 +43,7 @@ class _MyImagePickerState extends State<MyImagePicker> {
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: Column(
         children: [
-          CustomCard(
+          MyCard(
             backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
             elevation: 0,
             padding: const EdgeInsets.all(0),

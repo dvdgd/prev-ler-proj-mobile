@@ -5,10 +5,10 @@ import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
 import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/ui/components/injury_dropdown_button.dart';
-import 'package:prev_ler/src/shared/ui/components/my_image_picker.dart';
-import 'package:prev_ler/src/shared/ui/components/my_page_title.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_async_loading_button.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
+import 'package:prev_ler/src/shared/ui/components/page_title.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_image_picker.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
@@ -139,7 +139,7 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
               ),
             ),
             const SizedBox(height: 15),
-            CustomTextField(
+            MyTextFormField(
               labelText: 'Nome*',
               validator: (text) =>
                   text == null || text.isEmpty ? 'Campo obrigatório' : null,
@@ -147,7 +147,7 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
               prefixIcon: const Icon(Icons.text_format),
             ),
             InjuryDropdownButton(injuryTypeController: _injuryTypeController),
-            CustomTextField(
+            MyTextFormField(
               labelText: 'Instruções*',
               validator: (text) =>
                   text == null || text.isEmpty ? 'Campo obrigatório' : null,
@@ -155,7 +155,7 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
               prefixIcon: const Icon(Icons.integration_instructions),
               maxLength: 200,
             ),
-            CustomTextField(
+            MyTextFormField(
               labelText: 'Descrição*',
               controller: _descriptionController,
               validator: (text) =>
@@ -172,13 +172,13 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
               ),
             ),
             const SizedBox(height: 15),
-            CustomTextField(
+            MyTextFormField(
               labelText: 'Precauções',
               controller: _precautionsController,
               prefixIcon: const Icon(Icons.warning_rounded),
               maxLength: 200,
             ),
-            CustomTextField(
+            MyTextFormField(
               labelText: 'Observações',
               textInputType: TextInputType.multiline,
               controller: _observationsController,
@@ -186,7 +186,7 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
               maxLength: 200,
             ),
             const SizedBox(height: 40),
-            CustomAsyncLoadingButton(
+            MyFilledLoadingButton(
               text: 'Salvar',
               action: () async {
                 if (_formKey.currentState!.validate()) {

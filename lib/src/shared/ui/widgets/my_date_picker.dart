@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:prev_ler/src/shared/ui/widgets/custom_text_field.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 
-class CustomDatePicker extends StatefulWidget {
+class MyDatePicker extends StatefulWidget {
   final String labelText;
   final TextEditingController controller;
   final TextEditingController selectedDate;
@@ -12,7 +12,7 @@ class CustomDatePicker extends StatefulWidget {
   final bool? enable;
   final String? Function(String? text)? validator;
 
-  const CustomDatePicker({
+  const MyDatePicker({
     super.key,
     required this.labelText,
     required this.controller,
@@ -25,13 +25,13 @@ class CustomDatePicker extends StatefulWidget {
   });
 
   @override
-  State<CustomDatePicker> createState() => _CustomDatePickerState();
+  State<MyDatePicker> createState() => _MyDatePickerState();
 }
 
-class _CustomDatePickerState extends State<CustomDatePicker> {
+class _MyDatePickerState extends State<MyDatePicker> {
   @override
   Widget build(BuildContext context) {
-    return CustomTextField(
+    return MyTextFormField(
       readOnly: true,
       validator: widget.validator,
       enable: widget.enable,
