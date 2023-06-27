@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 
 class ClientHttp {
   final Dio dio = Dio();
+  final List<InterceptorsWrapper>? interceptors;
 
-  ClientHttp() {
+  ClientHttp(this.interceptors) {
     dio.options.contentType = 'application/json; charset=utf-8';
     dio.options.responseType = ResponseType.json;
     dio.options.connectTimeout = const Duration(seconds: 10);
+    if (interceptors != null) {
+      dio.interceptors.addAll(interceptors!);
+    }
   }
 
   Future<Response> _requestWrapper(Future<Response> Function() request) async {

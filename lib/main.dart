@@ -10,9 +10,12 @@ import 'package:prev_ler/src/modules/exercises/shared/exercises_service.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_service.dart';
 import 'package:prev_ler/src/my_material_app.dart';
+import 'package:prev_ler/src/shared/cache/hive/cache_hive.dart';
 import 'package:prev_ler/src/shared/controllers/dark_mode_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
+import 'package:prev_ler/src/shared/http/cache_interceptor.dart';
 import 'package:prev_ler/src/shared/http/client_http.dart';
+import 'package:prev_ler/src/shared/services/check_internet.dart';
 import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/services/secure_store.dart';
 import 'package:prev_ler/src/shared/services/user_service.dart';
@@ -30,8 +33,16 @@ void main() async {
     MultiProvider(
       providers: [
         Provider(create: (_) => SecureStore(const FlutterSecureStorage())),
-        Provider(create: (_) => ClientHttp()),
+        Provider(create: (_) => CacheHive()),
+        Provider(create: (_) => CheckInternet()),
         Provider(create: (_) => FileConverter()),
+        Provider(
+          create: (ctx) => CacheInterceptor(
+            cacheAdapter: ctx.read<CacheHive>(),
+            checkInternet: ctx.read<CheckInternet>(),
+          ),
+        ),
+        Provider(create: (ctx) => ClientHttp([ctx.read<CacheInterceptor>()])),
         Provider(create: (ctx) => ContentsServiceImpl(ctx.read<ClientHttp>())),
         Provider(create: (ctx) => InjuriesServiceImpl(ctx.read<ClientHttp>())),
         Provider(
