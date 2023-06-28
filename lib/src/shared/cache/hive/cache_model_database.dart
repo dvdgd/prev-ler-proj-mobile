@@ -17,7 +17,7 @@ class CacheModelDatabase extends HiveObject implements CacheModel {
 
   @HiveField(2)
   @override
-  final Map<String, dynamic> data;
+  final Map data;
 
   CacheModelDatabase({
     required this.id,
