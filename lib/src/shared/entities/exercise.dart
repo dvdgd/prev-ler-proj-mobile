@@ -67,8 +67,8 @@ class Exercise {
       "encodedGif": image,
       "precaucoes": precautions,
       "observacoes": observations,
-      "dataCriacao": createdAt,
-      "dataAtualizacao": updatedAt,
+      "dataCriacao": createdAt?.toIso8601String(),
+      "dataAtualizacao": updatedAt?.toIso8601String(),
     };
   }
 }

@@ -13,7 +13,9 @@ import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
 class ExerciseRegisterPage extends StatefulWidget {
-  const ExerciseRegisterPage({super.key});
+  const ExerciseRegisterPage({super.key, this.exercise});
+
+  final Exercise? exercise;
 
   @override
   State<ExerciseRegisterPage> createState() => _ExerciseRegisterPageState();
@@ -31,7 +33,7 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
   final _precautionsController = TextEditingController();
   final _observationsController = TextEditingController();
   final _injuryTypeController = TextEditingController();
-  final _imagePath = TextEditingController();
+  final _imagePathController = TextEditingController();
 
   @override
   void initState() {
@@ -40,6 +42,7 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
     converter = context.read<FileConverter>();
     controller = context.read<ExercisesController>();
     controller.addListener(_handleControllerChangeState);
+    _serializeControllers();
     final medic = context.read<UserController>().user?.medic;
     if (medic == null) {
       Navigator.of(context).pushReplacementNamed('/');
@@ -72,6 +75,21 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
     }
   }
 
+  void _serializeControllers() {
+    final exercise = widget.exercise;
+    if (exercise == null) {
+      return;
+    }
+
+    _nameController.text = exercise.name;
+    _descriptionController.text = exercise.description;
+    _instructionsController.text = exercise.instructions;
+    _precautionsController.text = exercise.precautions;
+    _observationsController.text = exercise.observations;
+    _injuryTypeController.text = exercise.idInjuryType.toString();
+    _imagePathController.text = exercise.image;
+  }
+
   Future<Exercise> _getExerciseFromForm() async {
     final name = _nameController.text;
     final description = _descriptionController.text;
@@ -81,12 +99,13 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
     final injuryTypeId = _injuryTypeController.text;
 
     return Exercise(
+      idExercise: widget.exercise?.idExercise ?? 0,
       idMedic: medic.idMedic,
       idInjuryType: int.parse(injuryTypeId),
       name: name,
       description: description,
       instructions: instructions,
-      image: await converter.fileToBase64(_imagePath.text),
+      image: _imagePathController.text,
       precautions: precautions,
       observations: observations,
       createdAt: DateTime.now(),
@@ -124,7 +143,7 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
             ),
             const SizedBox(height: 40),
             MyImagePicker(
-              imagePathController: _imagePath,
+              imagePathController: _imagePathController,
               text: const Text(
                 'Selecione uma imagem contendo o passo a passo de um exercício.',
                 textAlign: TextAlign.center,
@@ -146,14 +165,18 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
               controller: _nameController,
               prefixIcon: const Icon(Icons.text_format),
             ),
-            InjuryDropdownButton(injuryTypeController: _injuryTypeController),
+            InjuryDropdownButton(
+              injuryTypeController: _injuryTypeController,
+              idInjuryType: widget.exercise?.idInjuryType,
+            ),
             MyTextFormField(
               labelText: 'Instruções*',
               validator: (text) =>
                   text == null || text.isEmpty ? 'Campo obrigatório' : null,
               controller: _instructionsController,
               prefixIcon: const Icon(Icons.integration_instructions),
-              maxLength: 200,
+              maxLength: 500,
+              maxLines: 20,
             ),
             MyTextFormField(
               labelText: 'Descrição*',
@@ -189,10 +212,16 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
             MyFilledLoadingButton(
               text: 'Salvar',
               action: () async {
-                if (_formKey.currentState!.validate()) {
-                  await controller.create(
-                    await _getExerciseFromForm(),
-                  );
+                final validForm = _formKey.currentState?.validate();
+                if (validForm == null || !validForm) {
+                  return;
+                }
+
+                final exercise = await _getExerciseFromForm();
+                if (widget.exercise == null) {
+                  await controller.create(exercise);
+                } else {
+                  await controller.update(exercise);
                 }
               },
             ),

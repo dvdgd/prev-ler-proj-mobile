@@ -27,7 +27,7 @@ class ExercisesServiceImpl extends ExerciseService {
 
   @override
   Future<List<Exercise>> fetchAll() async {
-    final responseBody = await clientHttp.fetch<List<Map<String, dynamic>>>(
+    final responseBody = await clientHttp.fetch<List<dynamic>>(
       uri: Uri.parse(baseUrl),
     );
 

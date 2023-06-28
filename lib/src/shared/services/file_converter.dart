@@ -11,6 +11,11 @@ class FileConverter {
     return fileBase64;
   }
 
+  Future<String> binaryToBase64(Uint8List bytes) async {
+    final base64String = base64Encode(bytes);
+    return Future.value(base64String);
+  }
+
   Uint8List base64Binary(String base64File) {
     Uint8List fileBytes = base64.decode(base64File);
     return fileBytes;

@@ -1,7 +1,8 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 
 class MyImagePicker extends StatefulWidget {
@@ -19,21 +20,34 @@ class MyImagePicker extends StatefulWidget {
 }
 
 class _MyImagePickerState extends State<MyImagePicker> {
+  late final FileConverter converter;
   final imagePicker = ImagePicker();
-  File? imageFile;
+  Uint8List? imageBytes;
   final double heigth = 450;
 
-  void openImage() async {
-    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+  @override
+  void initState() {
+    super.initState();
+    converter = FileConverter();
 
-    if (pickedFile != null) {
-      setState(() => imageFile = File(pickedFile.path));
-      widget.imagePathController.text = pickedFile.path;
+    if (widget.imagePathController.text.isNotEmpty) {
+      imageBytes = converter.base64Binary(widget.imagePathController.text);
     }
   }
 
+  void openImage() async {
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) return;
+
+    final bytes = await pickedFile.readAsBytes();
+    final imageBase64 = await converter.binaryToBase64(bytes);
+
+    setState(() => imageBytes = bytes);
+    widget.imagePathController.text = imageBase64;
+  }
+
   void clearImage() {
-    setState(() => imageFile = null);
+    setState(() => imageBytes = null);
     widget.imagePathController.text = '';
   }
 
@@ -48,7 +62,7 @@ class _MyImagePickerState extends State<MyImagePicker> {
             elevation: 0,
             padding: const EdgeInsets.all(0),
             clipBehavior: Clip.antiAlias,
-            child: imageFile == null ? _imageCover : _imageWidget,
+            child: imageBytes == null ? _imageCover : _imageWidget,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -75,9 +89,8 @@ class _MyImagePickerState extends State<MyImagePicker> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Image.file(
-          imageFile!,
-          fit: BoxFit.cover,
+        child: Image.memory(
+          imageBytes!,
         ),
       );
 

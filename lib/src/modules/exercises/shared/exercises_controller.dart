@@ -41,4 +41,46 @@ class ExercisesController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> update(Exercise newExercise) async {
+    state = StateEnum.loading;
+    notifyListeners();
+
+    try {
+      await service.update(newExercise);
+
+      final contentIndex = exercises.indexWhere(
+        (exerc) => exerc.idExercise == newExercise.idExercise,
+      );
+
+      if (contentIndex != -1) {
+        exercises[contentIndex] = newExercise;
+        notifyListeners();
+      }
+
+      state = StateEnum.success;
+    } catch (e) {
+      errorMessage = e.toString();
+      state = StateEnum.error;
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<void> delete(Exercise exercise) async {
+    state = StateEnum.loading;
+    notifyListeners();
+
+    try {
+      await service.delete(exercise);
+
+      exercises.removeWhere((exerc) => exerc.idExercise == exercise.idExercise);
+      state = StateEnum.success;
+    } catch (e) {
+      errorMessage = e.toString();
+      state = StateEnum.error;
+    } finally {
+      notifyListeners();
+    }
+  }
 }
