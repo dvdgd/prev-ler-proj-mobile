@@ -4,9 +4,9 @@ import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_loading_sliver.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_silver_page_app_bar.dart';
-import 'package:prev_ler/src/shared/ui/widgets/my_loading_sliver.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +52,7 @@ class _ContentsPageState extends State<ContentsPage> {
             if (state == StateEnum.loading) const MyLoadingSliver(),
             if (state == StateEnum.error)
               SliverFillRemaining(
-                child: Center(child: Center(child: Text(errorMessage))),
+                child: Center(child: Text(errorMessage)),
               )
             else if (contents.isEmpty)
               _noContentsSliver,
@@ -62,7 +62,7 @@ class _ContentsPageState extends State<ContentsPage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Text(
-                      'Meus Conteúdos: ',
+                      'Meus: ',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
@@ -83,7 +83,7 @@ class _ContentsPageState extends State<ContentsPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20, top: 20),
                       child: Text(
-                        'Outros Conteúdos: ',
+                        'Outros: ',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
