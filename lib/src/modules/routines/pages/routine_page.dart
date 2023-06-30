@@ -119,7 +119,12 @@ class RoutinesPage extends StatelessWidget {
       appBar: AppBar(
         title: const PageTitle(title: 'Minhas Rotinas'),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+          IconButton(
+            onPressed: () => Navigator.of(context).pushNamed(
+              '/routines/register',
+            ),
+            icon: const Icon(Icons.add),
+          ),
         ],
       ),
       body: Padding(
