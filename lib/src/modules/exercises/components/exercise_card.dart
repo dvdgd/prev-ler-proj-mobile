@@ -98,7 +98,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
             Navigator.of(context).pop();
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => ExerciseRegisterPage(
+                builder: (_) => ExerciseFormPage(
                   exercise: widget.exercise,
                 ),
               ),

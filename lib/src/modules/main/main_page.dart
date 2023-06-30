@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/contents/pages/contents_page.dart';
+import 'package:prev_ler/src/modules/contents/pages/content_page.dart';
 import 'package:prev_ler/src/modules/exercises/pages/exercise_page.dart';
 import 'package:prev_ler/src/modules/home/home_page.dart';
 import 'package:prev_ler/src/modules/injuries/pages/injury_page.dart';
@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const InjuryPage(),
     const ExercisePage(),
-    const ContentsPage(),
+    const ContentPage(),
   ];
 
   void _tappedPage(int index) {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 
-class ContentRead extends StatelessWidget {
-  const ContentRead(this.content, {super.key});
+class ContentDetailsPage extends StatelessWidget {
+  const ContentDetailsPage(this.content, {super.key});
 
   final Content content;
 

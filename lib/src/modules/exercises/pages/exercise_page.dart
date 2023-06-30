@@ -140,7 +140,7 @@ class _ExercisePageState extends State<ExercisePage> {
           ),
           AuthMedicAddButton(onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const ExerciseRegisterPage(),
+              builder: (context) => const ExerciseFormPage(),
             ));
           })
         ],

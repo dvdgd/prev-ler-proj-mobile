@@ -10,21 +10,21 @@ import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
-class RegisterContentPage extends StatefulWidget {
+class ContentFormPage extends StatefulWidget {
   final String title;
   final Content? content;
 
-  const RegisterContentPage({
+  const ContentFormPage({
     super.key,
     required this.title,
     this.content,
   });
 
   @override
-  State<RegisterContentPage> createState() => _RegisterContentPageState();
+  State<ContentFormPage> createState() => _ContentFormPageState();
 }
 
-class _RegisterContentPageState extends State<RegisterContentPage> {
+class _ContentFormPageState extends State<ContentFormPage> {
   final _titleController = TextEditingController();
   final _subtitleController = TextEditingController();
   final _injuryTypeController = TextEditingController();
@@ -131,8 +131,6 @@ class _RegisterContentPageState extends State<RegisterContentPage> {
                 prefixIcon: const Icon(Icons.subtitles),
               ),
               InjuryDropdownButton(
-                validator: (value) =>
-                    value == null ? 'Selecione uma lesão' : null,
                 injuryTypeController: _injuryTypeController,
                 idInjuryType: widget.content?.injuryType?.idInjuryType,
               ),

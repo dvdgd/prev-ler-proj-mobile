@@ -19,6 +19,7 @@ class MyTextFormField extends StatelessWidget {
   final InputBorder? border;
   final int? maxLines;
   final String? Function(String? text)? validator;
+  final AutovalidateMode autoValidateMode;
 
   const MyTextFormField({
     super.key,
@@ -39,6 +40,7 @@ class MyTextFormField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.readOnly = false,
+    this.autoValidateMode = AutovalidateMode.onUserInteraction,
   });
 
   @override
@@ -55,7 +57,7 @@ class MyTextFormField extends StatelessWidget {
           ),
       child: TextFormField(
         readOnly: readOnly,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode: autoValidateMode,
         maxLength: maxLength,
         validator: validator,
         inputFormatters: inputFormatters,

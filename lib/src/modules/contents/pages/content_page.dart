@@ -4,20 +4,21 @@ import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
+import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_loading_sliver.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_silver_page_app_bar.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
-class ContentsPage extends StatefulWidget {
-  const ContentsPage({super.key});
+class ContentPage extends StatefulWidget {
+  const ContentPage({super.key});
 
   @override
-  State<ContentsPage> createState() => _ContentsPageState();
+  State<ContentPage> createState() => _ContentPageState();
 }
 
-class _ContentsPageState extends State<ContentsPage> {
+class _ContentPageState extends State<ContentPage> {
   @override
   void initState() {
     super.initState();
@@ -51,11 +52,11 @@ class _ContentsPageState extends State<ContentsPage> {
             _appBar,
             if (state == StateEnum.loading) const MyLoadingSliver(),
             if (state == StateEnum.error)
-              SliverFillRemaining(
-                child: Center(child: Text(errorMessage)),
-              )
-            else if (contents.isEmpty)
-              _noContentsSliver,
+              SliverCenterText(message: errorMessage),
+            if (contents.isEmpty)
+              const SliverCenterText(
+                message: 'Não existem conteúdo para serem exibidos.',
+              ),
             if (userContents.isNotEmpty)
               SliverList(
                 delegate: SliverChildListDelegate([
@@ -102,10 +103,6 @@ class _ContentsPageState extends State<ContentsPage> {
       ),
     );
   }
-
-  SliverFillRemaining get _noContentsSliver => const SliverFillRemaining(
-        child: Center(child: Text('Não existem conteúdo para serem exibidos.')),
-      );
 
   SliverPageSearchAppBar get _appBar => SliverPageSearchAppBar(
         title: const PageTitle(title: 'Conteúdos'),

@@ -5,7 +5,7 @@ import 'package:prev_ler/src/shared/services/file_converter.dart';
 
 abstract class ExerciseService {
   Future<List<Exercise>> fetchAll();
-  Future<void> create(Exercise newExercise);
+  Future<Exercise> create(Exercise newExercise);
   Future<void> update(Exercise newExercise);
   Future<void> delete(Exercise exercise);
 }
@@ -21,8 +21,11 @@ class ExercisesServiceImpl extends ExerciseService {
   );
 
   @override
-  Future<void> create(Exercise newExercise) async {
-    await clientHttp.post(uri: Uri.parse(baseUrl), data: newExercise.toMap());
+  Future<Exercise> create(Exercise newExercise) async {
+    final responseBody = await clientHttp.post(
+        uri: Uri.parse(baseUrl), data: newExercise.toMap());
+
+    return Exercise.fromMap(responseBody);
   }
 
   @override

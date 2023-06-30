@@ -9,21 +9,21 @@ import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
-class RegisterInjury extends StatefulWidget {
+class InjuryFormPage extends StatefulWidget {
   final String title;
   final InjuryType? injury;
 
-  const RegisterInjury({
+  const InjuryFormPage({
     super.key,
     this.injury,
     required this.title,
   });
 
   @override
-  State<RegisterInjury> createState() => _RegisterInjuryState();
+  State<InjuryFormPage> createState() => _InjuryFormPageState();
 }
 
-class _RegisterInjuryState extends State<RegisterInjury> {
+class _InjuryFormPageState extends State<InjuryFormPage> {
   final _nameController = TextEditingController();
   final _abbreviationController = TextEditingController();
   final _descriptionController = TextEditingController();

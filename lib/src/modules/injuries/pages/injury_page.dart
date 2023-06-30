@@ -4,6 +4,7 @@ import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
+import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
@@ -48,17 +49,14 @@ class _InjuryPageState extends State<InjuryPage> {
           controller.fetchAllInjuries();
         },
         child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
             _appBar,
             if (state == StateEnum.error)
-              SliverFillRemaining(
-                child: Center(child: Text(errorMessage)),
-              ),
+              SliverCenterText(message: errorMessage),
             if (injuries.isEmpty)
-              const SliverFillRemaining(
-                child: Center(
-                    child: Text('Não existem conteúdos a serem exibidos.')),
+              const SliverCenterText(
+                message: 'Não existem conteúdos a serem exibidos.',
               ),
             if (userInjuries.isNotEmpty)
               SliverList(

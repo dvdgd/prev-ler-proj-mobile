@@ -10,12 +10,10 @@ class InjuryDropdownButton extends StatefulWidget {
     super.key,
     required this.injuryTypeController,
     this.idInjuryType,
-    this.validator,
   });
 
   final int? idInjuryType;
   final TextEditingController injuryTypeController;
-  final String? Function(int?)? validator;
 
   @override
   State<InjuryDropdownButton> createState() => _InjuryDropdownButtonState();
@@ -52,6 +50,10 @@ class _InjuryDropdownButtonState extends State<InjuryDropdownButton> {
     }
   }
 
+  String? validator(String? text) {
+    return text == null || text.isEmpty ? 'Cadastre uma lesão primeiro.' : null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<InjuriesController>();
@@ -76,30 +78,28 @@ class _InjuryDropdownButtonState extends State<InjuryDropdownButton> {
 
     if (injuries.isEmpty) {
       return MyTextFormField(
-        validator: (text) => text == null || text.isEmpty
-            ? 'Cadastre uma lesão primeiro.'
-            : null,
+        validator: validator,
         prefixIcon: const Icon(Icons.healing_outlined),
         labelText: 'Selecionar Lesão.',
         enable: false,
       );
-    }
-
-    return MyDropdownButtonFormField(
-      validator: widget.validator,
-      controller: widget.injuryTypeController,
-      prefixIcon: const Icon(Icons.healing_outlined),
-      hintText: 'Selecionar Lesão',
-      initValue: widget.idInjuryType,
-      list: [
-        for (var item in injuries)
-          DropdownMenuItem<int>(
-            value: item.idInjuryType,
-            child: Text(
-              item.name,
+    } else {
+      return MyDropdownButtonFormField(
+        validator: (value) => validator(value.toString()),
+        controller: widget.injuryTypeController,
+        prefixIcon: const Icon(Icons.healing_outlined),
+        hintText: 'Selecionar Lesão',
+        initValue: widget.idInjuryType,
+        list: [
+          for (var item in injuries)
+            DropdownMenuItem<int>(
+              value: item.idInjuryType,
+              child: Text(
+                item.name,
+              ),
             ),
-          ),
-      ],
-    );
+        ],
+      );
+    }
   }
 }

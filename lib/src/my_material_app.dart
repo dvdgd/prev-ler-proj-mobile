@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/auth/pages/login_page.dart';
 import 'package:prev_ler/src/modules/auth/pages/user_register_page.dart';
-import 'package:prev_ler/src/modules/contents/pages/content_register_page.dart';
+import 'package:prev_ler/src/modules/contents/pages/content_form_page.dart';
 import 'package:prev_ler/src/modules/home/home_page.dart';
-import 'package:prev_ler/src/modules/injuries/pages/register_injury.dart';
+import 'package:prev_ler/src/modules/injuries/pages/injury_form_page.dart';
 import 'package:prev_ler/src/modules/main/main_page.dart';
 import 'package:prev_ler/src/modules/profile/profile_page.dart';
 import 'package:prev_ler/src/modules/routines/pages/routine_page.dart';
@@ -75,11 +75,11 @@ class MyMaterialApp extends StatelessWidget {
             const AuthRegisterPage(userType: UserType.patient),
         '/register/medic': (_) =>
             const AuthRegisterPage(userType: UserType.medic),
-        '/contents/register': (_) => const RegisterContentPage(
+        '/contents/register': (_) => const ContentFormPage(
               title: 'Cadastrar Conteúdo',
               content: null,
             ),
-        '/injuries/register': (_) => const RegisterInjury(
+        '/injuries/register': (_) => const InjuryFormPage(
               title: 'Nova Lesão',
               injury: null,
             ),

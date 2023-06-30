@@ -12,16 +12,16 @@ import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
-class ExerciseRegisterPage extends StatefulWidget {
-  const ExerciseRegisterPage({super.key, this.exercise});
+class ExerciseFormPage extends StatefulWidget {
+  const ExerciseFormPage({super.key, this.exercise});
 
   final Exercise? exercise;
 
   @override
-  State<ExerciseRegisterPage> createState() => _ExerciseRegisterPageState();
+  State<ExerciseFormPage> createState() => _ExerciseFormPageState();
 }
 
-class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
+class _ExerciseFormPageState extends State<ExerciseFormPage> {
   final _formKey = GlobalKey<FormState>();
   late final ExercisesController controller;
   late final FileConverter converter;

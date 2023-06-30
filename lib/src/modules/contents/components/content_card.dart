@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/contents/pages/content_read_page.dart';
-import 'package:prev_ler/src/modules/contents/pages/content_register_page.dart';
+import 'package:prev_ler/src/modules/contents/pages/content_datails_page.dart';
+import 'package:prev_ler/src/modules/contents/pages/content_form_page.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
@@ -77,7 +77,7 @@ class _ContentCardState extends State<ContentCard> {
 
   void _navigateToContentRead() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => ContentRead(widget.content),
+      builder: (_) => ContentDetailsPage(widget.content),
     ));
   }
 
@@ -106,7 +106,7 @@ class _ContentCardState extends State<ContentCard> {
             Navigator.of(context).pop();
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => RegisterContentPage(
+                builder: (_) => ContentFormPage(
                   title: 'Editar Conteúdo',
                   content: widget.content,
                 ),

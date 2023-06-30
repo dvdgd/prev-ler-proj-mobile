@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 
-class InjuryRead extends StatelessWidget {
-  const InjuryRead(this.injuryType, {super.key});
+class InjuryDetailsPage extends StatelessWidget {
+  const InjuryDetailsPage(this.injuryType, {super.key});
 
   final InjuryType injuryType;
 

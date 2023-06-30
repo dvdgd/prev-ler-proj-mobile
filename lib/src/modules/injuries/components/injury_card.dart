@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/injuries/pages/injury_read_page.dart';
-import 'package:prev_ler/src/modules/injuries/pages/register_injury.dart';
+import 'package:prev_ler/src/modules/injuries/pages/injury_details_page.dart';
+import 'package:prev_ler/src/modules/injuries/pages/injury_form_page.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
@@ -74,7 +74,7 @@ class _InjuryCardState extends State<InjuryCard> {
   void _navigateToInjuryDetailsPage() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => InjuryRead(widget.injuryType),
+        builder: (context) => InjuryDetailsPage(widget.injuryType),
       ),
     );
   }
@@ -103,7 +103,7 @@ class _InjuryCardState extends State<InjuryCard> {
           pressedFunction: () {
             Navigator.of(context).pop();
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => RegisterInjury(
+              builder: (_) => InjuryFormPage(
                 title: 'Editar Lesão',
                 injury: widget.injuryType,
               ),
