@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:prev_ler/src/modules/exercises/components/exercise_card.dart';
-import 'package:prev_ler/src/modules/exercises/pages/exercise_register_page.dart';
+import 'package:prev_ler/src/modules/exercises/pages/exercise_form_page.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
+import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_loading_sliver.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
@@ -52,23 +53,16 @@ class _ExercisePageState extends State<ExercisePage> {
       body: RefreshIndicator(
         onRefresh: () async => controller.fetchAll(),
         child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
             _appBar,
             if (state == StateEnum.loading) const MyLoadingSliver(),
             if (state == StateEnum.error)
-              SliverFillRemaining(
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Center(
-                    child: Text(
-                      errorMessage,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
+              SliverCenterText(message: errorMessage),
+            if (exercises.isEmpty)
+              const SliverCenterText(
+                message: 'Não existem exercícios para serem exibidos.',
               ),
-            if (exercises.isEmpty) _noContentsSliver,
             if (userExercises.isNotEmpty)
               SliverList(
                 delegate: SliverChildListDelegate([
@@ -129,12 +123,6 @@ class _ExercisePageState extends State<ExercisePage> {
       ),
     );
   }
-
-  SliverFillRemaining get _noContentsSliver => const SliverFillRemaining(
-        child: Center(
-          child: Text('Não existem exercícios para serem exibidos.'),
-        ),
-      );
 
   SliverAppBar get _appBar => SliverAppBar(
         floating: true,

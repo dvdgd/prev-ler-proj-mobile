@@ -32,7 +32,8 @@ class ExercisesController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await service.create(exercise);
+      final newExercise = await service.create(exercise);
+      exercises.add(newExercise);
       state = StateEnum.success;
     } catch (e) {
       errorMessage = e.toString();

@@ -175,7 +175,7 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
                   text == null || text.isEmpty ? 'Campo obrigatório' : null,
               controller: _instructionsController,
               prefixIcon: const Icon(Icons.integration_instructions),
-              maxLength: 500,
+              maxLength: 2000,
               maxLines: 20,
             ),
             MyTextFormField(
@@ -184,7 +184,8 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
               validator: (text) =>
                   text == null || text.isEmpty ? 'Campo obrigatório' : null,
               prefixIcon: const Icon(Icons.description),
-              maxLength: 200,
+              maxLength: 2000,
+              maxLines: 20,
             ),
             ...divider,
             const Padding(
@@ -199,14 +200,16 @@ class _ExerciseRegisterPageState extends State<ExerciseRegisterPage> {
               labelText: 'Precauções',
               controller: _precautionsController,
               prefixIcon: const Icon(Icons.warning_rounded),
-              maxLength: 200,
+              maxLength: 500,
+              maxLines: 20,
             ),
             MyTextFormField(
               labelText: 'Observações',
               textInputType: TextInputType.multiline,
               controller: _observationsController,
               prefixIcon: const Icon(Icons.remove_red_eye),
-              maxLength: 200,
+              maxLength: 500,
+              maxLines: 20,
             ),
             const SizedBox(height: 40),
             MyFilledLoadingButton(

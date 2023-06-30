@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/exercises/pages/exercise_register_page.dart';
+import 'package:prev_ler/src/modules/exercises/pages/exercise_form_page.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
@@ -22,12 +22,13 @@ class ExerciseCard extends StatefulWidget {
 }
 
 class _ExerciseCardState extends State<ExerciseCard> {
+  static final FileConverter converter = FileConverter();
+
   @override
   Widget build(BuildContext context) {
     final userController = context.watch<UserController>();
     final medic = userController.user?.medic;
 
-    final FileConverter converter = FileConverter();
     final image = widget.exercise.image;
     final title = widget.exercise.name;
     final subTitle = widget.exercise.description;
@@ -41,8 +42,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
         onTap: () {
           final medicContent = widget.exercise.idMedic == medic?.idMedic;
           if (medic == null || !medicContent) {
-            return;
-            // TODO: implement exercise read page
+            return _navigateToExerciseReadPage();
           }
 
           if (medicContent) {
@@ -81,13 +81,15 @@ class _ExerciseCardState extends State<ExerciseCard> {
     );
   }
 
+  void _navigateToExerciseReadPage() {
+    Navigator.of(context).pop();
+    // TODO: implement exercise read page
+  }
+
   get optionsButtons => [
         MyOptionButton(
           title: 'Visualizar',
-          pressedFunction: () {
-            Navigator.of(context).pop();
-            // TODO: implement read page for exercise
-          },
+          pressedFunction: _navigateToExerciseReadPage,
           icon: const Icon(Icons.remove_red_eye_outlined),
         ),
         MyOptionButton(
