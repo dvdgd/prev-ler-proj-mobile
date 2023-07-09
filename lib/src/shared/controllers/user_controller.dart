@@ -10,6 +10,8 @@ class UserController extends ChangeNotifier {
   User? user;
   StateEnum state = StateEnum.idle;
 
+  String errorMessage = '';
+
   Future<void> fetchUser() async {
     if (state != StateEnum.idle) {
       return;
@@ -21,9 +23,10 @@ class UserController extends ChangeNotifier {
     try {
       user = await authService.getUserData();
       state = StateEnum.success;
-      notifyListeners();
     } catch (e) {
+      errorMessage = e.toString();
       state = StateEnum.error;
+    } finally {
       notifyListeners();
     }
   }
@@ -36,9 +39,11 @@ class UserController extends ChangeNotifier {
       await authService.updateUser(newUser);
       user = newUser;
       state = StateEnum.success;
-      notifyListeners();
     } catch (e) {
+      errorMessage = e.toString();
       state = StateEnum.error;
+    } finally {
+      notifyListeners();
     }
   }
 

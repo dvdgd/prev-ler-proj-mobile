@@ -75,11 +75,11 @@ class _UserFormState extends State<UserForm> {
     _emailController.text = user.email;
     _passwordController.text = user.password ?? '';
     _nameController.text = user.name;
-    _bornDateController.text = DateFormat('dd/MM/yyyy').format(user.bornDate);
+    _bornDateController.text = DateFormat('yyyy-MM-dd').format(user.bornDate);
     _crmNumberController.text = user.medic?.crmNumber ?? '';
     _crmStateController.text = user.medic?.crmState ?? '';
     _selectedBornDateController.text =
-        DateFormat('dd/MM/yyyy').format(user.bornDate);
+        DateFormat('yyyy-MM-dd').format(user.bornDate);
     _occupationController.text = user.patient?.occupation ?? '';
   }
 
