@@ -64,17 +64,22 @@ class _UserFormState extends State<UserForm> {
         ? 'Médico'
         : _occupationController.text;
 
+    final isMedic = widget.userType == UserType.medic;
+
     return User(
       idUser: widget.user?.idUser ?? 0,
       name: name,
       bornDate: DateTime.parse(bornDate),
       email: email,
       password: password,
-      medic: Medic(
-          idMedic: widget.user?.medic?.idMedic ?? 0,
-          crmNumber: crmNumber,
-          crmState: crmState,
-          crmStatus: widget.user?.medic?.crmStatus),
+      medic: !isMedic
+          ? null
+          : Medic(
+              idMedic: widget.user?.medic?.idMedic ?? 0,
+              crmNumber: crmNumber,
+              crmState: crmState,
+              crmStatus: widget.user?.medic?.crmStatus,
+            ),
       patient: Patient(
         idPatient: widget.user?.patient?.idPatient ?? 0,
         occupation: occupation,
