@@ -14,59 +14,60 @@ class ContentDetailsPage extends StatelessWidget {
     final title = content.title;
     final subtitle = content.subtitle;
     final description = content.description;
-    final observation = content.observation;
+    final observations = content.observation;
 
     final injuryType = content.injuryType;
 
     return Scaffold(
       appBar: AppBar(
-        title: const PageTitle(title: 'Detalhes do Conteúdo'),
+        title: const PageTitle(title: 'Conteúdo'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: textTheme.titleLarge),
-              const SizedBox(height: 10),
-              Text(subtitle, style: textTheme.titleMedium),
-              const SizedBox(height: 20),
-              Text(
-                description,
-                style: textTheme.bodyLarge,
-                textAlign: TextAlign.justify,
-              ),
-              const SizedBox(height: 25),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 30),
+            Text(title, style: textTheme.titleLarge),
+            const SizedBox(height: 10),
+            Text(subtitle, style: textTheme.titleMedium),
+            const SizedBox(height: 15),
+            Text(
+              description,
+              style: textTheme.bodyMedium,
+              textAlign: TextAlign.justify,
+            ),
+            const SizedBox(height: 30),
+            if (observations != null && observations.isNotEmpty) ...[
               Text('Observações', style: textTheme.titleMedium),
               const SizedBox(height: 10),
               Text(
-                observation,
+                observations,
                 style: textTheme.bodyMedium,
                 textAlign: TextAlign.justify,
               ),
-              const SizedBox(height: 25),
-              Text(
-                'Conteúdo criado em ${content.createdAt.toString()}',
-                style: textTheme.bodySmall,
-              ),
-              Text(
-                'Conteúdo atualizado em ${content.createdAt.toString()}',
-                style: textTheme.bodySmall,
-              ),
-              if (injuryType != null) ...[
-                const Divider(),
-                Text(
-                  'Lesão: ${injuryType.name} - (${injuryType.abbreviation})',
-                  style: textTheme.bodySmall,
-                ),
-                Text(
-                  'Lesão criada em ${injuryType.createdAt.toString()}',
-                  style: textTheme.bodySmall,
-                ),
-              ],
             ],
-          ),
+            const SizedBox(height: 30),
+            Text(
+              'Conteúdo criado em ${content.createdAt.toString()}',
+              style: textTheme.bodySmall,
+            ),
+            Text(
+              'Conteúdo atualizado em ${content.createdAt.toString()}',
+              style: textTheme.bodySmall,
+            ),
+            if (injuryType != null) ...[
+              const Divider(),
+              Text(
+                'Lesão: ${injuryType.name} - (${injuryType.abbreviation})',
+                style: textTheme.bodySmall,
+              ),
+              Text(
+                'Lesão criada em ${injuryType.createdAt.toString()}',
+                style: textTheme.bodySmall,
+              ),
+            ],
+          ],
         ),
       ),
     );
