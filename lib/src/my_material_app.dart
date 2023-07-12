@@ -6,6 +6,7 @@ import 'package:prev_ler/src/modules/home/home_page.dart';
 import 'package:prev_ler/src/modules/injuries/pages/injury_form_page.dart';
 import 'package:prev_ler/src/modules/main/main_page.dart';
 import 'package:prev_ler/src/modules/profile/profile_page.dart';
+import 'package:prev_ler/src/modules/routines/pages/exercise_cart_page.dart';
 import 'package:prev_ler/src/modules/routines/pages/routine_form_page.dart';
 import 'package:prev_ler/src/modules/routines/pages/routine_page.dart';
 import 'package:prev_ler/src/shared/controllers/dark_mode_controller.dart';
@@ -89,7 +90,8 @@ class MyMaterialApp extends StatelessWidget {
         '/routines/register': (_) => RoutineFormPage(
               title: 'Nova Rotina',
               routine: null,
-            )
+            ),
+        '/routines/cart/exercises': (_) => const ExerciseCartPage(),
       },
     );
   }

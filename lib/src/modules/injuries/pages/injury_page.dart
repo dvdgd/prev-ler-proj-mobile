@@ -53,9 +53,9 @@ class _InjuryPageState extends State<InjuryPage> {
           slivers: [
             _appBar,
             if (state == StateEnum.error)
-              const SliverCenterText(
-                  message:
-                      'Erro: Não é possível excluir uma lesão associada a um conteúdo'),
+              SliverCenterText(
+                message: errorMessage,
+              ),
             if (injuries.isEmpty)
               const SliverCenterText(
                 message: 'Não existem conteúdos a serem exibidos.',

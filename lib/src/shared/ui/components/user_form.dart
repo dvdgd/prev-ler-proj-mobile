@@ -60,6 +60,9 @@ class _UserFormState extends State<UserForm> {
     final bornDate = _selectedBornDateController.text;
     final crmNumber = _crmNumberController.text;
     final crmState = _crmStateController.text;
+    final occupation = _occupationController.text.isEmpty
+        ? 'Médico'
+        : _occupationController.text;
 
     return User(
       name: name,
@@ -67,7 +70,7 @@ class _UserFormState extends State<UserForm> {
       email: email,
       password: password,
       medic: Medic(crmNumber: crmNumber, crmState: crmState),
-      patient: Patient(occupation: 'Médico'),
+      patient: Patient(occupation: occupation),
     );
   }
 

@@ -23,11 +23,11 @@ class ClientHttp {
       if (e.type == DioExceptionType.connectionTimeout) {
         throw Exception('Tempo de conexão com o servidor expirado.');
       }
-      throw Exception('Ocorreu um erro inexperado na requisição.');
+      throw Exception('Ocorreu um erro inesperado na requisição.');
     } catch (e) {
       debugPrint(e.toString());
       debugPrintStack();
-      throw Exception('Ocorreu um erro inexperado na requisição.');
+      throw Exception('Ocorreu um erro inesperado na requisição.');
     }
   }
 

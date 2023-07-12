@@ -23,7 +23,9 @@ class ExercisesServiceImpl extends ExerciseService {
   @override
   Future<Exercise> create(Exercise newExercise) async {
     final responseBody = await clientHttp.post(
-        uri: Uri.parse(baseUrl), data: newExercise.toMap());
+      uri: Uri.parse(baseUrl),
+      data: newExercise.toMap(),
+    );
 
     return Exercise.fromMap(responseBody);
   }

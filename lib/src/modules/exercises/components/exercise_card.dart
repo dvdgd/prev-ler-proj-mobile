@@ -29,9 +29,10 @@ class _ExerciseCardState extends State<ExerciseCard> {
     final userController = context.watch<UserController>();
     final medic = userController.user?.medic;
 
-    final image = widget.exercise.image;
     final title = widget.exercise.name;
-    final subTitle = widget.exercise.description;
+    final description = widget.exercise.description;
+
+    final imageBytes = converter.base64Binary(widget.exercise.image);
 
     return SizedBox(
       width: 180,
@@ -53,15 +54,23 @@ class _ExerciseCardState extends State<ExerciseCard> {
           children: [
             Container(
               clipBehavior: Clip.antiAlias,
+              height: 80,
+              width: double.maxFinite,
               decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Image.memory(converter.base64Binary(image)),
+              child: Image.memory(imageBytes),
             ),
             ListTile(
-              title: Text(title),
+              title: Text(
+                title,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
               subtitle: Text(
-                subTitle,
+                description,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),

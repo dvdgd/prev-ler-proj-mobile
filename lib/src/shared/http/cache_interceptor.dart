@@ -80,7 +80,7 @@ class CacheInterceptor extends InterceptorsWrapper {
         date: DateTime.now(),
         id: id,
       );
-      _cacheAdapter.put(data);
+      await _cacheAdapter.put(data);
     }
 
     return handler.next(response);

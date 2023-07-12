@@ -37,7 +37,7 @@ class _AuthRegisterPageState extends State<AuthRegisterPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Ocorreu um erro inexperado, tente novamente mais tarde.',
+            'Ocorreu um erro inesperado, tente novamente mais tarde.',
           ),
         ),
       );

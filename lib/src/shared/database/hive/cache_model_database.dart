@@ -17,7 +17,7 @@ class CacheModelDatabase extends HiveObject implements CacheModel {
 
   @HiveField(2)
   @override
-  final Map data;
+  final dynamic data;
 
   CacheModelDatabase({
     required this.id,
@@ -29,7 +29,7 @@ class CacheModelDatabase extends HiveObject implements CacheModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'date': date.millisecondsSinceEpoch,
+      'date': date,
       'data': data,
     };
   }

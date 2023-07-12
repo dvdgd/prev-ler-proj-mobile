@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyCard extends StatelessWidget {
   final Widget child;
   final void Function()? onTap;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final EdgeInsets? padding;
   final double? elevation;
   final Clip? clipBehavior;
@@ -12,7 +12,7 @@ class MyCard extends StatelessWidget {
     super.key,
     this.onTap,
     required this.child,
-    required this.backgroundColor,
+    this.backgroundColor,
     this.clipBehavior,
     this.padding,
     this.elevation,

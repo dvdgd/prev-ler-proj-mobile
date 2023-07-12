@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/home/components/dark_mode_button.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
+import 'package:prev_ler/src/shared/ui/components/dark_mode_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/splash_screen.dart';
 import 'package:prev_ler/src/shared/ui/components/user_form.dart';

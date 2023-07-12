@@ -12,10 +12,10 @@ void debugPrintHttpRequestOptions(RequestOptions options) {
   log(json.encode('BaseURL: ${options.baseUrl}'), name: 'Request[BaseURL]');
   log(json.encode('Endpoint: ${options.path}'), name: 'Request[Endpoint]');
 
-  if (options.headers['access-token'] != null) {
+  if (options.headers['Authorization'] != null) {
     log(
-      json.encode('access-token: ${options.headers['access-token']}'),
-      name: 'Request[access-token]',
+      json.encode('Authorization: ${options.headers['access-token']}'),
+      name: 'Request[Authorization]',
     );
   }
   if (options.data != null) {
