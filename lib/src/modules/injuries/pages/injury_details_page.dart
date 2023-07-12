@@ -32,13 +32,13 @@ class InjuryDetailsPage extends StatelessWidget {
               Text(title, style: textTheme.titleLarge),
               const SizedBox(height: 10),
               Text(subtitle, style: textTheme.titleMedium),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               Text(
                 description,
                 style: textTheme.bodyLarge,
                 textAlign: TextAlign.justify,
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 30),
               const Divider(),
               Text(
                 'Criada em ${createdAt.toString()}',
