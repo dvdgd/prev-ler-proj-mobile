@@ -138,7 +138,7 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
               prefixIcon: const Icon(Icons.description),
               textInputType: TextInputType.multiline,
               maxLines: 5,
-              maxLength: 300,
+              maxLength: 2000,
             ),
             const SizedBox(height: 40),
             MyFilledLoadingButton(

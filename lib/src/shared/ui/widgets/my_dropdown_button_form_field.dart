@@ -59,6 +59,7 @@ class _MyDropdownButtonFormFieldState<T>
       child: DropdownButtonFormField<T>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.validator,
+        isExpanded: true,
         value: widget.initValue,
         items: widget.list,
         elevation: 8,

@@ -147,14 +147,14 @@ class _ContentFormPageState extends State<ContentFormPage> {
                 labelText: 'Descrição',
                 prefixIcon: const Icon(Icons.description),
                 maxLines: 10,
-                maxLength: 2000,
+                maxLength: 4000,
               ),
               MyTextFormField(
                 controller: _observationController,
                 labelText: 'Observações',
                 prefixIcon: const Icon(Icons.zoom_in),
                 maxLines: 5,
-                maxLength: 300,
+                maxLength: 500,
               ),
               const SizedBox(height: 40),
               MyFilledLoadingButton(
