@@ -27,11 +27,11 @@ class ContentDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Text(title, style: textTheme.titleLarge),
-            const SizedBox(height: 10),
-            Text(subtitle, style: textTheme.titleMedium),
             const SizedBox(height: 15),
+            Text(subtitle, style: textTheme.titleMedium),
+            const SizedBox(height: 30),
             Text(
               description,
               style: textTheme.bodyMedium,

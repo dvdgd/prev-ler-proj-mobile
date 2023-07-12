@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:prev_ler/src/shared/cache/domain/cache_model.dart';
-import 'package:prev_ler/src/shared/cache/domain/cache_service.dart';
+import 'package:prev_ler/src/shared/database/domain/cache_model.dart';
+import 'package:prev_ler/src/shared/database/domain/cache_service.dart';
 import 'package:prev_ler/src/shared/services/check_internet.dart';
 import 'package:prev_ler/src/shared/utils/debug_print_http.dart';
 

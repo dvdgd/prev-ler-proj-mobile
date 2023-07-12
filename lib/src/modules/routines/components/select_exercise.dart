@@ -17,10 +17,17 @@ class SelectExercise extends StatelessWidget {
     final controller = context.watch<ExerciseCartController>();
 
     final isSelected = controller.value.contains(exercise);
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final backgroudColor = isSelected ? colorScheme.tertiaryContainer : null;
+    final imageBackgroudColor = isSelected
+        ? colorScheme.tertiary.withOpacity(0.4)
+        : colorScheme.secondary.withOpacity(0.2);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: MyCard(
+        backgroundColor: backgroudColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -32,7 +39,7 @@ class SelectExercise extends StatelessWidget {
                 height: 60,
                 width: 80,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  color: imageBackgroudColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Image.memory(

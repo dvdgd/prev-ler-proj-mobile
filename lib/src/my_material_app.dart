@@ -37,6 +37,7 @@ class MyMaterialApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         buttonTheme: ButtonThemeData(
+          colorScheme: myColorScheme,
           shape: _roudedRectangleBorder,
         ),
         filledButtonTheme: FilledButtonThemeData(
@@ -87,7 +88,7 @@ class MyMaterialApp extends StatelessWidget {
             ),
         '/profile': (_) => const ProfilePage(),
         '/routines': (_) => const RoutinesPage(),
-        '/routines/register': (_) => RoutineFormPage(
+        '/routines/register': (_) => const RoutineFormPage(
               title: 'Nova Rotina',
               routine: null,
             ),

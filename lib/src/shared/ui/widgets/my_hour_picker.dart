@@ -3,18 +3,16 @@ import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 
 class MyHourPicker extends StatefulWidget {
   final String labelText;
-  final TextEditingController controller;
-  final TextEditingController selectedDate;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool? enable;
   final String? Function(String? text)? validator;
+  final ValueNotifier<TimeOfDay> selectedTime;
 
   const MyHourPicker({
     super.key,
     required this.labelText,
-    required this.controller,
-    required this.selectedDate,
+    required this.selectedTime,
     this.enable,
     this.prefixIcon,
     this.suffixIcon,
@@ -26,26 +24,17 @@ class MyHourPicker extends StatefulWidget {
 }
 
 class _MyHourPickerState extends State<MyHourPicker> {
+  final _durationController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MyTextFormField(
       readOnly: true,
+      controller: _durationController,
       validator: widget.validator,
       enable: widget.enable,
-      controller: widget.controller,
       labelText: widget.labelText,
       prefixIcon: widget.prefixIcon,
-      suffixIcon: widget.controller.text.isEmpty
-          ? null
-          : IconButton(
-              icon: const Icon(Icons.clear_outlined),
-              onPressed: () {
-                setState(() {
-                  widget.selectedDate.text = '';
-                  widget.controller.text = '';
-                });
-              },
-            ),
       onTap: _onTap,
     );
   }
@@ -56,11 +45,9 @@ class _MyHourPickerState extends State<MyHourPicker> {
       initialTime: TimeOfDay.now(),
     );
 
-    if (timeOfDay != null) {
-      setState(() {
-        widget.selectedDate.text = timeOfDay.toString();
-        widget.controller.text = timeOfDay.toString();
-      });
+    if (timeOfDay != null && context.mounted) {
+      widget.selectedTime.value = timeOfDay;
+      _durationController.text = timeOfDay.format(context);
     }
   }
 }

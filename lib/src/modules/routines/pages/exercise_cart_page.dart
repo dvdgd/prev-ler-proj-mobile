@@ -6,12 +6,30 @@ import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
-class ExerciseCartPage extends StatelessWidget {
+class ExerciseCartPage extends StatefulWidget {
   const ExerciseCartPage({super.key});
+
+  @override
+  State<ExerciseCartPage> createState() => _ExerciseCartPageState();
+}
+
+class _ExerciseCartPageState extends State<ExerciseCartPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    final controller = context.read<ExercisesController>();
+    if (controller.state == StateEnum.idle) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await controller.fetchAll();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<ExercisesController>();
+
     final selectedExercises = context.watch<ExerciseCartController>().value;
     final exercises = controller.exercises;
 
@@ -25,10 +43,6 @@ class ExerciseCartPage extends StatelessWidget {
       return a.name.compareTo(b.name);
     });
 
-    if (controller.state == StateEnum.idle) {
-      controller.fetchAll();
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const PageTitle(title: 'Selecionar exercícios'),
@@ -40,7 +54,19 @@ class ExerciseCartPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          if (exercises.isEmpty)
+          if (controller.state == StateEnum.idle)
+            const Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Center(
+                  child: Text(
+                    'Carregando...',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            )
+          else if (exercises.isEmpty)
             const Expanded(
               child: Padding(
                 padding: EdgeInsets.all(20),

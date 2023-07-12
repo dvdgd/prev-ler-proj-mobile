@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:prev_ler/src/modules/routines/components/select_exercise.dart';
+import 'package:prev_ler/src/modules/routines/components/week_day_picker.dart';
 import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/week_day_controller.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
@@ -8,8 +11,8 @@ import 'package:prev_ler/src/shared/ui/widgets/my_hour_picker.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:provider/provider.dart';
 
-class RoutineFormPage extends StatelessWidget {
-  RoutineFormPage({
+class RoutineFormPage extends StatefulWidget {
+  const RoutineFormPage({
     super.key,
     required this.title,
     this.routine,
@@ -18,60 +21,48 @@ class RoutineFormPage extends StatelessWidget {
   final String title;
   final Routine? routine;
 
+  @override
+  State<RoutineFormPage> createState() => _RoutineFormPageState();
+}
+
+class _RoutineFormPageState extends State<RoutineFormPage> {
   final _formKey = GlobalKey<FormState>();
 
-  List<Widget> get divider => [
-        const SizedBox(height: 15),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Divider(),
+  @override
+  void dispose() {
+    context.read<ExerciseCartController>().clearAll();
+    context.watch<WeekDayController>().disableAll();
+    super.dispose();
+  }
+
+  Widget get divider => const Padding(
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 20),
+        child: Divider(),
+      );
+
+  Widget leftAlignWithPadding({required Widget child}) => Padding(
+        padding: const EdgeInsets.only(left: 20, bottom: 15),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: child,
         ),
-        const SizedBox(height: 20),
-      ];
+      );
 
   @override
   Widget build(BuildContext context) {
-    final exercisesController = context.watch<ExerciseCartController>();
-    final exercises = exercisesController.value;
+    final exercisesCartController = context.watch<ExerciseCartController>();
+    final exercises = exercisesCartController.value;
 
     return Scaffold(
       appBar: AppBar(
-        title: PageTitle(title: title),
+        title: PageTitle(title: widget.title),
       ),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              const SizedBox(height: 15),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: const Text(
-                  'Exercícios:',
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              if (exercises.isNotEmpty)
-                ...exercises
-                    .map((e) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: SelectExercise(exercise: e),
-                        ))
-                    .toList()
-              else
-                const Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Text('Selecione no mínimo um exercício.'),
-                ),
-              const SizedBox(height: 15),
-              OutlinedButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed('/routines/cart/exercises'),
-                child: const Text('Adicionar Exercícios'),
-              ),
-              ...divider,
-              const SizedBox(height: 15),
+              const SizedBox(height: 30),
               const MyTextFormField(
                 labelText: 'Nome',
                 prefixIcon: Icon(Icons.title),
@@ -82,23 +73,76 @@ class RoutineFormPage extends StatelessWidget {
                 maxLines: 10,
                 maxLength: 300,
               ),
+              divider,
+              leftAlignWithPadding(
+                child: Text(
+                  'Dias da rotina ativa.',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: MyDayOfWeekPicker(),
+              ),
+              divider,
+              leftAlignWithPadding(
+                child: Text(
+                  style: Theme.of(context).textTheme.titleMedium,
+                  'Selecione um exercício.',
+                ),
+              ),
+              if (exercises.isNotEmpty)
+                ...exercises
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: SelectExercise(exercise: e),
+                        ))
+                    .toList(),
+              const SizedBox(height: 15),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: FilledButton.tonalIcon(
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      '/routines/cart/exercises',
+                    ),
+                    icon: const Icon(Icons.add),
+                    label: const Text('Adicionar'),
+                  ),
+                ),
+              ),
+              divider,
+              const SizedBox(height: 15),
               MyHourPicker(
-                controller: TextEditingController(),
+                selectedTime: ValueNotifier(TimeOfDay.now()),
                 labelText: 'Horario de inicío',
-                selectedDate: TextEditingController(),
+                prefixIcon: const Icon(Icons.alarm_on),
               ),
-              const MyTextFormField(
-                labelText: 'Horario de inicío',
-                prefixIcon: Icon(Icons.alarm_on),
-              ),
-              const MyTextFormField(
+              MyHourPicker(
+                selectedTime: ValueNotifier(TimeOfDay.now()),
                 labelText: 'Horario de fim',
-                prefixIcon: Icon(Icons.alarm_off),
+                prefixIcon: const Icon(Icons.alarm_off),
               ),
-              const MyTextFormField(
-                labelText: 'Intervalo',
-                prefixIcon: Icon(Icons.alarm),
+              MyTextFormField(
+                labelText: 'Intervalo em minutos',
+                prefixIcon: const Icon(Icons.alarm_off),
+                controller: TextEditingController(),
                 textInputType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+                ],
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Campo obrigatório.';
+                  }
+
+                  if (int.tryParse(text) == null) {
+                    return 'O intervalo deve ser um numérico';
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 40),
               MyFilledLoadingButton(

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:hive_flutter/adapters.dart';
-import 'package:prev_ler/src/shared/cache/domain/cache_model.dart';
-import 'package:prev_ler/src/shared/cache/domain/cache_service.dart';
+import 'package:prev_ler/src/shared/database/domain/cache_model.dart';
+import 'package:prev_ler/src/shared/database/domain/cache_service.dart';
 import 'package:prev_ler/src/shared/database/hive/cache_model_database.dart';
 
 class CacheHive implements ICacheAdapter {

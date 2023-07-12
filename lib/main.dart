@@ -10,11 +10,12 @@ import 'package:prev_ler/src/modules/exercises/shared/exercises_service.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_service.dart';
 import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/week_day_controller.dart';
 import 'package:prev_ler/src/my_material_app.dart';
-import 'package:prev_ler/src/shared/cache/cache_hive.dart';
 import 'package:prev_ler/src/shared/controllers/dark_mode_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/database/box_container.dart';
+import 'package:prev_ler/src/shared/database/services/cache_hive.dart';
 import 'package:prev_ler/src/shared/http/cache_interceptor.dart';
 import 'package:prev_ler/src/shared/http/client_http.dart';
 import 'package:prev_ler/src/shared/services/check_internet.dart';
@@ -60,6 +61,9 @@ void main() async {
             ctx.read<ClientHttp>(),
             ctx.read<SecureStore>(),
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => WeekDayController(),
         ),
         ChangeNotifierProvider(
           create: (_) => ExerciseCartController(),
