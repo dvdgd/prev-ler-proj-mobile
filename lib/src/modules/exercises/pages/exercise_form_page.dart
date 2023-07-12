@@ -219,6 +219,15 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
                 if (validForm == null || !validForm) {
                   return;
                 }
+                // verificar se o imagepath é vazia, se sim, chamar o validate
+                if (_imagePathController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Erro: Selecione uma imagem'),
+                    ),
+                  );
+                  return;
+                }
 
                 final exercise = await _getExerciseFromForm();
                 if (widget.exercise == null) {
