@@ -2,7 +2,7 @@ import 'package:prev_ler/src/shared/entities/medic.dart';
 import 'package:prev_ler/src/shared/entities/patient.dart';
 
 class User {
-  int idUsuario;
+  int idUser;
   String email;
   String name;
   DateTime bornDate;
@@ -11,7 +11,7 @@ class User {
   Medic? medic;
 
   User({
-    this.idUsuario = 0,
+    this.idUser = 0,
     required this.email,
     required this.bornDate,
     required this.name,
@@ -22,6 +22,7 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
+      'idUsuario': idUser,
       'email': email,
       'senhaEncriptada': password,
       'paciente': patient?.toMap(),
@@ -33,6 +34,7 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> json) {
     return User(
+      idUser: json['idUsuario'],
       email: json['email'],
       password: json['senhaEncriptada'],
       name: json['nome'],

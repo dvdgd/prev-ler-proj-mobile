@@ -95,7 +95,6 @@ class ExerciseDetailsPage extends StatelessWidget {
               ),
             ],
             const SizedBox(height: 30),
-            const Divider(),
             Text(
               'Exercício Criado em ${createdAt.toString()}',
               style: textTheme.bodySmall,

@@ -8,7 +8,7 @@ class Content {
   String title;
   String subtitle;
   String description;
-  String observation;
+  String? observation;
   DateTime? createdAt;
   DateTime? updatedAt;
   Medic? medic;

@@ -65,12 +65,20 @@ class _UserFormState extends State<UserForm> {
         : _occupationController.text;
 
     return User(
+      idUser: widget.user?.idUser ?? 0,
       name: name,
       bornDate: DateTime.parse(bornDate),
       email: email,
       password: password,
-      medic: Medic(crmNumber: crmNumber, crmState: crmState),
-      patient: Patient(occupation: occupation),
+      medic: Medic(
+          idMedic: widget.user?.medic?.idMedic ?? 0,
+          crmNumber: crmNumber,
+          crmState: crmState,
+          crmStatus: widget.user?.medic?.crmStatus),
+      patient: Patient(
+        idPatient: widget.user?.patient?.idPatient ?? 0,
+        occupation: occupation,
+      ),
     );
   }
 

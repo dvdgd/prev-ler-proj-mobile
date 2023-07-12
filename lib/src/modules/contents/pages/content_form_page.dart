@@ -56,7 +56,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
       _injuryTypeController.text =
           content.injuryType?.idInjuryType.toString() ?? '';
       _descriptionController.text = content.description;
-      _observationController.text = content.observation;
+      _observationController.text = content.observation ?? '';
     }
   }
 
@@ -89,6 +89,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
     final injuryTypeId = _injuryTypeController.text;
 
     return Content(
+      idContent: widget.content?.idContent ?? 0,
       idMedic: medic.idMedic,
       idInjuryType: int.parse(injuryTypeId),
       title: title,
@@ -146,20 +147,14 @@ class _ContentFormPageState extends State<ContentFormPage> {
                 labelText: 'Descrição',
                 prefixIcon: const Icon(Icons.description),
                 maxLines: 10,
-                maxLength: 300,
+                maxLength: 2000,
               ),
               MyTextFormField(
-                validator: (text) {
-                  if (text == null || text.isEmpty) {
-                    return 'Observação não pode ser vazia';
-                  }
-                  return null;
-                },
                 controller: _observationController,
                 labelText: 'Observações',
                 prefixIcon: const Icon(Icons.zoom_in),
                 maxLines: 5,
-                maxLength: 150,
+                maxLength: 300,
               ),
               const SizedBox(height: 40),
               MyFilledLoadingButton(
