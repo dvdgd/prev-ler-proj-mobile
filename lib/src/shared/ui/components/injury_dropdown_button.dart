@@ -85,7 +85,7 @@ class _InjuryDropdownButtonState extends State<InjuryDropdownButton> {
       );
     } else {
       return MyDropdownButtonFormField(
-        validator: (value) => validator(value.toString()),
+        validator: (value) => validator(value?.toString()),
         controller: widget.injuryTypeController,
         prefixIcon: const Icon(Icons.healing_outlined),
         hintText: 'Selecionar Lesão',
