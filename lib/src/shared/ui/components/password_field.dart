@@ -31,7 +31,7 @@ class _CustomPasswordFieldPageState extends State<PasswordField> {
   }
 
   get suffixIcon => IconButton(
-        icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+        icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
         onPressed: _changeVisiblePassword,
       );
 
