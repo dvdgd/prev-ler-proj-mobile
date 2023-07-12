@@ -84,8 +84,8 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
     _nameController.text = exercise.name;
     _descriptionController.text = exercise.description;
     _instructionsController.text = exercise.instructions;
-    _precautionsController.text = exercise.precautions;
-    _observationsController.text = exercise.observations;
+    _precautionsController.text = exercise.precautions ?? '';
+    _observationsController.text = exercise.observations ?? '';
     _injuryTypeController.text = exercise.idInjuryType.toString();
     _imagePathController.text = exercise.image;
   }

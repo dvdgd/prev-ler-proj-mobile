@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/modules/exercises/pages/exercise_details_page.dart';
 import 'package:prev_ler/src/modules/exercises/pages/exercise_form_page.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
@@ -91,8 +92,13 @@ class _ExerciseCardState extends State<ExerciseCard> {
   }
 
   void _navigateToExerciseReadPage() {
-    Navigator.of(context).pop();
-    // TODO: implement exercise read page
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => ExerciseDetailsPage(
+          exercise: widget.exercise,
+        ),
+      ),
+    );
   }
 
   get optionsButtons => [

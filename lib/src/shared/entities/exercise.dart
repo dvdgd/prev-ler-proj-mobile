@@ -9,8 +9,8 @@ class Exercise {
   String description;
   String instructions;
   String image;
-  String precautions;
-  String observations;
+  String? precautions;
+  String? observations;
   DateTime? createdAt;
   DateTime? updatedAt;
   Medic? medic;
