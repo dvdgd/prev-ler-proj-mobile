@@ -18,6 +18,5 @@ class ExerciseCartController extends ChangeNotifier {
 
   void clearAll() {
     value = [];
-    notifyListeners();
   }
 }

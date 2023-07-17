@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/entities/medic.dart';
-import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/ui/components/injury_dropdown_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_image_picker.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
+import 'package:prev_ler/src/shared/utils/my_converter.dart';
 import 'package:provider/provider.dart';
 
 class ExerciseFormPage extends StatefulWidget {
@@ -24,7 +25,7 @@ class ExerciseFormPage extends StatefulWidget {
 class _ExerciseFormPageState extends State<ExerciseFormPage> {
   final _formKey = GlobalKey<FormState>();
   late final ExercisesController controller;
-  late final FileConverter converter;
+  late final MyConverter converter;
   late final Medic medic;
 
   final _nameController = TextEditingController();
@@ -39,13 +40,14 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
   void initState() {
     super.initState();
 
-    converter = context.read<FileConverter>();
+    converter = context.read<MyConverter>();
     controller = context.read<ExercisesController>();
     controller.addListener(_handleControllerChangeState);
     _serializeControllers();
     final medic = context.read<UserController>().user?.medic;
     if (medic == null) {
-      Navigator.of(context).pushReplacementNamed('/');
+      Navigator.of(Routes.navigatorKey.currentContext!)
+          .pushReplacementNamed('/');
     } else {
       this.medic = medic;
     }
@@ -59,7 +61,7 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
 
   _handleControllerChangeState() {
     if (controller.state == StateEnum.success) {
-      Navigator.of(context).pop();
+      Navigator.of(Routes.navigatorKey.currentContext!).pop();
     }
     if (controller.state == StateEnum.error) {
       ScaffoldMessenger.of(context).showSnackBar(

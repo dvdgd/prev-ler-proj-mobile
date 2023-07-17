@@ -70,7 +70,7 @@ class ClientHttp {
     return response.data;
   }
 
-  Future<void> put({
+  Future<dynamic> put({
     required Uri uri,
     required Map data,
     Map<String, String>? headers,
@@ -84,6 +84,8 @@ class ClientHttp {
     if (response.statusCode != 204) {
       throw Exception('Falha ao atualizar');
     }
+
+    return response.data;
   }
 
   Future<void> delete<T>({

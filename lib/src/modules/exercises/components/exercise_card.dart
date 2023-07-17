@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/exercises/pages/exercise_details_page.dart';
 import 'package:prev_ler/src/modules/exercises/pages/exercise_form_page.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
-import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/ui/components/crud_options_buttons.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_option_button.dart';
+import 'package:prev_ler/src/shared/utils/my_converter.dart';
 import 'package:provider/provider.dart';
 
 class ExerciseCard extends StatefulWidget {
@@ -23,8 +24,6 @@ class ExerciseCard extends StatefulWidget {
 }
 
 class _ExerciseCardState extends State<ExerciseCard> {
-  static final FileConverter converter = FileConverter();
-
   @override
   Widget build(BuildContext context) {
     final userController = context.watch<UserController>();
@@ -33,7 +32,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
     final title = widget.exercise.name;
     final description = widget.exercise.description;
 
-    final imageBytes = converter.base64Binary(widget.exercise.image);
+    final imageBytes = MyConverter.base64Binary(widget.exercise.image);
 
     return SizedBox(
       width: 180,
@@ -92,7 +91,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
   }
 
   void _navigateToExerciseReadPage() {
-    Navigator.of(context).push(
+    Navigator.of(Routes.navigatorKey.currentContext!).push(
       MaterialPageRoute(
         builder: (BuildContext context) => ExerciseDetailsPage(
           exercise: widget.exercise,
@@ -110,8 +109,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
         MyOptionButton(
           title: 'Editar',
           pressedFunction: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).push(
+            Navigator.of(Routes.navigatorKey.currentContext!).pop();
+            Navigator.of(Routes.navigatorKey.currentContext!).push(
               MaterialPageRoute(
                 builder: (_) => ExerciseFormPage(
                   exercise: widget.exercise,
@@ -124,7 +123,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
         MyOptionButton(
           title: 'Deletar',
           pressedFunction: () {
-            Navigator.of(context).pop();
+            Navigator.of(Routes.navigatorKey.currentContext!).pop();
             context.read<ExercisesController>().delete(widget.exercise);
           },
           icon: const Icon(Icons.delete_forever_outlined),

@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
+import 'package:prev_ler/src/shared/utils/my_converter.dart';
 
 class MyImagePicker extends StatefulWidget {
   const MyImagePicker({
@@ -20,7 +20,7 @@ class MyImagePicker extends StatefulWidget {
 }
 
 class _MyImagePickerState extends State<MyImagePicker> {
-  late final FileConverter converter;
+  late final MyConverter converter;
   final imagePicker = ImagePicker();
   Uint8List? imageBytes;
   final double heigth = 450;
@@ -28,10 +28,10 @@ class _MyImagePickerState extends State<MyImagePicker> {
   @override
   void initState() {
     super.initState();
-    converter = FileConverter();
+    converter = MyConverter();
 
     if (widget.imagePathController.text.isNotEmpty) {
-      imageBytes = converter.base64Binary(widget.imagePathController.text);
+      imageBytes = MyConverter.base64Binary(widget.imagePathController.text);
     }
   }
 
@@ -40,7 +40,7 @@ class _MyImagePickerState extends State<MyImagePicker> {
     if (pickedFile == null) return;
 
     final bytes = await pickedFile.readAsBytes();
-    final imageBase64 = await converter.binaryToBase64(bytes);
+    final imageBase64 = await MyConverter.binaryToBase64(bytes);
 
     setState(() => imageBytes = bytes);
     widget.imagePathController.text = imageBase64;

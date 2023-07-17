@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/contents/pages/content_datails_page.dart';
 import 'package:prev_ler/src/modules/contents/pages/content_form_page.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
@@ -76,7 +77,7 @@ class _ContentCardState extends State<ContentCard> {
   }
 
   void _navigateToContentRead() {
-    Navigator.of(context).push(MaterialPageRoute(
+    Navigator.of(Routes.navigatorKey.currentContext!).push(MaterialPageRoute(
       builder: (_) => ContentDetailsPage(widget.content),
     ));
   }
@@ -95,7 +96,7 @@ class _ContentCardState extends State<ContentCard> {
         MyOptionButton(
           title: 'Visualizar',
           pressedFunction: () {
-            Navigator.of(context).pop();
+            Navigator.of(Routes.navigatorKey.currentContext!).pop();
             _navigateToContentRead();
           },
           icon: const Icon(Icons.remove_red_eye_outlined),
@@ -103,8 +104,8 @@ class _ContentCardState extends State<ContentCard> {
         MyOptionButton(
           title: 'Editar',
           pressedFunction: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).push(
+            Navigator.of(Routes.navigatorKey.currentContext!).pop();
+            Navigator.of(Routes.navigatorKey.currentContext!).push(
               MaterialPageRoute(
                 builder: (_) => ContentFormPage(
                   title: 'Editar Conteúdo',
@@ -119,7 +120,7 @@ class _ContentCardState extends State<ContentCard> {
           title: 'Deletar',
           pressedFunction: () {
             context.read<ContentsController>().deleteContent(widget.content);
-            Navigator.of(context).pop();
+            Navigator.of(Routes.navigatorKey.currentContext!).pop();
           },
           icon: const Icon(Icons.delete_forever_outlined),
         ),

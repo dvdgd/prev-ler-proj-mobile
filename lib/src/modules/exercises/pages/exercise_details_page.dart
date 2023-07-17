@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
-import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
+import 'package:prev_ler/src/shared/utils/my_converter.dart';
 
 class ExerciseDetailsPage extends StatelessWidget {
   ExerciseDetailsPage({super.key, required this.exercise});
 
   final Exercise exercise;
-  final converter = FileConverter();
+  final converter = MyConverter();
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    final imageBytes = converter.base64Binary(exercise.image);
+    final imageBytes = MyConverter.base64Binary(exercise.image);
     final title = exercise.name;
     final description = exercise.description;
     final instrucions = exercise.instructions;

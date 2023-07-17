@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
+import 'package:prev_ler/src/modules/routines/shared/routines_controller.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
 import 'package:prev_ler/src/shared/ui/components/crud_options_buttons.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_option_button.dart';
+import 'package:provider/provider.dart';
 
 class RoutineCard extends StatefulWidget {
   const RoutineCard({super.key, required this.routine});
@@ -24,7 +27,7 @@ class _RoutineCardState extends State<RoutineCard> {
     routineActive = widget.routine.active;
 
     final activesDayOfWeekStr = widget.routine.weekdays
-        ?.map((wd) => wd.name.substring(0, 3))
+        ?.map((wd) => wd?.name.substring(0, 3))
         .reduce((value, element) => '$value | $element');
 
     activeWeekDays = activesDayOfWeekStr ?? '';
@@ -53,7 +56,10 @@ class _RoutineCardState extends State<RoutineCard> {
             MyOptionButton(
               title: 'Deletar',
               icon: const Icon(Icons.delete_outline),
-              pressedFunction: () {},
+              pressedFunction: () {
+                Navigator.of(Routes.navigatorKey.currentContext!).pop();
+                context.read<RoutinesController>().delete(widget.routine);
+              },
             ),
           ]),
         );

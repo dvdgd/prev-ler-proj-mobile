@@ -18,7 +18,7 @@ class CacheModelDatabaseAdapter extends TypeAdapter<CacheModelDatabase> {
     };
     return CacheModelDatabase(
       id: fields[0] as String,
-      data: (fields[2]),
+      data: fields[2] as dynamic,
       date: fields[1] as DateTime?,
     );
   }

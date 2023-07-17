@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
-import 'package:prev_ler/src/shared/services/file_converter.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
+import 'package:prev_ler/src/shared/utils/my_converter.dart';
 import 'package:provider/provider.dart';
 
 class SelectExercise extends StatelessWidget {
   const SelectExercise({super.key, required this.exercise});
 
   final Exercise exercise;
-  static final converter = FileConverter();
+  static final converter = MyConverter();
 
   @override
   Widget build(BuildContext context) {
-    final imageBytes = converter.base64Binary(exercise.image);
+    final imageBytes = MyConverter.base64Binary(exercise.image);
     final controller = context.watch<ExerciseCartController>();
 
     final isSelected = controller.value.contains(exercise);

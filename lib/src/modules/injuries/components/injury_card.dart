@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/injuries/pages/injury_details_page.dart';
 import 'package:prev_ler/src/modules/injuries/pages/injury_form_page.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
@@ -72,7 +73,7 @@ class _InjuryCardState extends State<InjuryCard> {
   }
 
   void _navigateToInjuryDetailsPage() {
-    Navigator.of(context).push(
+    Navigator.of(Routes.navigatorKey.currentContext!).push(
       MaterialPageRoute(
         builder: (context) => InjuryDetailsPage(widget.injuryType),
       ),
@@ -93,7 +94,7 @@ class _InjuryCardState extends State<InjuryCard> {
         MyOptionButton(
           title: 'Visualizar',
           pressedFunction: () {
-            Navigator.of(context).pop();
+            Navigator.of(Routes.navigatorKey.currentContext!).pop();
             _navigateToInjuryDetailsPage();
           },
           icon: const Icon(Icons.remove_red_eye_outlined),
@@ -101,8 +102,9 @@ class _InjuryCardState extends State<InjuryCard> {
         MyOptionButton(
           title: 'Editar',
           pressedFunction: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).push(MaterialPageRoute(
+            Navigator.of(Routes.navigatorKey.currentContext!).pop();
+            Navigator.of(Routes.navigatorKey.currentContext!)
+                .push(MaterialPageRoute(
               builder: (_) => InjuryFormPage(
                 title: 'Editar Lesão',
                 injury: widget.injuryType,
@@ -114,7 +116,7 @@ class _InjuryCardState extends State<InjuryCard> {
         MyOptionButton(
           title: 'Deletar',
           pressedFunction: () {
-            Navigator.of(context).pop();
+            Navigator.of(Routes.navigatorKey.currentContext!).pop();
             context
                 .read<InjuriesController>()
                 .deleteInjuryType(widget.injuryType);

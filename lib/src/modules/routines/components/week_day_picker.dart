@@ -21,7 +21,10 @@ class MyDayOfWeekPicker extends StatelessWidget {
       shortWeekdays: pt.NARROWWEEKDAYS,
       onChanged: (int day) {
         final index = day % 7;
+        debugPrint('Selected day index: $index');
+        debugPrint('Selected days before toggle: ${controller.selectedDays}');
         controller.toggle(index);
+        debugPrint('Selected days after toggle: ${controller.selectedDays}');
       },
       values: controller.selectedDays,
     );

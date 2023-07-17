@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/modules/routines/components/select_exercise.dart';
 import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
@@ -48,13 +49,15 @@ class _ExerciseCartPageState extends State<ExerciseCartPage> {
         title: const PageTitle(title: 'Selecionar exercícios'),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.of(context).pop(),
+        onPressed: () =>
+            Navigator.of(Routes.navigatorKey.currentContext!).pop(),
         label: const Text('OK'),
         icon: const Icon(Icons.done),
       ),
       body: Column(
         children: [
-          if (controller.state == StateEnum.idle)
+          if (controller.state == StateEnum.idle ||
+              controller.state == StateEnum.loading)
             const Expanded(
               child: Padding(
                 padding: EdgeInsets.all(20),

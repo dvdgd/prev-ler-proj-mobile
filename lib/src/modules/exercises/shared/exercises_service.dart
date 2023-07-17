@@ -1,7 +1,7 @@
 import 'package:prev_ler/main.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/http/client_http.dart';
-import 'package:prev_ler/src/shared/services/file_converter.dart';
+import 'package:prev_ler/src/shared/utils/my_converter.dart';
 
 abstract class ExerciseService {
   Future<List<Exercise>> fetchAll();
@@ -12,7 +12,7 @@ abstract class ExerciseService {
 
 class ExercisesServiceImpl extends ExerciseService {
   final ClientHttp clientHttp;
-  final FileConverter fileConverter;
+  final MyConverter fileConverter;
   final String baseUrl = '${Environment.apiBaseUrl}/exercicios';
 
   ExercisesServiceImpl(

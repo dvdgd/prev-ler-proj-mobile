@@ -1,20 +1,20 @@
 import 'package:hive_flutter/adapters.dart';
-import 'package:prev_ler/src/shared/database/domain/routine_repository.dart';
+import 'package:prev_ler/src/modules/routines/shared/repositories/routine_repository.dart';
 import 'package:prev_ler/src/shared/database/hive/routine_model_database.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/entities/notification.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
 import 'package:uuid/uuid.dart';
 
-class RoutineHive implements IRoutineRepository {
+class RoutineHiveRepository implements IRoutineRepository {
   final Box<RoutineModelDatabase> box;
   final uuid = const Uuid();
 
-  RoutineHive(this.box);
+  RoutineHiveRepository(this.box);
 
   @override
   Future<Routine> create(Routine routine) async {
-    final data = RoutineModelDatabase(routine.title, routine);
+    final data = RoutineModelDatabase(routine.title, routine.toMap());
     await box.put(routine.title, data);
 
     return routine;
@@ -33,11 +33,11 @@ class RoutineHive implements IRoutineRepository {
 
   @override
   Future<List<Routine>> getAllRoutinesByPatientId(int patientId) {
-    final list = box.values.cast().toList() as List<RoutineModelDatabase>;
+    final list = box.values.cast().toList();
 
     final routines = list
-        .where((element) => element.routine.idPatient == patientId)
-        .map((e) => e.routine)
+        .map((e) => Routine.fromMap(e.routine))
+        .where((element) => element.idPatient == patientId)
         .toList();
 
     return Future.value(routines);

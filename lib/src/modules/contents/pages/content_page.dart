@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/contents/components/content_card.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
@@ -112,7 +113,8 @@ class _ContentPageState extends State<ContentPage> {
             onPressed: () {},
           ),
           AuthMedicAddButton(
-            onPressed: () => Navigator.of(context).pushNamed(
+            onPressed: () =>
+                Navigator.of(Routes.navigatorKey.currentContext!).pushNamed(
               '/contents/register',
             ),
           ),

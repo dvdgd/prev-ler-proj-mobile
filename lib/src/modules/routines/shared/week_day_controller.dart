@@ -14,12 +14,10 @@ class WeekDayController extends ChangeNotifier {
   }
 
   void disableAll() {
-    selectedDays = List.generate(7, (index) => false);
-    notifyListeners();
+    selectedDays = List.generate(7, (_) => false);
   }
 
   void enableAll() {
     selectedDays = List.generate(7, (index) => true);
-    notifyListeners();
   }
 }

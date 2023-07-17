@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/injuries/components/injury_card.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
@@ -122,7 +123,8 @@ class _InjuryPageState extends State<InjuryPage> {
             },
           ),
           AuthMedicAddButton(
-            onPressed: () => Navigator.of(context).pushNamed(
+            onPressed: () =>
+                Navigator.of(Routes.navigatorKey.currentContext!).pushNamed(
               '/injuries/register',
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 
 import 'my_filled_button.dart';
 
@@ -26,7 +27,8 @@ class MyAlertDiaLog extends StatelessWidget {
       actions: [
         MyFilledButton(
           text: 'OK',
-          onTap: onTap ?? () => Navigator.of(context).pop(),
+          onTap: onTap ??
+              () => Navigator.of(Routes.navigatorKey.currentContext!).pop(),
         ),
       ],
     );

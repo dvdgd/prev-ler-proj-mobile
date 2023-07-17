@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/auth/shared/register_user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/user_form.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
@@ -45,7 +46,7 @@ class _AuthRegisterPageState extends State<AuthRegisterPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Cadastrado com sucesso.')),
       );
-      Navigator.of(context).pop();
+      Navigator.of(Routes.navigatorKey.currentContext!).pop();
     }
   }
 

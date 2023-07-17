@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
@@ -44,7 +45,8 @@ class _ContentFormPageState extends State<ContentFormPage> {
 
     final medic = context.read<UserController>().user?.medic;
     if (medic == null) {
-      Navigator.of(context).pushReplacementNamed('/');
+      Navigator.of(Routes.navigatorKey.currentContext!)
+          .pushReplacementNamed('/');
     } else {
       this.medic = medic;
     }
@@ -71,7 +73,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Sucesso!')),
       );
-      Navigator.of(context).pop();
+      Navigator.of(Routes.navigatorKey.currentContext!).pop();
     }
 
     if (controller.state == StateEnum.error) {

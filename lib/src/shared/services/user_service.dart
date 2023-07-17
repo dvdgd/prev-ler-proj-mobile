@@ -10,6 +10,8 @@ class UserService {
   final SecureStore secureStorage;
   final ClientHttp clientHttp;
 
+  User? currentUser;
+
   UserService(this.clientHttp, this.secureStorage);
 
   Future<void> register(User user) async {
@@ -56,7 +58,10 @@ class UserService {
     );
 
     responseBody['senhaEncriptada'] = await secureStorage.getPassword();
-    return User.fromMap(responseBody);
+    final user = User.fromMap(responseBody);
+    currentUser = user;
+
+    return user;
   }
 
   Future<void> logout() async {

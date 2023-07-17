@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 
 class RoutineResumeCard extends StatelessWidget {
@@ -14,7 +15,8 @@ class RoutineResumeCard extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             backgroundColor: Theme.of(context).primaryColor,
             child: _buildCardContent(4, 13),
-            onTap: () => Navigator.of(context).pushNamed('/routines'),
+            onTap: () => Navigator.of(Routes.navigatorKey.currentContext!)
+                .pushNamed('/routines'),
           ),
         ]),
       ),

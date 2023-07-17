@@ -10,6 +10,7 @@ import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_loading_sliver.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:provider/provider.dart';
 
 class ExercisePage extends StatefulWidget {
@@ -139,7 +140,8 @@ class _ExercisePageState extends State<ExercisePage> {
             },
           ),
           AuthMedicAddButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
+            Navigator.of(Routes.navigatorKey.currentContext!)
+                .push(MaterialPageRoute(
               builder: (context) => const ExerciseFormPage(),
             ));
           })

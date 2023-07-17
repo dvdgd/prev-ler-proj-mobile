@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/dark_mode_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
@@ -44,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Atualizado com sucesso.')),
       );
-      Navigator.of(context).pop();
+      Navigator.of(Routes.navigatorKey.currentContext!).pop();
     }
   }
 

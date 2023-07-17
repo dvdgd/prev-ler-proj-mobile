@@ -6,7 +6,7 @@ class NotificationData {
   int idExercise;
   String title;
   String message;
-  String time;
+  DateTime time;
   bool sent;
   Exercise? exercise;
 
@@ -28,7 +28,7 @@ class NotificationData {
       idExercise: map['idExercicio'],
       title: map['titulo'],
       message: map['mensagem'],
-      time: map['hora'],
+      time: DateTime.parse(map['hora']),
       sent: map['enviado'],
       exercise:
           map['exercicio'] != null ? Exercise.fromMap(map['exercicio']) : null,
@@ -42,7 +42,7 @@ class NotificationData {
       'idExercicio': idExercise,
       'titulo': title,
       'mensagem': message,
-      'hora': time,
+      'hora': time.toIso8601String(),
       'enviado': sent,
       'exercicio': exercise?.toMap(),
     };

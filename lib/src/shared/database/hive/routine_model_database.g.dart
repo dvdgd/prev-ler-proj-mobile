@@ -18,7 +18,7 @@ class RoutineModelDatabaseAdapter extends TypeAdapter<RoutineModelDatabase> {
     };
     return RoutineModelDatabase(
       fields[0] as String,
-      fields[1] as Routine,
+      fields[1] as dynamic,
     );
   }
 

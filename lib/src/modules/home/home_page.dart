@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/home/components/logout_button.dart';
 import 'package:prev_ler/src/modules/home/components/routine_resume_card.dart';
 import 'package:prev_ler/src/modules/home/components/user_hello.dart';
@@ -14,7 +15,8 @@ class HomePage extends StatelessWidget {
         title: const UserHello(),
         actions: [
           IconButton(
-            onPressed: () => Navigator.of(context).pushNamed('/profile'),
+            onPressed: () => Navigator.of(Routes.navigatorKey.currentContext!)
+                .pushNamed('/profile'),
             icon: const Icon(Icons.person_outline),
           ),
           IconButton(

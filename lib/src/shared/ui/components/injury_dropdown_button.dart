@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_dropdown_button_form_field.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
@@ -43,7 +44,7 @@ class _InjuryDropdownButtonState extends State<InjuryDropdownButton> {
 
   void _handleAuthStateChange() {
     if (controller.state == StateEnum.error) {
-      Navigator.of(context).pop();
+      Navigator.of(Routes.navigatorKey.currentContext!).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(controller.errorMessage)),
       );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/modules/routines/shared/routine_create_model.dart';
 import 'package:prev_ler/src/modules/routines/shared/routines_service.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
+import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/services/user_service.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 
@@ -14,32 +16,99 @@ class RoutinesController extends ChangeNotifier {
 
   RoutinesController(this.routinesSservice, this.userService);
 
-  Future<void> fetchAll() async {
-    final user = await userService.getUserData();
-    final patientId = user.patient?.idPatient;
-
-    if (patientId == null) {
-      errorMessage = 'Você precisa ser um paciente para criar rotinas.';
-      state = StateEnum.error;
+  Future<void> checkRoutines() async {
+    if (routines.isEmpty) {
       return;
     }
 
-    try {
-      final user = await userService.getUserData();
-      final patient = user.patient;
-      if (patient == null) {
-        throw Exception(
-          'Desculpe, mas apenas um paciente pode acessar essa funcionalidade',
-        );
-      }
-
-      routines = await routinesSservice.getAll(patient.idPatient);
-    } catch (e) {
-      errorMessage = e.toString();
-    } finally {}
+    final firstRoutine = routines[0];
+    if (firstRoutine.idPatient != _getPatientUser().patient?.idPatient) {
+      await fetchAll();
+    }
   }
 
-  Future<void> update() async {}
+  User _getPatientUser() {
+    final user = userService.currentUser;
+    if (user == null || user.patient?.idPatient == null) {
+      throw Exception('Você precisa ser um paciente para criar rotinas.');
+    }
 
-  Future<void> delete() async {}
+    return user;
+  }
+
+  Future<void> create(RoutineCreateModel newRoutine) async {
+    state = StateEnum.loading;
+    notifyListeners();
+
+    try {
+      final patientId = _getPatientUser().patient!.idPatient;
+      newRoutine.patientId = patientId;
+
+      final routine = await routinesSservice.create(newRoutine);
+      routines.add(routine);
+      state = StateEnum.success;
+    } catch (e) {
+      errorMessage = e.toString();
+      state = StateEnum.error;
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchAll() async {
+    state = StateEnum.loading;
+    notifyListeners();
+
+    try {
+      final patient = _getPatientUser().patient;
+
+      routines = await routinesSservice.getAll(patient!.idPatient);
+      state = StateEnum.success;
+    } catch (e) {
+      errorMessage = e.toString();
+      state = StateEnum.error;
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<void> delete(Routine routine) async {
+    state = StateEnum.loading;
+    notifyListeners();
+
+    try {
+      await routinesSservice.delete(routine);
+      routines.removeWhere((e) => e.idRoutine == routine.idRoutine);
+      state = StateEnum.success;
+    } catch (e) {
+      errorMessage = e.toString();
+      state = StateEnum.error;
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<void> update(Routine newRoutine) async {
+    state = StateEnum.loading;
+    notifyListeners();
+
+    try {
+      await routinesSservice.update(newRoutine);
+
+      final routineIndex = routines.indexWhere(
+        (e) => e.idRoutine == newRoutine.idRoutine,
+      );
+
+      if (routineIndex != -1) {
+        routines[routineIndex] = newRoutine;
+      }
+
+      state = StateEnum.success;
+    } catch (e) {
+      errorMessage = e.toString();
+      state = StateEnum.error;
+    } finally {
+      notifyListeners();
+    }
+  }
 }

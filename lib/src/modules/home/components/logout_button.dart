@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,8 @@ class _LogoutButtonState extends State<LogoutButton> {
 
   void _handleAuthStateChanged() {
     if (controller.state == StateEnum.idle) {
-      Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+      Navigator.of(Routes.navigatorKey.currentContext!)
+          .pushNamedAndRemoveUntil('/', (route) => false);
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/auth/shared/auth_controller.dart';
 import 'package:prev_ler/src/modules/auth/shared/auth_request_model.dart';
 import 'package:prev_ler/src/shared/ui/components/dark_mode_button.dart';
@@ -37,7 +38,8 @@ class _AuthPageState extends State<AuthPage> {
 
   void _handleAuthStateChange() {
     if (controller.state == AuthState.loggedIn) {
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(Routes.navigatorKey.currentContext!)
+          .pushReplacementNamed('/home');
     } else if (controller.state == AuthState.error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(controller.errorMessage)),
@@ -130,7 +132,7 @@ class _AuthPageState extends State<AuthPage> {
   Widget _buildTextButton(String text, String route) {
     return TextButton(
       onPressed: () {
-        Navigator.of(context).pushNamed(route);
+        Navigator.of(Routes.navigatorKey.currentContext!).pushNamed(route);
       },
       child: Center(
         child: Text(text),
