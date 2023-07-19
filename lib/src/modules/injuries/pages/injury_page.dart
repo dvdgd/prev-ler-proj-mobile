@@ -6,7 +6,6 @@ import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
-import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
@@ -114,14 +113,6 @@ class _InjuryPageState extends State<InjuryPage> {
         snap: false,
         title: const PageTitle(title: 'Lesões'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_alt),
-            onPressed: () {
-              throw UnimplementedError(
-                'Filter button is not implemented yet!',
-              );
-            },
-          ),
           AuthMedicAddButton(
             onPressed: () =>
                 Navigator.of(Routes.navigatorKey.currentContext!).pushNamed(
@@ -129,13 +120,5 @@ class _InjuryPageState extends State<InjuryPage> {
             ),
           ),
         ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(68),
-          child: MySearchBar(
-            action: () {},
-            hintText: "Buscar lesão",
-            searchController: _searchController,
-          ),
-        ),
       );
 }

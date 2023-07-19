@@ -6,7 +6,6 @@ import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
-import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_silver_page_app_bar.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
@@ -110,10 +109,6 @@ class _ContentPageState extends State<ContentPage> {
   SliverPageSearchAppBar get _appBar => SliverPageSearchAppBar(
         title: const PageTitle(title: 'Conteúdos'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_alt),
-            onPressed: () {},
-          ),
           AuthMedicAddButton(
             onPressed: () =>
                 Navigator.of(Routes.navigatorKey.currentContext!).pushNamed(
@@ -121,13 +116,5 @@ class _ContentPageState extends State<ContentPage> {
             ),
           ),
         ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(68),
-          child: MySearchBar(
-            hintText: 'Buscar Conteúdo',
-            searchController: TextEditingController(),
-            action: () {},
-          ),
-        ),
       );
 }
