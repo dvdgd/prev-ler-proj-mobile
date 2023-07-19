@@ -8,5 +8,5 @@ abstract class IRoutineRepository {
   Future<List<Exercise?>> getActiveExercisesByPatientId(int patientId);
   Future<List<NotificationData>> getAllNotificationsByPatientId(int patientId);
   Future<List<Routine>> getAllRoutinesByPatientId(int patientId);
-  Future<Routine> update(Routine newRoutine);
+  Future<void> update(Routine newRoutine);
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/config/routes.dart';
+import 'package:prev_ler/src/modules/auth/shared/auth_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
-import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
 class LogoutButton extends StatefulWidget {
@@ -12,33 +11,24 @@ class LogoutButton extends StatefulWidget {
 }
 
 class _LogoutButtonState extends State<LogoutButton> {
-  late final UserController controller;
+  late final UserController userController;
+  late final AuthController authController;
 
   @override
   void initState() {
     super.initState();
 
-    controller = context.read<UserController>();
-    controller.addListener(_handleAuthStateChanged);
-  }
-
-  @override
-  void dispose() {
-    controller.removeListener(_handleAuthStateChanged);
-    super.dispose();
-  }
-
-  void _handleAuthStateChanged() {
-    if (controller.state == StateEnum.idle) {
-      Navigator.of(Routes.navigatorKey.currentContext!)
-          .pushNamedAndRemoveUntil('/', (route) => false);
-    }
+    userController = context.read<UserController>();
+    authController = context.read<AuthController>();
   }
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: controller.logout,
+      onPressed: () async {
+        await userController.logout();
+        await authController.checkUserState();
+      },
       icon: const Icon(Icons.logout),
     );
   }

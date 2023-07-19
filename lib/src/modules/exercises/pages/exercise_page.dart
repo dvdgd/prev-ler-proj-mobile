@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/exercises/components/exercise_card.dart';
 import 'package:prev_ler/src/modules/exercises/pages/exercise_form_page.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
@@ -7,10 +8,8 @@ import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
-import 'package:prev_ler/src/shared/ui/widgets/my_loading_sliver.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
-import 'package:prev_ler/src/config/routes.dart';
 import 'package:provider/provider.dart';
 
 class ExercisePage extends StatefulWidget {
@@ -49,15 +48,18 @@ class _ExercisePageState extends State<ExercisePage> {
     final userExercises = exercises.where((e) => e.idMedic == idMedic).toList();
     final otherExercises =
         exercises.where((e) => e.idMedic != idMedic).toList();
+    final isLoading = state == StateEnum.loading;
 
     return Scaffold(
+      bottomNavigationBar: isLoading ? const LinearProgressIndicator() : null,
       body: RefreshIndicator(
-        onRefresh: () async => controller.fetchAll(),
+        onRefresh: () async {
+          controller.fetchAll();
+        },
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
             _appBar,
-            if (state == StateEnum.loading) const MyLoadingSliver(),
             if (state == StateEnum.error)
               SliverCenterText(message: errorMessage),
             if (exercises.isEmpty)

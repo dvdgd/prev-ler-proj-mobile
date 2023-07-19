@@ -6,7 +6,6 @@ import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
-import 'package:prev_ler/src/shared/ui/widgets/my_loading_sliver.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_search_app_bar.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_silver_page_app_bar.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
@@ -43,18 +42,21 @@ class _ContentPageState extends State<ContentPage> {
 
     final state = controller.state;
     final errorMessage = controller.errorMessage;
+    final isLoading = state == StateEnum.loading;
 
     return Scaffold(
+      bottomNavigationBar: isLoading ? const LinearProgressIndicator() : null,
       body: RefreshIndicator(
-        onRefresh: () async => controller.fetchAllContents(),
+        onRefresh: () async {
+          controller.fetchAllContents();
+        },
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
             _appBar,
-            if (state == StateEnum.loading) const MyLoadingSliver(),
             if (state == StateEnum.error)
               SliverCenterText(message: errorMessage),
-            if (contents.isEmpty)
+            if (contents.isEmpty && !isLoading)
               const SliverCenterText(
                 message: 'Não existem conteúdo para serem exibidos.',
               ),

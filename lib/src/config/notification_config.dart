@@ -55,13 +55,16 @@ class NotificationConfig {
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     await localNotificationsPlugin.initialize(
       const InitializationSettings(android: android),
-      // onSelectNotification: _onSelectNotification,
+      onDidReceiveNotificationResponse: _onSelectNotification,
     );
   }
 
-  _onSelectNotification(String? payload) {
+  _onSelectNotification(NotificationResponse response) {
+    final payload = response.payload;
+
     if (payload != null && payload.isNotEmpty) {
-      Navigator.of(Routes.navigatorKey.currentContext!).pushNamed(payload);
+      Navigator.of(Routes.navigatorKey.currentContext!)
+          .pushReplacementNamed(payload);
     }
   }
 
@@ -87,6 +90,7 @@ class NotificationConfig {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+      payload: notification.payload,
     );
   }
 
@@ -97,8 +101,11 @@ class NotificationConfig {
   Future<void> checkForNotifications() async {
     final details =
         await localNotificationsPlugin.getNotificationAppLaunchDetails();
-    if (details != null && details.didNotificationLaunchApp) {
-      _onSelectNotification(details.notificationResponse?.payload);
+
+    if (details != null &&
+        details.didNotificationLaunchApp &&
+        details.notificationResponse != null) {
+      _onSelectNotification(details.notificationResponse!);
     }
   }
 }

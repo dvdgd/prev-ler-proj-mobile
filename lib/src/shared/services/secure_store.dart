@@ -10,12 +10,12 @@ enum _SecureKeys {
 }
 
 class SecureStore {
-  final FlutterSecureStorage storage;
+  final FlutterSecureStorage _storage;
 
-  SecureStore(this.storage);
+  SecureStore(this._storage);
 
   Future<String> _getKey(String key) async {
-    final value = await storage.read(key: key);
+    final value = await _storage.read(key: key);
 
     if (value == null) {
       throw Exception('Key $key not found.');
@@ -24,8 +24,13 @@ class SecureStore {
     return value;
   }
 
+  Future<bool> containsBearer() async {
+    final bearer = await _storage.containsKey(key: _SecureKeys.bearerToken.key);
+    return bearer;
+  }
+
   Future<void> saveBearer(String bearerToken) async {
-    await storage.write(key: _SecureKeys.bearerToken.key, value: bearerToken);
+    await _storage.write(key: _SecureKeys.bearerToken.key, value: bearerToken);
   }
 
   Future<String> getBearer() async {
@@ -33,7 +38,7 @@ class SecureStore {
   }
 
   Future<void> saveUserPassword(String password) async {
-    await storage.write(key: _SecureKeys.password.key, value: password);
+    await _storage.write(key: _SecureKeys.password.key, value: password);
   }
 
   Future<String> getPassword() async {
@@ -42,8 +47,8 @@ class SecureStore {
 
   Future<void> deleteBearerAndPassword() async {
     Future.wait([
-      storage.delete(key: _SecureKeys.bearerToken.key),
-      storage.delete(key: _SecureKeys.password.key),
+      _storage.delete(key: _SecureKeys.bearerToken.key),
+      _storage.delete(key: _SecureKeys.password.key),
     ]);
   }
 }

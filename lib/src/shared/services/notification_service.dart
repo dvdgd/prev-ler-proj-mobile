@@ -3,10 +3,10 @@ import 'package:prev_ler/src/config/notification_config.dart';
 import 'package:prev_ler/src/shared/entities/notification.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-class NotificationService {
+class FlutterNotificationService {
   final NotificationConfig _notificationConfig;
 
-  NotificationService(this._notificationConfig);
+  FlutterNotificationService(this._notificationConfig);
 
   tz.TZDateTime _nextInstanceOfHour(int hour, int minute) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
@@ -48,5 +48,14 @@ class NotificationService {
     debugPrint('Notification scheduled: ${notification.toMap()}');
 
     _notificationConfig.scheduleNotification(notification);
+  }
+
+  Future<void> cancelNotification(NotificationData notificationData) async {
+    debugPrint(
+        'Cancelling notification, notificationId: ${notificationData.idNotification}');
+    await _notificationConfig
+        .cancelNotification(notificationData.idNotification);
+    debugPrint(
+        'Cancel notification sucess, notificationId: ${notificationData.idNotification}');
   }
 }

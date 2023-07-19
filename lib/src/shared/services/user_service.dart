@@ -7,40 +7,44 @@ import 'package:prev_ler/src/shared/services/secure_store.dart';
 class UserService {
   final String baseUrl = '${Environment.apiBaseUrl}/usuarios';
 
-  final SecureStore secureStorage;
-  final ClientHttp clientHttp;
+  final SecureStore _secureStorage;
+  final ClientHttp _clientHttp;
 
   User? currentUser;
 
-  UserService(this.clientHttp, this.secureStorage);
+  UserService(this._clientHttp, this._secureStorage);
 
   Future<void> register(User user) async {
-    await clientHttp.post(
+    await _clientHttp.post(
       data: user.toMap(),
       uri: Uri.parse(baseUrl),
     );
   }
 
+  Future<bool> checkUserState() {
+    return _secureStorage.containsBearer();
+  }
+
   Future<Map<String, String>> getBearerHeader() async {
-    final bearer = await secureStorage.getBearer();
+    final bearer = await _secureStorage.getBearer();
     return {'Authorization': 'Bearer $bearer'};
   }
 
   Future<dynamic> getCurrentUserId() async {
-    final authToken = await secureStorage.getBearer();
+    final authToken = await _secureStorage.getBearer();
     Map<String, dynamic> decodedToken = JwtDecoder.decode(authToken);
     return decodedToken['nameid'];
   }
 
   Future<Map<String, dynamic>> login(String email, String password) async {
-    final responseBody = await clientHttp.post(
+    final responseBody = await _clientHttp.post(
       data: {'email': email, 'senha': password},
       uri: Uri.parse('$baseUrl/login'),
     );
 
     await Future.wait([
-      secureStorage.saveBearer(responseBody['auth']['token']),
-      secureStorage.saveUserPassword(password),
+      _secureStorage.saveBearer(responseBody['auth']['token']),
+      _secureStorage.saveUserPassword(password),
     ]);
 
     return responseBody;
@@ -52,12 +56,12 @@ class UserService {
     final bearerHeader = results[0];
     final userId = results[1];
 
-    final responseBody = await clientHttp.fetch(
+    final responseBody = await _clientHttp.fetch(
       uri: Uri.parse('$baseUrl/$userId'),
       headers: bearerHeader,
     );
 
-    responseBody['senhaEncriptada'] = await secureStorage.getPassword();
+    responseBody['senhaEncriptada'] = await _secureStorage.getPassword();
     final user = User.fromMap(responseBody);
     currentUser = user;
 
@@ -65,7 +69,7 @@ class UserService {
   }
 
   Future<void> logout() async {
-    await secureStorage.deleteBearerAndPassword();
+    await _secureStorage.deleteBearerAndPassword();
   }
 
   Future<void> updateUser(User newUser) async {
@@ -74,7 +78,7 @@ class UserService {
     final bearerHeader = results[0];
     final id = results[1];
 
-    await clientHttp.put(
+    await _clientHttp.put(
       uri: Uri.parse('$baseUrl/$id'),
       data: newUser.toMap(),
       headers: bearerHeader,

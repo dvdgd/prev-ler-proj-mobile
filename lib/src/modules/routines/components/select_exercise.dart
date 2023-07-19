@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:prev_ler/src/config/routes.dart';
+import 'package:prev_ler/src/modules/exercises/pages/exercise_details_page.dart';
 import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
@@ -6,9 +8,14 @@ import 'package:prev_ler/src/shared/utils/my_converter.dart';
 import 'package:provider/provider.dart';
 
 class SelectExercise extends StatelessWidget {
-  const SelectExercise({super.key, required this.exercise});
+  const SelectExercise({
+    super.key,
+    required this.exercise,
+    this.showAction,
+  });
 
   final Exercise exercise;
+  final bool? showAction;
   static final converter = MyConverter();
 
   @override
@@ -27,6 +34,13 @@ class SelectExercise extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: MyCard(
+        onTap: () {
+          Navigator.of(Routes.navigatorKey.currentContext!).push(
+            MaterialPageRoute(
+              builder: (ctx) => ExerciseDetailsPage(exercise: exercise),
+            ),
+          );
+        },
         backgroundColor: backgroudColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -44,6 +44,8 @@ class _ExerciseCartPageState extends State<ExerciseCartPage> {
       return a.name.compareTo(b.name);
     });
 
+    final isLoading = controller.state == StateEnum.loading;
+
     return Scaffold(
       appBar: AppBar(
         title: const PageTitle(title: 'Selecionar exercícios'),
@@ -54,44 +56,50 @@ class _ExerciseCartPageState extends State<ExerciseCartPage> {
         label: const Text('OK'),
         icon: const Icon(Icons.done),
       ),
-      body: Column(
-        children: [
-          if (controller.state == StateEnum.idle ||
-              controller.state == StateEnum.loading)
-            const Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Center(
-                  child: Text(
-                    'Carregando...',
-                    textAlign: TextAlign.center,
+      bottomNavigationBar: isLoading ? const LinearProgressIndicator() : null,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          controller.fetchAll();
+        },
+        child: Column(
+          children: [
+            if (controller.state == StateEnum.idle ||
+                controller.state == StateEnum.loading)
+              const Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Center(
+                    child: Text(
+                      'Carregando...',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              ),
-            )
-          else if (exercises.isEmpty)
-            const Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Center(
-                  child: Text(
-                    'Desculpe, não foram encontrados exercícios. Tente novamente mais tarde.',
-                    textAlign: TextAlign.center,
+              )
+            else if (exercises.isEmpty)
+              const Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Center(
+                    child: Text(
+                      'Desculpe, não foram encontrados exercícios. Tente novamente mais tarde.',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
+              )
+            else
+              Expanded(
+                child: ListView.builder(
+                  itemCount: exercises.length,
+                  padding: const EdgeInsets.all(8),
+                  itemBuilder: (context, index) {
+                    return SelectExercise(exercise: exercises[index]);
+                  },
+                ),
               ),
-            )
-          else
-            Expanded(
-              child: ListView.builder(
-                itemCount: exercises.length,
-                padding: const EdgeInsets.all(8),
-                itemBuilder: (context, index) {
-                  return SelectExercise(exercise: exercises[index]);
-                },
-              ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:prev_ler/src/modules/auth/shared/auth_controller.dart';
 import 'package:prev_ler/src/modules/auth/shared/auth_request_model.dart';
 import 'package:prev_ler/src/shared/ui/components/dark_mode_button.dart';
 import 'package:prev_ler/src/shared/ui/components/password_field.dart';
-import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
+import 'package:prev_ler/src/shared/ui/widgets/my_filled_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:provider/provider.dart';
 
@@ -105,9 +105,12 @@ class _AuthPageState extends State<AuthPage> {
                   labelText: 'Senha',
                 ),
                 const SizedBox(height: 30),
-                MyFilledLoadingButton(
-                  text: 'Login',
-                  action: _makeLogin,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: MyFilledButton(
+                    text: 'Login',
+                    onTap: _makeLogin,
+                  ),
                 ),
                 const SizedBox(height: 15.0),
                 Padding(

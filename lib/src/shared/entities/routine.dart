@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/day_of_week.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/entities/notification.dart';
+import 'package:prev_ler/src/shared/entities/week_days.dart';
 import 'package:prev_ler/src/shared/utils/my_converter.dart';
 
 class Routine {
@@ -12,7 +13,7 @@ class Routine {
   final TimeOfDay startTime;
   final TimeOfDay endTime;
   final Duration duration;
-  final bool active;
+  late final bool active;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final List<Exercise>? exercises;
@@ -35,6 +36,38 @@ class Routine {
     this.notifications,
   });
 
+  Routine copyWith({
+    int? idRoutine,
+    int? idPatient,
+    String? title,
+    String? description,
+    TimeOfDay? startTime,
+    TimeOfDay? endTime,
+    bool? active,
+    Duration? duration,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    List<Exercise>? exercises,
+    List<DayOfWeek?>? weekdays,
+    List<NotificationData>? notifications,
+  }) {
+    return Routine(
+      idRoutine: idRoutine ?? this.idRoutine,
+      idPatient: idPatient ?? this.idPatient,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      active: active ?? this.active,
+      duration: duration ?? this.duration,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      exercises: exercises ?? this.exercises,
+      weekdays: weekdays ?? this.weekdays,
+      notifications: notifications ?? this.notifications,
+    );
+  }
+
   factory Routine.fromMap(Map<String, dynamic> map) {
     final intervals = map['intervalo'].split(':');
     final duration = Duration(
@@ -43,15 +76,31 @@ class Routine {
       seconds: int.parse(intervals[2]),
     );
 
-    final exercises = map['exercicios']
-        ?.map((e) => Exercise.fromMap(e))
-        .toList() as List<Exercise>;
-    final weekdays = map['rotinaDiaSemanas']
-        ?.map((e) => DayOfWeek.fromMap(e))
-        .toList() as List<DayOfWeek>;
-    final notifications = map['notificacoes']
-        ?.map((e) => NotificationData.fromMap(e))
-        .toList() as List<NotificationData>;
+    final exercisesMap = map['exercicios'] as List<dynamic>?;
+    final List<Exercise> exercises = [];
+    if (exercisesMap != null && exercisesMap.isNotEmpty) {
+      for (var element in exercisesMap) {
+        exercises.add(Exercise.fromMap(element));
+      }
+    }
+
+    final weekdaysMap = map['rotinaDiaSemanas'] as List<dynamic>?;
+    final List<DayOfWeek> weekdays = [];
+    if (weekdaysMap != null && weekdaysMap.isNotEmpty) {
+      for (var day in weekdaysMap) {
+        final dayOfWeek =
+            daysOfWeek.firstWhere((dw) => dw.idWeekday == day['idDiaSemana']);
+        weekdays.add(dayOfWeek);
+      }
+    }
+
+    final notificationsMap = map['notificacoes'] as List<dynamic>?;
+    final List<NotificationData> notifications = [];
+    if (notificationsMap != null && notificationsMap.isNotEmpty) {
+      for (var notification in notificationsMap) {
+        notifications.add(NotificationData.fromMap(notification));
+      }
+    }
 
     return Routine(
       idRoutine: map['idRotina'],
@@ -71,9 +120,8 @@ class Routine {
   Map<String, dynamic> toMap() {
     final exercisesMap = exercises?.map((e) {
       final Map<String, dynamic> map = {
-        'idRotina': 0,
+        'idRotina': idRoutine,
         'idExercicio': e.idExercise,
-        'exercicio': e.toMap(),
       };
       return map;
     }).toList();
@@ -81,9 +129,8 @@ class Routine {
     final weekdaysMap = weekdays?.map(
       (e) {
         final Map<String, dynamic> map = {
-          'idRotina': 0,
+          'idRotina': idRoutine,
           'idDiaSemana': e?.idWeekday,
-          'diaSemana': e?.toMap(),
         };
         return map;
       },

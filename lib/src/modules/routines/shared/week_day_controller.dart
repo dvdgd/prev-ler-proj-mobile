@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WeekDayController extends ChangeNotifier {
-  List<bool> selectedDays = List.generate(7, (index) => true);
+  List<bool> selectedDays = List.generate(7, (index) => false);
 
   void toggle(int index) {
     selectedDays[index] = !selectedDays[index];

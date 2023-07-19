@@ -8,7 +8,7 @@ import 'package:prev_ler/src/shared/http/client_http.dart';
 class RoutineHttpRepository implements IRoutineRepository {
   final ClientHttp _clientHttp;
   final _patientBaseUrl = '${Environment.apiBaseUrl}/pacientes';
-  final _routineBaseUrl = '${Environment.apiBaseUrl}/routines';
+  final _routineBaseUrl = '${Environment.apiBaseUrl}/rotinas';
 
   RoutineHttpRepository(this._clientHttp);
 
@@ -30,26 +30,12 @@ class RoutineHttpRepository implements IRoutineRepository {
   }
 
   @override
-  Future<Routine> update(Routine newRoutine) async {
+  Future<void> update(Routine newRoutine) async {
     final id = newRoutine.idRoutine;
-    final respBody = await _clientHttp.put(
+    await _clientHttp.put(
       uri: Uri.parse('$_routineBaseUrl/$id'),
       data: newRoutine.toMap(),
     );
-
-    return Routine.fromMap(respBody);
-  }
-
-  @override
-  Future<List<Exercise?>> getActiveExercisesByPatientId(int patientId) {
-    // TODO: implement getActiveExercisesByPatientId
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<NotificationData>> getAllNotificationsByPatientId(int patientId) {
-    // TODO: implement getAllNotificationsByPatientId
-    throw UnimplementedError();
   }
 
   @override
@@ -60,5 +46,23 @@ class RoutineHttpRepository implements IRoutineRepository {
 
     final routines = respBody.map((e) => Routine.fromMap(e));
     return routines.toList();
+  }
+
+  @override
+  Future<List<Exercise?>> getActiveExercisesByPatientId(int patientId) {
+    // TODO: implement getActiveExercisesByPatientId
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<NotificationData>> getAllNotificationsByPatientId(
+    int patientId,
+  ) async {
+    final respBody = await _clientHttp.fetch<List<dynamic>>(
+      uri: Uri.parse('$_patientBaseUrl/$patientId/notificacoes'),
+    );
+
+    final notifications = respBody.map((e) => NotificationData.fromMap(e));
+    return notifications.toList();
   }
 }

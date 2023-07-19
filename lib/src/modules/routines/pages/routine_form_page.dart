@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/routines/components/select_exercise.dart';
+import 'package:prev_ler/src/modules/routines/components/week_day_legend.dart';
 import 'package:prev_ler/src/modules/routines/components/week_day_picker.dart';
 import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
 import 'package:prev_ler/src/modules/routines/shared/routine_create_model.dart';
@@ -44,13 +45,6 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
   final _endTime = ValueNotifier(TimeOfDay.now());
 
   @override
-  void dispose() {
-    _exerciseCartController.clearAll();
-    _weekDayController.disableAll();
-    super.dispose();
-  }
-
-  @override
   void initState() {
     _exerciseCartController = context.read<ExerciseCartController>();
     _weekDayController = context.read<WeekDayController>();
@@ -60,12 +54,23 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _exerciseCartController.clearAll();
+    _weekDayController.disableAll();
+    _routinesController.removeListener(_handleStateChange);
+    super.dispose();
+  }
+
   _handleStateChange() {
     if (_routinesController.state == StateEnum.success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Sucesso!')),
+      );
       Navigator.of(Routes.navigatorKey.currentContext!).pop();
     }
     if (_routinesController.state == StateEnum.error) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(Routes.navigatorKey.currentContext!).showSnackBar(
         SnackBar(
           content: Text(_routinesController.errorMessage),
           action: SnackBarAction(
@@ -150,6 +155,9 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
                   'Dias da rotina ativa.',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
+              ),
+              leftAlignWithPadding(
+                child: const WeekdayLegend(),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),

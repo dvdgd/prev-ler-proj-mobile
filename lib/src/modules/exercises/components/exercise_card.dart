@@ -91,6 +91,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
   }
 
   void _navigateToExerciseReadPage() {
+    Navigator.of(Routes.navigatorKey.currentContext!).pop();
     Navigator.of(Routes.navigatorKey.currentContext!).push(
       MaterialPageRoute(
         builder: (BuildContext context) => ExerciseDetailsPage(

@@ -20,11 +20,8 @@ class HomePage extends StatelessWidget {
             icon: const Icon(Icons.person_outline),
           ),
           IconButton(
-            onPressed: () {
-              throw UnimplementedError(
-                'Notifications IconButton is not implemented yet!',
-              );
-            },
+            onPressed: () => Navigator.of(Routes.navigatorKey.currentContext!)
+                .pushNamed('/notifications'),
             icon: const Icon(Icons.notifications_none_outlined),
           ),
           const LogoutButton(),

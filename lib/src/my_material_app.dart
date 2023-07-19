@@ -40,9 +40,7 @@ class MyMaterialApp extends StatelessWidget {
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             shape: _roudedRectangleBorder,
-            side: BorderSide(
-              color: myColorScheme.primary,
-            ),
+            side: BorderSide(color: myColorScheme.primary),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(

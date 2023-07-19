@@ -3,7 +3,7 @@ import 'package:prev_ler/src/modules/auth/shared/auth_request_model.dart';
 import 'package:prev_ler/src/shared/http/client_http.dart';
 import 'package:prev_ler/src/shared/services/user_service.dart';
 
-enum AuthState { loggedIn, error, loggedOut, loading }
+enum AuthState { loggedIn, error, loggedOut, loading, idle }
 
 class AuthController extends ChangeNotifier {
   final UserService authService;
@@ -11,7 +11,7 @@ class AuthController extends ChangeNotifier {
 
   AuthController(this.authService, this.clientHttp);
 
-  AuthState state = AuthState.loggedOut;
+  AuthState state = AuthState.idle;
   String errorMessage = '';
 
   Future<void> login(AuthRequestModel authRequest) async {
@@ -35,6 +35,18 @@ class AuthController extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
+  }
+
+  Future<void> checkUserState() async {
+    final logged = await authService.checkUserState();
+
+    if (logged) {
+      state = AuthState.loggedIn;
+    } else {
+      state = AuthState.loggedOut;
+    }
+
+    notifyListeners();
   }
 
   void clearState() {

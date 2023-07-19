@@ -64,9 +64,11 @@ class RoutinesController extends ChangeNotifier {
 
       routines = await routinesSservice.getAll(patient!.idPatient);
       state = StateEnum.success;
-    } catch (e) {
+    } catch (e, stackTrace) {
       errorMessage = e.toString();
       state = StateEnum.error;
+      debugPrint(e.toString());
+      debugPrint(stackTrace.toString());
     } finally {
       notifyListeners();
     }
@@ -95,14 +97,35 @@ class RoutinesController extends ChangeNotifier {
     try {
       await routinesSservice.update(newRoutine);
 
-      final routineIndex = routines.indexWhere(
-        (e) => e.idRoutine == newRoutine.idRoutine,
-      );
+      _updateRoutineFromController(newRoutine);
+      state = StateEnum.success;
+    } catch (e) {
+      errorMessage = e.toString();
+      state = StateEnum.error;
+    } finally {
+      notifyListeners();
+    }
+  }
 
-      if (routineIndex != -1) {
-        routines[routineIndex] = newRoutine;
-      }
+  Routine _updateRoutineFromController(Routine routine) {
+    final routineIndex = routines.indexWhere(
+      (e) => e.idRoutine == routine.idRoutine,
+    );
 
+    if (routineIndex != -1) {
+      routines[routineIndex] = routine;
+    }
+    return routine;
+  }
+
+  Future<void> toggleRoutine(Routine routine) async {
+    state = StateEnum.loading;
+    notifyListeners();
+
+    try {
+      await routinesSservice.toggleRoutine(routine);
+
+      _updateRoutineFromController(routine);
       state = StateEnum.success;
     } catch (e) {
       errorMessage = e.toString();

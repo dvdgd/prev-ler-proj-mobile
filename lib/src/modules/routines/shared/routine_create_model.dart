@@ -34,7 +34,7 @@ class RoutineCreateModel {
         List.generate(selectedDays.length, (index) {
       final isIndexSelected = selectedDays[index];
       if (isIndexSelected) {
-        return weekDays[index];
+        return daysOfWeek[index];
       }
       return null;
     }).where((element) => element != null).toList();
@@ -54,7 +54,7 @@ class RoutineCreateModel {
   }
 
   factory RoutineCreateModel.fromRoutine(Routine routine) {
-    List<bool> selectedDays = List<bool>.filled(weekDays.length, false);
+    List<bool> selectedDays = List<bool>.filled(daysOfWeek.length, false);
 
     return RoutineCreateModel(
       routineId: routine.idRoutine,

@@ -11,6 +11,8 @@ import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart'
 import 'package:prev_ler/src/modules/exercises/shared/exercises_service.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_service.dart';
+import 'package:prev_ler/src/modules/notifications/shared/notification_controller.dart';
+import 'package:prev_ler/src/modules/notifications/shared/notification_service.dart';
 import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
 import 'package:prev_ler/src/modules/routines/shared/repositories/routine_hive_repository.dart';
 import 'package:prev_ler/src/modules/routines/shared/repositories/routine_http_repository.dart';
@@ -52,7 +54,8 @@ void main() async {
         Provider(create: (_) => RoutineHiveRepository(hiveBox.routineBox)),
         Provider(create: (_) => NotificationConfig()),
         Provider(
-          create: (ctx) => NotificationService(ctx.read<NotificationConfig>()),
+          create: (ctx) =>
+              FlutterNotificationService(ctx.read<NotificationConfig>()),
         ),
         Provider(
           create: (ctx) => CacheInterceptor(
@@ -80,10 +83,12 @@ void main() async {
         ),
         Provider(
           create: (ctx) => RoutinesServiceImpl(
-            ctx.read<ClientHttp>(),
             ctx.read<RoutineHttpRepository>(),
-            ctx.read<NotificationService>(),
+            ctx.read<FlutterNotificationService>(),
           ),
+        ),
+        Provider(
+          create: (ctx) => NotificationServiceImp(ctx.read<ClientHttp>()),
         ),
         ChangeNotifierProvider(
           create: (_) => WeekDayController(),
@@ -122,6 +127,12 @@ void main() async {
         ChangeNotifierProvider(
           create: (ctx) => RoutinesController(
             ctx.read<RoutinesServiceImpl>(),
+            ctx.read<UserService>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => NotificationController(
+            ctx.read<NotificationServiceImp>(),
             ctx.read<UserService>(),
           ),
         ),
