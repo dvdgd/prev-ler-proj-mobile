@@ -19,8 +19,6 @@ class ExercisePage extends StatefulWidget {
 }
 
 class _ExercisePageState extends State<ExercisePage> {
-  final _searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +39,7 @@ class _ExercisePageState extends State<ExercisePage> {
     final state = controller.state;
     final errorMessage = controller.errorMessage;
 
-    final idMedic = context.read<UserController>().user?.medic?.idMedic;
+    final idMedic = context.read<UserController>().user?.idUser;
 
     final exercises = controller.exercises;
     final userExercises = exercises.where((e) => e.idMedic == idMedic).toList();

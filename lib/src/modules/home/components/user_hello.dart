@@ -28,7 +28,7 @@ class _UserHelloState extends State<UserHello> {
   Widget build(BuildContext context) {
     final controller = context.watch<UserController>();
 
-    final name = controller.user?.name;
+    final name = controller.user?.firstName;
     final textName = name?.split(' ')[0] ?? '';
 
     return PageTitle(

@@ -19,7 +19,7 @@ class MyMaterialApp extends StatelessWidget {
     final brightness = isDarkMode ? Brightness.dark : Brightness.light;
 
     final myColorScheme = ColorScheme.fromSeed(
-      seedColor: Colors.deepPurple,
+      seedColor: Colors.blueAccent,
       brightness: brightness,
     );
 

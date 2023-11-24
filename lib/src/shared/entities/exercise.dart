@@ -1,5 +1,4 @@
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
-import 'package:prev_ler/src/shared/entities/medic.dart';
 
 class Exercise {
   int idExercise;
@@ -13,7 +12,6 @@ class Exercise {
   String? observations;
   DateTime? createdAt;
   DateTime? updatedAt;
-  Medic? medic;
   InjuryType? injuryType;
 
   Exercise({
@@ -28,7 +26,6 @@ class Exercise {
     required this.observations,
     this.createdAt,
     this.updatedAt,
-    this.medic,
     this.injuryType,
   });
 
@@ -43,7 +40,6 @@ class Exercise {
       image: map['encodedGif'],
       precautions: map['precaucoes'],
       observations: map['observacoes'],
-      medic: map['medico'] != null ? Medic.fromMap(map['medico']) : null,
       createdAt: map['dataCriacao'] != null
           ? DateTime.parse(map['dataCriacao'])
           : null,

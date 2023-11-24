@@ -1,5 +1,3 @@
-import 'package:prev_ler/src/shared/entities/medic.dart';
-
 class InjuryType {
   int idInjuryType;
   int idMedic;
@@ -8,7 +6,6 @@ class InjuryType {
   String description;
   DateTime? createdAt;
   DateTime? updatedAt;
-  Medic? medic;
 
   InjuryType({
     this.idInjuryType = 0,
@@ -18,7 +15,6 @@ class InjuryType {
     required this.description,
     this.createdAt,
     this.updatedAt,
-    this.medic,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,7 +26,6 @@ class InjuryType {
       'descricao': description,
       'dataCriacao': createdAt?.toIso8601String(),
       'dataAtualizacao': updatedAt?.toIso8601String(),
-      'medico': medic?.toMap(),
     };
   }
 
@@ -46,9 +41,6 @@ class InjuryType {
           : null,
       updatedAt: json['dataAtualizacao'] != null
           ? DateTime.parse(json['dataAtualizacao'] as String)
-          : null,
-      medic: json['medico'] != null
-          ? Medic.fromMap(json['medico'] as Map<String, dynamic>)
           : null,
     );
   }

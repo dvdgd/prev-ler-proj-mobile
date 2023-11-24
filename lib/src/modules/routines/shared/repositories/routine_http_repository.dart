@@ -1,68 +1,55 @@
-import 'package:prev_ler/main.dart';
+import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/routines/shared/repositories/routine_repository.dart';
-import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/entities/notification.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
-import 'package:prev_ler/src/shared/http/client_http.dart';
 
 class RoutineHttpRepository implements IRoutineRepository {
-  final ClientHttp _clientHttp;
-  final _patientBaseUrl = '${Environment.apiBaseUrl}/pacientes';
-  final _routineBaseUrl = '${Environment.apiBaseUrl}/rotinas';
-
-  RoutineHttpRepository(this._clientHttp);
+  RoutineHttpRepository();
 
   @override
   Future<Routine> create(Routine routine) async {
-    final patientId = routine.idPatient;
-    final responseBody = await _clientHttp.post(
-      uri: Uri.parse('$_patientBaseUrl/$patientId/rotinas'),
-      data: routine.toMap(),
-    );
-
-    return Routine.fromMap(responseBody);
+    return routine;
   }
 
   @override
   Future<void> delete(Routine routine) async {
-    final id = routine.idRoutine;
-    await _clientHttp.delete(uri: Uri.parse('$_routineBaseUrl/$id'));
+    Future.delayed(const Duration(seconds: 1));
   }
 
   @override
   Future<void> update(Routine newRoutine) async {
-    final id = newRoutine.idRoutine;
-    await _clientHttp.put(
-      uri: Uri.parse('$_routineBaseUrl/$id'),
-      data: newRoutine.toMap(),
-    );
+    Future.delayed(const Duration(seconds: 1));
   }
 
   @override
   Future<List<Routine>> getAllRoutinesByPatientId(int patientId) async {
-    final respBody = await _clientHttp.fetch<List<dynamic>>(
-      uri: Uri.parse('$_patientBaseUrl/$patientId/rotinas'),
-    );
-
-    final routines = respBody.map((e) => Routine.fromMap(e));
-    return routines.toList();
-  }
-
-  @override
-  Future<List<Exercise?>> getActiveExercisesByPatientId(int patientId) {
-    // TODO: implement getActiveExercisesByPatientId
-    throw UnimplementedError();
+    return [
+      Routine(
+        idPatient: 1,
+        title: "title",
+        description: "description",
+        startTime: const TimeOfDay(hour: 1, minute: 10),
+        endTime: const TimeOfDay(hour: 3, minute: 10),
+        duration: const Duration(minutes: 15),
+        active: true,
+      ),
+    ];
   }
 
   @override
   Future<List<NotificationData>> getAllNotificationsByPatientId(
     int patientId,
   ) async {
-    final respBody = await _clientHttp.fetch<List<dynamic>>(
-      uri: Uri.parse('$_patientBaseUrl/$patientId/notificacoes'),
-    );
-
-    final notifications = respBody.map((e) => NotificationData.fromMap(e));
-    return notifications.toList();
+    return [
+      NotificationData(
+        idNotification: 1,
+        idRoutine: 1,
+        idExercise: 1,
+        title: "title",
+        message: "teste",
+        time: DateTime.now(),
+        sent: true,
+      )
+    ];
   }
 }

@@ -1,47 +1,57 @@
-import 'package:prev_ler/src/shared/entities/medic.dart';
-import 'package:prev_ler/src/shared/entities/patient.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class User {
   int idUser;
   String email;
-  String name;
-  DateTime bornDate;
+  String firstName;
+  String lastName;
+  String cpf;
+  DateTime? bornDate;
   String? password;
-  Patient? patient;
-  Medic? medic;
+  UserType type;
 
   User({
     this.idUser = 0,
     required this.email,
-    required this.bornDate,
-    required this.name,
+    required this.firstName,
+    required this.lastName,
+    required this.type,
+    required this.cpf,
+    this.bornDate,
     this.password,
-    this.patient,
-    this.medic,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'idUsuario': idUser,
+      'id_usuario': idUser,
       'email': email,
-      'senhaEncriptada': password,
-      'paciente': patient?.toMap(),
-      'medico': medic?.toMap(),
-      'nome': name,
-      'dataNascimento': bornDate.toIso8601String()
+      'data': {},
+      'first_name': firstName,
+    };
+  }
+
+  Map<String, dynamic> toSignUpMap() {
+    return {
+      'id_usuario': idUser,
+      'email': email,
+      'data': {
+        'first_name': firstName,
+        'last_name': lastName,
+        'cpf': cpf,
+        'born_date': bornDate?.toIso8601String(),
+      },
     };
   }
 
   factory User.fromMap(Map<String, dynamic> json) {
     return User(
-      idUser: json['idUsuario'],
+      bornDate: json['born_date'],
+      cpf: json['cpf'],
+      idUser: json['id_usuario'],
       email: json['email'],
-      password: json['senhaEncriptada'],
-      name: json['nome'],
-      bornDate: DateTime.parse(json['dataNascimento']),
-      patient:
-          json['paciente'] != null ? Patient.fromMap(json['paciente']) : null,
-      medic: json['medico'] != null ? Medic.fromMap(json['medico']) : null,
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      type: UserType.employee,
     );
   }
 }

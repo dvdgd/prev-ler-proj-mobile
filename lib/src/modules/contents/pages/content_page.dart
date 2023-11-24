@@ -33,7 +33,7 @@ class _ContentPageState extends State<ContentPage> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<ContentsController>();
-    final idMedic = context.read<UserController>().user?.medic?.idMedic;
+    final idMedic = context.read<UserController>().user?.idUser;
 
     final contents = controller.contents;
     final userContents = contents.where((c) => c.idMedic == idMedic).toList();

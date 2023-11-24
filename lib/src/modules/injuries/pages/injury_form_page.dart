@@ -3,7 +3,7 @@ import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
-import 'package:prev_ler/src/shared/entities/medic.dart';
+import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
@@ -29,7 +29,7 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
   final _abbreviationController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  late final Medic medic;
+  late final User medic;
   late final InjuriesController controller;
 
   final formKey = GlobalKey<FormState>();
@@ -41,12 +41,12 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
     controller = context.read<InjuriesController>();
     controller.addListener(_handleAuthStateChange);
 
-    final medic = context.read<UserController>().user?.medic;
-    if (medic == null) {
+    final user = context.read<UserController>().user;
+    if (user == null || user.type == UserType.employee) {
       Navigator.of(Routes.navigatorKey.currentContext!)
           .pushReplacementNamed('/');
     } else {
-      this.medic = medic;
+      medic = user;
     }
 
     final injury = widget.injury;
@@ -87,7 +87,7 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
 
     return InjuryType(
       idInjuryType: widget.injury?.idInjuryType ?? 0,
-      idMedic: medic.idMedic,
+      idMedic: medic.idUser,
       name: name,
       abbreviation: abbreviation,
       description: description,

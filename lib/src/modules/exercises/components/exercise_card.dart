@@ -27,7 +27,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
   @override
   Widget build(BuildContext context) {
     final userController = context.watch<UserController>();
-    final medic = userController.user?.medic;
+    final medic = userController.user;
 
     final title = widget.exercise.name;
     final description = widget.exercise.description;
@@ -41,7 +41,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
         clipBehavior: Clip.antiAlias,
         backgroundColor: Theme.of(context).cardColor,
         onTap: () {
-          final medicContent = widget.exercise.idMedic == medic?.idMedic;
+          final medicContent = widget.exercise.idMedic == medic?.idUser;
           if (medic == null || !medicContent) {
             return _navigateToExerciseReadPage();
           }

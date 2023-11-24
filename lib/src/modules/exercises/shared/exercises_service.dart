@@ -1,6 +1,4 @@
-import 'package:prev_ler/main.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
-import 'package:prev_ler/src/shared/http/client_http.dart';
 import 'package:prev_ler/src/shared/utils/my_converter.dart';
 
 abstract class ExerciseService {
@@ -11,47 +9,40 @@ abstract class ExerciseService {
 }
 
 class ExercisesServiceImpl extends ExerciseService {
-  final ClientHttp clientHttp;
   final MyConverter fileConverter;
-  final String baseUrl = '${Environment.apiBaseUrl}/exercicios';
 
   ExercisesServiceImpl(
-    this.clientHttp,
     this.fileConverter,
   );
 
   @override
   Future<Exercise> create(Exercise newExercise) async {
-    final responseBody = await clientHttp.post(
-      uri: Uri.parse(baseUrl),
-      data: newExercise.toMap(),
-    );
-
-    return Exercise.fromMap(responseBody);
+    return newExercise;
   }
 
   @override
   Future<List<Exercise>> fetchAll() async {
-    final responseBody = await clientHttp.fetch<List<dynamic>>(
-      uri: Uri.parse(baseUrl),
-    );
-
-    final exercises = responseBody.map((e) => Exercise.fromMap(e));
-    return exercises.toList();
+    return [
+      Exercise(
+        idMedic: 1,
+        idInjuryType: 1,
+        name: "name",
+        description: "description",
+        instructions: "instructions",
+        image: "image",
+        precautions: "precautions",
+        observations: "observations",
+      ),
+    ];
   }
 
   @override
   Future<void> delete(Exercise exercise) async {
-    final id = exercise.idExercise;
-    await clientHttp.delete(uri: Uri.parse('$baseUrl/$id'));
+    return Future.delayed(const Duration(seconds: 1));
   }
 
   @override
   Future<void> update(Exercise newExercise) async {
-    final id = newExercise.idExercise;
-    await clientHttp.put(
-      uri: Uri.parse('$baseUrl/$id'),
-      data: newExercise.toMap(),
-    );
+    return Future.delayed(const Duration(seconds: 1));
   }
 }

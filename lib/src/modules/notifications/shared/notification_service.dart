@@ -1,41 +1,33 @@
-import 'package:prev_ler/main.dart';
 import 'package:prev_ler/src/shared/entities/notification.dart';
-import 'package:prev_ler/src/shared/http/client_http.dart';
 
 abstract class INotificationService {
-  Future<List<NotificationData>> getNotifications(int patientId);
+  Future<List<NotificationData>> getActiveRoutinesNotifications(int patientId);
   Future<void> updateNotificationAsSended(NotificationData notification);
 }
 
 class NotificationServiceImp implements INotificationService {
-  final ClientHttp _clientHttp;
-  final _patientBaseUrl = '${Environment.apiBaseUrl}/pacientes';
-  final _notificationBaseUrl = '${Environment.apiBaseUrl}/notificacoes';
-
-  NotificationServiceImp(this._clientHttp);
+  NotificationServiceImp();
 
   @override
-  Future<List<NotificationData>> getNotifications(int patientId) async {
-    final respBody = await _clientHttp.fetch<List<dynamic>>(
-      uri: Uri.parse('$_patientBaseUrl/$patientId/rotinas/notificacoes'),
-      queryParams: {
-        'statusRotinas': true,
-      },
-    );
-
-    final notifications = respBody.map((e) => NotificationData.fromMap(e));
-    return notifications.toList();
+  Future<List<NotificationData>> getActiveRoutinesNotifications(
+      int patientId) async {
+    return [
+      NotificationData(
+        idNotification: 1,
+        idRoutine: 1,
+        idExercise: 1,
+        title: "title",
+        message: "teste",
+        time: DateTime.now(),
+        sent: true,
+      ),
+    ];
   }
 
   @override
   Future<void> updateNotificationAsSended(
     NotificationData notification,
   ) async {
-    final id = notification.idNotification;
-
-    await _clientHttp.put(
-      uri: Uri.parse('$_notificationBaseUrl/$id'),
-      data: notification.toMap(),
-    );
+    Future.delayed(const Duration(seconds: 1));
   }
 }

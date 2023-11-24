@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
       return const SplashScreen();
     }
 
-    final isMedic = user.medic != null;
+    final isMedic = user.type == UserType.healthProfessional;
 
     return Scaffold(
       appBar: AppBar(
@@ -74,7 +74,8 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 15),
             UserForm(
               action: controller.updateUser,
-              userType: isMedic ? UserType.medic : UserType.patient,
+              userType:
+                  isMedic ? UserType.healthProfessional : UserType.employee,
               user: user,
             ),
             const SizedBox(height: 40),

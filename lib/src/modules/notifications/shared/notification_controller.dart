@@ -17,7 +17,7 @@ class NotificationController extends ChangeNotifier {
 
   User _getPatientUser() {
     final user = _userService.currentUser;
-    if (user == null || user.patient?.idPatient == null) {
+    if (user == null || user.type == UserType.employee) {
       throw Exception('Você precisa ser um paciente para criar rotinas.');
     }
 
@@ -29,9 +29,10 @@ class NotificationController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final patientId = _getPatientUser().patient!.idPatient;
+      final patientId = _getPatientUser().idUser;
 
-      notifications = await _notificationService.getNotifications(patientId);
+      notifications =
+          await _notificationService.getActiveRoutinesNotifications(patientId);
       state = StateEnum.success;
     } catch (e) {
       state = StateEnum.error;

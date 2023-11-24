@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:prev_ler/src/shared/entities/medic.dart';
-import 'package:prev_ler/src/shared/entities/patient.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/password_field.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_date_picker.dart';
-import 'package:prev_ler/src/shared/ui/widgets/my_dropdown_button_form_field.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
-import 'package:prev_ler/src/shared/utils/constants.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:string_validator/string_validator.dart' as validator;
 
@@ -37,9 +32,6 @@ class _UserFormState extends State<UserForm> {
   final _nameController = TextEditingController();
   final _bornDateController = TextEditingController();
   final _selectedBornDateController = TextEditingController();
-  final _occupationController = TextEditingController();
-  final _crmNumberController = TextEditingController();
-  final _crmStateController = TextEditingController();
 
   late final bool enableFields;
 
@@ -58,50 +50,37 @@ class _UserFormState extends State<UserForm> {
     final password = _passwordController.text;
     final name = _nameController.text;
     final bornDate = _selectedBornDateController.text;
-    final crmNumber = _crmNumberController.text;
-    final crmState = _crmStateController.text;
-    final occupation = _occupationController.text.isEmpty
-        ? 'Médico'
-        : _occupationController.text;
 
-    final isMedic = widget.userType == UserType.medic;
+    final isMedic = widget.userType == UserType.healthProfessional;
 
     return User(
       idUser: widget.user?.idUser ?? 0,
-      name: name,
+      firstName: name,
       bornDate: DateTime.parse(bornDate),
       email: email,
       password: password,
-      medic: !isMedic
-          ? null
-          : Medic(
-              idMedic: widget.user?.medic?.idMedic ?? 0,
-              crmNumber: crmNumber,
-              crmState: crmState,
-              crmStatus: widget.user?.medic?.crmStatus,
-            ),
-      patient: Patient(
-        idPatient: widget.user?.patient?.idPatient ?? 0,
-        occupation: occupation,
-      ),
+      cpf: '',
+      lastName: '',
+      type: isMedic ? UserType.employee : UserType.healthProfessional,
     );
   }
 
   void _serializeControllers(User user) {
     _emailController.text = user.email;
     _passwordController.text = user.password ?? '';
-    _nameController.text = user.name;
-    _bornDateController.text = DateFormat('yyyy-MM-dd').format(user.bornDate);
-    _crmNumberController.text = user.medic?.crmNumber ?? '';
-    _crmStateController.text = user.medic?.crmState ?? '';
-    _selectedBornDateController.text =
-        DateFormat('yyyy-MM-dd').format(user.bornDate);
-    _occupationController.text = user.patient?.occupation ?? '';
+    _nameController.text = user.firstName;
+
+    if (user.bornDate != null) {
+      _bornDateController.text = user.bornDate != null
+          ? DateFormat('yyyy-MM-dd').format(user.bornDate!)
+          : '';
+      _selectedBornDateController.text =
+          DateFormat('yyyy-MM-dd').format(user.bornDate!);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isMedic = widget.userType == UserType.medic;
     final buttonText = widget.user == null ? 'Cadastrar-se' : 'Salvar';
 
     return Form(
@@ -167,8 +146,6 @@ class _UserFormState extends State<UserForm> {
           prefixIcon: const Icon(Icons.date_range_outlined),
           enable: enableFields,
         ),
-        if (isMedic) ..._medicForms,
-        if (!isMedic) ..._patientForms,
         const SizedBox(height: 30),
         MyFilledLoadingButton(
           text: buttonText,
@@ -183,51 +160,4 @@ class _UserFormState extends State<UserForm> {
       ]),
     );
   }
-
-  List<Widget> get _patientForms => [
-        MyTextFormField(
-          validator: (text) {
-            if (text == null || text.isEmpty) {
-              return 'Ocupação não pode ser vazia';
-            }
-            return null;
-          },
-          controller: _occupationController,
-          labelText: 'Ocupação',
-          prefixIcon: const Icon(Icons.work_history_outlined),
-        )
-      ];
-
-  List<Widget> get _medicForms => [
-        MyTextFormField(
-          validator: (text) {
-            if (text == null || text.isEmpty) {
-              return 'O CRM não pode ficar vazio';
-            }
-            return null;
-          },
-          controller: _crmNumberController,
-          labelText: 'Numero CRM',
-          textInputType: TextInputType.number,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
-          ],
-          prefixIcon: const Icon(Icons.numbers_outlined),
-          enable: enableFields,
-        ),
-        MyDropdownButtonFormField(
-          validator: (value) => value == null ? 'Selecione um estado' : null,
-          hintText: 'Selecione um estado',
-          initValue: widget.user?.medic?.crmState,
-          controller: _crmStateController,
-          prefixIcon: const Icon(Icons.map),
-          enable: enableFields,
-          list: statesList
-              .map((e) => DropdownMenuItem<String>(
-                    value: e,
-                    child: Text(e),
-                  ))
-              .toList(),
-        )
-      ];
 }

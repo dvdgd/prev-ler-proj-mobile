@@ -3,7 +3,7 @@ import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
-import 'package:prev_ler/src/shared/entities/medic.dart';
+import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/injury_dropdown_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
@@ -35,7 +35,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
   final formKey = GlobalKey<FormState>();
 
   late final ContentsController controller;
-  late final Medic medic;
+  late final User medic;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
     controller = context.read<ContentsController>();
     controller.addListener(_handleAuthStateChange);
 
-    final medic = context.read<UserController>().user?.medic;
+    final medic = context.read<UserController>().user;
     if (medic == null) {
       Navigator.of(Routes.navigatorKey.currentContext!)
           .pushReplacementNamed('/');
@@ -92,7 +92,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
 
     return Content(
       idContent: widget.content?.idContent ?? 0,
-      idMedic: medic.idMedic,
+      idMedic: medic.idUser,
       idInjuryType: int.parse(injuryTypeId),
       title: title,
       subtitle: subtitle,

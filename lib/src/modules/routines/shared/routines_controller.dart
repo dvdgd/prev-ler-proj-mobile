@@ -22,15 +22,15 @@ class RoutinesController extends ChangeNotifier {
     }
 
     final firstRoutine = routines[0];
-    if (firstRoutine.idPatient != _getPatientUser().patient?.idPatient) {
+    if (firstRoutine.idPatient != _getPatientUser().idUser) {
       await fetchAll();
     }
   }
 
   User _getPatientUser() {
     final user = userService.currentUser;
-    if (user == null || user.patient?.idPatient == null) {
-      throw Exception('Você precisa ser um paciente para criar rotinas.');
+    if (user == null || user.type == UserType.employee) {
+      throw Exception('Você precisa ser um funcionário para criar rotinas.');
     }
 
     return user;
@@ -41,7 +41,7 @@ class RoutinesController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final patientId = _getPatientUser().patient!.idPatient;
+      final patientId = _getPatientUser().idUser;
       newRoutine.patientId = patientId;
 
       final routine = await routinesSservice.create(newRoutine);
@@ -60,9 +60,9 @@ class RoutinesController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final patient = _getPatientUser().patient;
+      final patient = _getPatientUser();
 
-      routines = await routinesSservice.getAll(patient!.idPatient);
+      routines = await routinesSservice.getAll(patient.idUser);
       state = StateEnum.success;
     } catch (e, stackTrace) {
       errorMessage = e.toString();

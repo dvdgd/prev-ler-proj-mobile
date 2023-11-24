@@ -1,5 +1,4 @@
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
-import 'package:prev_ler/src/shared/entities/medic.dart';
 
 class Content {
   int idContent;
@@ -11,7 +10,6 @@ class Content {
   String? observation;
   DateTime? createdAt;
   DateTime? updatedAt;
-  Medic? medic;
   InjuryType? injuryType;
 
   Content({
@@ -24,7 +22,6 @@ class Content {
     required this.observation,
     this.createdAt,
     this.updatedAt,
-    this.medic,
     this.injuryType,
   });
 
@@ -39,7 +36,6 @@ class Content {
       observation: json['observacao'] as String,
       createdAt: DateTime.parse(json['dataCriacao'] as String),
       updatedAt: DateTime.parse(json['dataAtualizacao'] as String),
-      medic: json['medico'] != null ? Medic.fromMap(json['medico']) : null,
       injuryType: json['tipoLesao'] != null
           ? InjuryType.fromMap(json['tipoLesao'] as Map<String, dynamic>)
           : null,
@@ -57,7 +53,6 @@ class Content {
       'observacao': observation,
       'dataCriacao': createdAt?.toIso8601String(),
       'dataAtualizacao': updatedAt?.toIso8601String(),
-      'medico': medic?.toMap(),
       'tipoLesao': injuryType?.toMap(),
     };
   }

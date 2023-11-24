@@ -19,6 +19,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.6.2
   provider: ^6.0.5
   string_validator: ^1.0.0
+  supabase_flutter: ^1.6.2
   image_picker: ^0.8.9
   dio: ^5.2.1+1
   hive: ^2.2.3

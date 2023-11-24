@@ -23,7 +23,7 @@ class _ContentCardState extends State<ContentCard> {
   @override
   Widget build(BuildContext context) {
     final userController = context.watch<UserController>();
-    final medic = userController.user?.medic;
+    final medic = userController.user;
 
     return Center(
       child: Padding(
@@ -32,7 +32,7 @@ class _ContentCardState extends State<ContentCard> {
           padding: const EdgeInsets.all(20),
           backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
           onTap: () {
-            final medicContent = widget.content.idMedic == medic?.idMedic;
+            final medicContent = widget.content.idMedic == medic?.idUser;
             if (medic == null || !medicContent) {
               return _navigateToContentRead();
             }

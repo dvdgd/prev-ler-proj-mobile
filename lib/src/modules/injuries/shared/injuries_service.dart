@@ -1,6 +1,4 @@
-import 'package:prev_ler/main.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
-import 'package:prev_ler/src/shared/http/client_http.dart';
 
 abstract class InjuriesService {
   Future<List<InjuryType>> fetchAll();
@@ -11,54 +9,48 @@ abstract class InjuriesService {
 }
 
 class InjuriesServiceImpl extends InjuriesService {
-  final String _baseUrl = '${Environment.apiBaseUrl}/TipoLesoes';
-  final ClientHttp clientHttp;
-
-  InjuriesServiceImpl(this.clientHttp);
+  InjuriesServiceImpl();
 
   @override
   Future<InjuryType> create(InjuryType injuryType) async {
-    final responseBody = await clientHttp.post(
-      uri: Uri.parse(_baseUrl),
-      data: injuryType.toMap(),
-    );
-
-    return InjuryType.fromMap(responseBody);
+    return injuryType;
   }
 
   @override
   Future<List<InjuryType>> fetchAll() async {
-    final responseBody = await clientHttp.fetch<List<dynamic>>(
-      uri: Uri.parse(_baseUrl),
-    );
-
-    final contentsList = responseBody.map((e) => InjuryType.fromMap(e));
-
-    return List.from(contentsList);
+    return [
+      InjuryType(
+        idMedic: 1,
+        name: "name",
+        abbreviation: "abbreviation",
+        description: "description",
+      ),
+      InjuryType(
+        idMedic: 1,
+        name: "name",
+        abbreviation: "abbreviation",
+        description: "description",
+      ),
+    ];
   }
 
   @override
   Future<InjuryType> fetchById(int idInjuryType) async {
-    final responseBody = await clientHttp.fetch(
-      uri: Uri.parse('$_baseUrl/$idInjuryType'),
+    return InjuryType(
+      idMedic: 1,
+      name: "name",
+      abbreviation: "abbreviation",
+      description: "description",
     );
-
-    return InjuryType.fromMap(responseBody);
   }
 
   @override
   Future<void> delete(InjuryType injuryType) async {
-    await clientHttp.delete(
-      uri: Uri.parse('$_baseUrl/${injuryType.idInjuryType}'),
-    );
+    Future.delayed(const Duration(seconds: 1));
   }
 
   @override
   Future<void> update(InjuryType newInjuryType) async {
-    final id = newInjuryType.idInjuryType;
-    await clientHttp.put(
-      uri: Uri.parse('$_baseUrl/$id'),
-      data: newInjuryType.toMap(),
-    );
+    Future.delayed(const Duration(seconds: 1));
   }
 }

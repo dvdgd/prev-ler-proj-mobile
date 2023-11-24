@@ -17,7 +17,7 @@ class InjuryPage extends StatefulWidget {
 }
 
 class _InjuryPageState extends State<InjuryPage> {
-  final _searchController = TextEditingController();
+  // final _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _InjuryPageState extends State<InjuryPage> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<InjuriesController>();
-    final idMedic = context.read<UserController>().user?.medic?.idMedic;
+    final idMedic = context.read<UserController>().user?.idUser;
 
     final injuries = controller.injuries;
     final userInjuries = injuries.where((i) => i.idMedic == idMedic).toList();

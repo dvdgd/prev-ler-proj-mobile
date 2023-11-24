@@ -18,8 +18,9 @@ class Routes {
     '/': (_) => const CheckUserState(),
     '/home': (_) => const MainPage(page: HomePage),
     '/register/patient': (_) =>
-        const AuthRegisterPage(userType: UserType.patient),
-    '/register/medic': (_) => const AuthRegisterPage(userType: UserType.medic),
+        const AuthRegisterPage(userType: UserType.employee),
+    '/register/medic': (_) =>
+        const AuthRegisterPage(userType: UserType.healthProfessional),
     '/contents/register': (_) => const ContentFormPage(
           title: 'Cadastrar Conteúdo',
           content: null,

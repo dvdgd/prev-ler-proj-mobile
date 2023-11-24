@@ -3,7 +3,7 @@ import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
-import 'package:prev_ler/src/shared/entities/medic.dart';
+import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/injury_dropdown_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
@@ -26,7 +26,7 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
   final _formKey = GlobalKey<FormState>();
   late final ExercisesController controller;
   late final MyConverter converter;
-  late final Medic medic;
+  late final User medic;
 
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -44,7 +44,7 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
     controller = context.read<ExercisesController>();
     controller.addListener(_handleControllerChangeState);
     _serializeControllers();
-    final medic = context.read<UserController>().user?.medic;
+    final medic = context.read<UserController>().user;
     if (medic == null) {
       Navigator.of(Routes.navigatorKey.currentContext!)
           .pushReplacementNamed('/');
@@ -102,7 +102,7 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
 
     return Exercise(
       idExercise: widget.exercise?.idExercise ?? 0,
-      idMedic: medic.idMedic,
+      idMedic: medic.idUser,
       idInjuryType: int.parse(injuryTypeId),
       name: name,
       description: description,

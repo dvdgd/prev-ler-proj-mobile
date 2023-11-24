@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
+import 'package:provider/provider.dart';
 
 class AuthMedicAddButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -11,9 +11,9 @@ class AuthMedicAddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<UserController>();
-    final medic = controller.user?.medic;
+    final medic = controller.user?.type == UserType.healthProfessional;
 
-    return medic != null
+    return medic
         ? IconButton(
             onPressed: onPressed,
             icon: const Icon(Icons.add),

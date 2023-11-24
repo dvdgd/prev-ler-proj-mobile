@@ -53,7 +53,7 @@ class _AuthRegisterPageState extends State<AuthRegisterPage> {
   @override
   Widget build(BuildContext context) {
     final userType = widget.userType;
-    final isMedic = userType == UserType.medic;
+    final isMedic = userType == UserType.healthProfessional;
 
     final title = isMedic ? "Médico" : "Paciente";
     final description = isMedic

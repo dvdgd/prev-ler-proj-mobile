@@ -23,7 +23,7 @@ class _InjuryCardState extends State<InjuryCard> {
   @override
   Widget build(BuildContext context) {
     final userController = context.watch<UserController>();
-    final medic = userController.user?.medic;
+    final medic = userController.user;
 
     return Center(
       child: Container(
@@ -32,7 +32,7 @@ class _InjuryCardState extends State<InjuryCard> {
           padding: const EdgeInsets.all(0),
           backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
           onTap: () {
-            final medicContent = widget.injuryType.idMedic == medic?.idMedic;
+            final medicContent = widget.injuryType.idMedic == medic?.idUser;
             if (medic == null || !medicContent) {
               return _navigateToInjuryDetailsPage();
             }
