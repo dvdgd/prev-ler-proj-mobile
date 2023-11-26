@@ -8,4 +8,6 @@ enum StateEnum {
 enum UserType {
   healthProfessional,
   employee,
+  businessRepresentavive,
+  admin,
 }

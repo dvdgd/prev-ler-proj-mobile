@@ -36,6 +36,7 @@ class _CheckUserStateState extends State<CheckUserState> {
       case AuthState.idle:
         return const SplashScreen();
       case AuthState.error:
+        return const AuthPage();
       case AuthState.loggedOut:
         return const AuthPage();
       default:

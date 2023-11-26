@@ -3,7 +3,8 @@ import 'package:prev_ler/src/modules/routines/shared/routine_create_model.dart';
 import 'package:prev_ler/src/modules/routines/shared/routines_service.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
-import 'package:prev_ler/src/shared/services/user_service.dart';
+import 'package:prev_ler/src/shared/errors/base_error.dart';
+import 'package:prev_ler/src/shared/services/auth_service.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class RoutinesController extends ChangeNotifier {
@@ -12,7 +13,7 @@ class RoutinesController extends ChangeNotifier {
   String errorMessage = '';
 
   final RoutinesService routinesSservice;
-  final UserService userService;
+  final AuthService userService;
 
   RoutinesController(this.routinesSservice, this.userService);
 
@@ -30,7 +31,9 @@ class RoutinesController extends ChangeNotifier {
   User _getPatientUser() {
     final user = userService.currentUser;
     if (user == null || user.type == UserType.employee) {
-      throw Exception('Você precisa ser um funcionário para criar rotinas.');
+      throw BaseError(
+        message: 'Você precisa ser um funcionário para criar rotinas.',
+      );
     }
 
     return user;
@@ -47,6 +50,9 @@ class RoutinesController extends ChangeNotifier {
       final routine = await routinesSservice.create(newRoutine);
       routines.add(routine);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -64,6 +70,9 @@ class RoutinesController extends ChangeNotifier {
 
       routines = await routinesSservice.getAll(patient.idUser);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e, stackTrace) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -82,6 +91,9 @@ class RoutinesController extends ChangeNotifier {
       await routinesSservice.delete(routine);
       routines.removeWhere((e) => e.idRoutine == routine.idRoutine);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -99,6 +111,9 @@ class RoutinesController extends ChangeNotifier {
 
       _updateRoutineFromController(newRoutine);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -127,6 +142,9 @@ class RoutinesController extends ChangeNotifier {
 
       _updateRoutineFromController(routine);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;

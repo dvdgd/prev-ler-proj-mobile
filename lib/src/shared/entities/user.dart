@@ -1,4 +1,19 @@
+import 'package:prev_ler/src/shared/entities/company.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
+
+class UserSignUp {
+  String email;
+  String password;
+  String passwordConfirmation;
+  String cpf;
+
+  UserSignUp({
+    required this.cpf,
+    required this.email,
+    required this.password,
+    required this.passwordConfirmation,
+  });
+}
 
 class User {
   int idUser;
@@ -6,52 +21,22 @@ class User {
   String firstName;
   String lastName;
   String cpf;
+  String jobRole;
   DateTime? bornDate;
   String? password;
-  UserType type;
+  UserType? type;
+  Company? company;
 
   User({
     this.idUser = 0,
     required this.email,
     required this.firstName,
     required this.lastName,
-    required this.type,
     required this.cpf,
+    required this.jobRole,
+    this.company,
+    this.type,
     this.bornDate,
     this.password,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id_usuario': idUser,
-      'email': email,
-      'data': {},
-      'first_name': firstName,
-    };
-  }
-
-  Map<String, dynamic> toSignUpMap() {
-    return {
-      'id_usuario': idUser,
-      'email': email,
-      'data': {
-        'first_name': firstName,
-        'last_name': lastName,
-        'cpf': cpf,
-        'born_date': bornDate?.toIso8601String(),
-      },
-    };
-  }
-
-  factory User.fromMap(Map<String, dynamic> json) {
-    return User(
-      bornDate: json['born_date'],
-      cpf: json['cpf'],
-      idUser: json['id_usuario'],
-      email: json['email'],
-      firstName: json['first_name'],
-      lastName: json['last_name'],
-      type: UserType.employee,
-    );
-  }
 }

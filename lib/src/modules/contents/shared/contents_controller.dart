@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_service.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
+import 'package:prev_ler/src/shared/errors/base_error.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class ContentsController extends ChangeNotifier {
@@ -20,6 +21,9 @@ class ContentsController extends ChangeNotifier {
     try {
       contents = await service.fetchAll();
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -40,6 +44,9 @@ class ContentsController extends ChangeNotifier {
       final newContent = await service.create(content);
       contents.add(newContent);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -65,6 +72,9 @@ class ContentsController extends ChangeNotifier {
       }
 
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -82,6 +92,9 @@ class ContentsController extends ChangeNotifier {
 
       contents.removeWhere((cnt) => cnt.idContent == content.idContent);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;

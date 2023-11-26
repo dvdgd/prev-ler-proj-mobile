@@ -20,6 +20,7 @@ import 'package:prev_ler/src/my_material_app.dart';
 import 'package:prev_ler/src/shared/controllers/dark_mode_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/http/client_http.dart';
+import 'package:prev_ler/src/shared/services/auth_service.dart';
 import 'package:prev_ler/src/shared/services/notification_service.dart';
 import 'package:prev_ler/src/shared/services/user_service.dart';
 import 'package:prev_ler/src/shared/utils/my_converter.dart';
@@ -27,12 +28,10 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sup;
 
 class Environment {
-  static String get apiBaseUrl =>
-      dotenv.get('API_BASE_URL', fallback: 'URL NOT FOUND');
   static String get supabaseUrl =>
       dotenv.get('SUPABASE_URL', fallback: 'URL NOT FOUND');
   static String get supabaseAnonKey =>
-      dotenv.get('SUPABASE_ANON_KEY', fallback: 'URL NOT FOUND');
+      dotenv.get('SUPABASE_ANON_KEY', fallback: 'ANON KEY NOT FOUND');
 }
 
 final supabaseClient = sup.Supabase.instance.client;
@@ -63,7 +62,7 @@ void main() async {
           create: (ctx) => ExercisesServiceImpl(ctx.read<MyConverter>()),
         ),
         Provider(
-          create: (ctx) => UserService(),
+          create: (ctx) => AuthService(userService: UserService()),
         ),
         Provider(
           create: (ctx) => RoutinesServiceImpl(
@@ -76,7 +75,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ExerciseCartController()),
         ChangeNotifierProvider(create: (_) => DarkModeController()),
         ChangeNotifierProvider(
-          create: (ctx) => UserController(ctx.read<UserService>()),
+          create: (ctx) => UserController(ctx.read<AuthService>()),
         ),
         ChangeNotifierProvider(
           create: (ctx) => ExercisesController(
@@ -85,13 +84,13 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (ctx) => AuthController(
-            ctx.read<UserService>(),
+            ctx.read<AuthService>(),
             ctx.read<ClientHttp>(),
           ),
         ),
         ChangeNotifierProvider(
           create: (ctx) => RegisterUserController(
-            ctx.read<UserService>(),
+            ctx.read<AuthService>(),
           ),
         ),
         ChangeNotifierProvider(
@@ -103,13 +102,13 @@ void main() async {
         ChangeNotifierProvider(
           create: (ctx) => RoutinesController(
             ctx.read<RoutinesServiceImpl>(),
-            ctx.read<UserService>(),
+            ctx.read<AuthService>(),
           ),
         ),
         ChangeNotifierProvider(
           create: (ctx) => NotificationController(
             ctx.read<NotificationServiceImp>(),
-            ctx.read<UserService>(),
+            ctx.read<AuthService>(),
           ),
         ),
       ],

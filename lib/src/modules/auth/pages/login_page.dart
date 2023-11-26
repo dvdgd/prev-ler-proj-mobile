@@ -26,25 +26,17 @@ class _AuthPageState extends State<AuthPage> {
   void initState() {
     super.initState();
     controller = context.read<AuthController>();
-
-    controller.addListener(_handleAuthStateChange);
-  }
-
-  @override
-  void dispose() {
-    controller.removeListener(_handleAuthStateChange);
-    super.dispose();
-  }
-
-  void _handleAuthStateChange() {
-    if (controller.state == AuthState.loggedIn) {
-      Navigator.of(Routes.navigatorKey.currentContext!)
-          .pushReplacementNamed('/home');
-    } else if (controller.state == AuthState.error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(controller.errorMessage)),
-      );
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (controller.state == AuthState.error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(controller.errorMessage)),
+        );
+      }
+      if (controller.state == AuthState.loggedIn) {
+        Navigator.of(Routes.navigatorKey.currentContext!)
+            .pushReplacementNamed('/home');
+      }
+    });
   }
 
   Future<void> _makeLogin() async {
@@ -116,11 +108,17 @@ class _AuthPageState extends State<AuthPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildTextButton('Registrar médico', '/register/medic'),
-                      _buildTextButton(
-                          'Registrar paciente', '/register/patient'),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(Routes.navigatorKey.currentContext!)
+                              .pushNamed('/register');
+                        },
+                        child: const Center(
+                          child: Text('Registrar-se'),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -128,17 +126,6 @@ class _AuthPageState extends State<AuthPage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildTextButton(String text, String route) {
-    return TextButton(
-      onPressed: () {
-        Navigator.of(Routes.navigatorKey.currentContext!).pushNamed(route);
-      },
-      child: Center(
-        child: Text(text),
       ),
     );
   }

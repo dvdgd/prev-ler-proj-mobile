@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
-import 'package:prev_ler/src/shared/services/user_service.dart';
+import 'package:prev_ler/src/shared/services/auth_service.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class UserController extends ChangeNotifier {
-  final UserService authService;
+  final AuthService authService;
   UserController(this.authService);
 
   User? user;
+  bool? ableToCreateContents;
   StateEnum state = StateEnum.idle;
 
   String errorMessage = '';

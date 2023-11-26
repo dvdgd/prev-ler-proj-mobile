@@ -29,7 +29,7 @@ class ExercisesServiceImpl extends ExerciseService {
         name: "name",
         description: "description",
         instructions: "instructions",
-        image: "image",
+        image: "teste",
         precautions: "precautions",
         observations: "observations",
       ),

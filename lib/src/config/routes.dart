@@ -10,17 +10,13 @@ import 'package:prev_ler/src/modules/profile/profile_page.dart';
 import 'package:prev_ler/src/modules/routines/pages/exercise_cart_page.dart';
 import 'package:prev_ler/src/modules/routines/pages/routine_form_page.dart';
 import 'package:prev_ler/src/modules/routines/pages/routine_page.dart';
-import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> list =
       <String, WidgetBuilder>{
     '/': (_) => const CheckUserState(),
     '/home': (_) => const MainPage(page: HomePage),
-    '/register/patient': (_) =>
-        const AuthRegisterPage(userType: UserType.employee),
-    '/register/medic': (_) =>
-        const AuthRegisterPage(userType: UserType.healthProfessional),
+    '/register': (_) => const AuthRegisterPage(),
     '/contents/register': (_) => const ContentFormPage(
           title: 'Cadastrar Conteúdo',
           content: null,
