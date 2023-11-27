@@ -8,6 +8,7 @@ import 'package:prev_ler/src/shared/entities/content.dart';
 import 'package:prev_ler/src/shared/ui/components/crud_options_buttons.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_option_button.dart';
+import 'package:prev_ler/src/shared/utils/check_user_permission.dart';
 import 'package:provider/provider.dart';
 
 class ContentCard extends StatefulWidget {
@@ -32,14 +33,14 @@ class _ContentCardState extends State<ContentCard> {
           padding: const EdgeInsets.all(20),
           backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
           onTap: () {
-            final medicContent = widget.content.idMedic == medic?.idUser;
-            if (medic == null || !medicContent) {
+            final ableToEdit =
+                returnTrueIfUserCouldCreateContents(userController.user);
+
+            if (medic == null || !ableToEdit) {
               return _navigateToContentRead();
             }
 
-            if (medicContent) {
-              return _showOptions();
-            }
+            return _showOptions();
           },
           child: SizedBox(
             width: double.infinity,
@@ -64,10 +65,6 @@ class _ContentCardState extends State<ContentCard> {
                   ),
                 ),
                 const SizedBox(height: 7),
-                Text(
-                  'Enfermidade: ${widget.content.injuryType?.name ?? 'Não informada'}',
-                  style: const TextStyle(fontSize: 11),
-                ),
               ],
             ),
           ),

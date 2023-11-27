@@ -16,8 +16,6 @@ class ContentDetailsPage extends StatelessWidget {
     final description = content.description;
     final observations = content.observation;
 
-    final injuryType = content.injuryType;
-
     return Scaffold(
       appBar: AppBar(
         title: const PageTitle(title: 'Conteúdo'),
@@ -56,17 +54,6 @@ class ContentDetailsPage extends StatelessWidget {
               'Conteúdo atualizado em ${content.createdAt.toString()}',
               style: textTheme.bodySmall,
             ),
-            if (injuryType != null) ...[
-              const Divider(),
-              Text(
-                'Lesão: ${injuryType.name}',
-                style: textTheme.bodySmall,
-              ),
-              Text(
-                'Lesão criada em ${injuryType.createdAt.toString()}',
-                style: textTheme.bodySmall,
-              ),
-            ],
           ],
         ),
       ),

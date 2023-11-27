@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/contents/components/content_card.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
-import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/auth_medic_add_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
@@ -33,11 +32,8 @@ class _ContentPageState extends State<ContentPage> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<ContentsController>();
-    final idMedic = context.read<UserController>().user?.idUser;
 
     final contents = controller.contents;
-    final userContents = contents.where((c) => c.idMedic == idMedic).toList();
-    final otherContents = contents.where((c) => c.idMedic != idMedic).toList();
 
     final state = controller.state;
     final errorMessage = controller.errorMessage;
@@ -59,47 +55,19 @@ class _ContentPageState extends State<ContentPage> {
               const SliverCenterText(
                 message: 'Não existem conteúdo para serem exibidos.',
               ),
-            if (userContents.isNotEmpty)
+            if (contents.isNotEmpty)
               SliverList(
                 delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      'Meus: ',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: userContents.length,
+                    itemCount: contents.length,
                     itemBuilder: (context, index) => ContentCard(
-                      content: userContents[index],
+                      content: contents[index],
                     ),
                   ),
                 ]),
               ),
-            if (otherContents.isNotEmpty)
-              SliverList(
-                delegate: SliverChildListDelegate([
-                  if (idMedic != null)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 20),
-                      child: Text(
-                        'Outros: ',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: otherContents.length,
-                    itemBuilder: (context, index) => ContentCard(
-                      content: otherContents[index],
-                    ),
-                  )
-                ]),
-              )
           ],
         ),
       ),

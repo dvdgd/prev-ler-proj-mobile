@@ -4,7 +4,6 @@ import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
-import 'package:prev_ler/src/shared/ui/components/injury_dropdown_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
@@ -28,14 +27,13 @@ class ContentFormPage extends StatefulWidget {
 class _ContentFormPageState extends State<ContentFormPage> {
   final _titleController = TextEditingController();
   final _subtitleController = TextEditingController();
-  final _injuryTypeController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _observationController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
   late final ContentsController controller;
-  late final User medic;
+  late final User user;
 
   @override
   void initState() {
@@ -43,20 +41,18 @@ class _ContentFormPageState extends State<ContentFormPage> {
     controller = context.read<ContentsController>();
     controller.addListener(_handleAuthStateChange);
 
-    final medic = context.read<UserController>().user;
-    if (medic == null) {
+    final user = context.read<UserController>().user;
+    if (user == null) {
       Navigator.of(Routes.navigatorKey.currentContext!)
           .pushReplacementNamed('/');
     } else {
-      this.medic = medic;
+      this.user = user;
     }
 
     final content = widget.content;
     if (content != null) {
       _titleController.text = content.title;
       _subtitleController.text = content.subtitle;
-      _injuryTypeController.text =
-          content.injuryType?.idInjuryType.toString() ?? '';
       _descriptionController.text = content.description;
       _observationController.text = content.observation ?? '';
     }
@@ -88,12 +84,10 @@ class _ContentFormPageState extends State<ContentFormPage> {
     final subtitle = _subtitleController.text;
     final description = _descriptionController.text;
     final observation = _observationController.text;
-    final injuryTypeId = _injuryTypeController.text;
 
     return Content(
-      idContent: widget.content?.idContent ?? 0,
-      idMedic: medic.idUser,
-      idInjuryType: int.parse(injuryTypeId),
+      contentId: widget.content?.contentId ?? 0,
+      companyId: user.company?.cnpj ?? '',
       title: title,
       subtitle: subtitle,
       description: description,
@@ -132,10 +126,6 @@ class _ContentFormPageState extends State<ContentFormPage> {
                 controller: _subtitleController,
                 labelText: 'Subtítulo',
                 prefixIcon: const Icon(Icons.subtitles),
-              ),
-              InjuryDropdownButton(
-                injuryTypeController: _injuryTypeController,
-                idInjuryType: widget.content?.injuryType?.idInjuryType,
               ),
               MyTextFormField(
                 validator: (text) {

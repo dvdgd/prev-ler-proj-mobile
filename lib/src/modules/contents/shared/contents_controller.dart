@@ -32,10 +32,6 @@ class ContentsController extends ChangeNotifier {
     }
   }
 
-  Future<Content> fetchContentById(int idContent) async {
-    return service.fetchById(idContent);
-  }
-
   Future<void> create(Content content) async {
     state = StateEnum.loading;
     notifyListeners();
@@ -63,7 +59,7 @@ class ContentsController extends ChangeNotifier {
       await service.update(newContent);
 
       final contentIndex = contents.indexWhere(
-        (cnt) => cnt.idContent == newContent.idContent,
+        (cnt) => cnt.contentId == newContent.contentId,
       );
 
       if (contentIndex != -1) {
@@ -90,7 +86,7 @@ class ContentsController extends ChangeNotifier {
     try {
       await service.delete(content);
 
-      contents.removeWhere((cnt) => cnt.idContent == content.idContent);
+      contents.removeWhere((cnt) => cnt.contentId == content.contentId);
       state = StateEnum.success;
     } on BaseError catch (e) {
       errorMessage = e.message;
