@@ -107,7 +107,7 @@ class ExerciseDetailsPage extends StatelessWidget {
             if (injuryType != null) ...[
               const Divider(),
               Text(
-                'Lesão: ${injuryType.name} - (${injuryType.abbreviation})',
+                'Lesão: ${injuryType.name}',
                 style: textTheme.bodySmall,
               ),
               Text(

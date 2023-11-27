@@ -8,6 +8,7 @@ import 'package:prev_ler/src/shared/entities/injury_type.dart';
 import 'package:prev_ler/src/shared/ui/components/crud_options_buttons.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_option_button.dart';
+import 'package:prev_ler/src/shared/utils/check_user_permission.dart';
 import 'package:provider/provider.dart';
 
 class InjuryCard extends StatefulWidget {
@@ -23,7 +24,7 @@ class _InjuryCardState extends State<InjuryCard> {
   @override
   Widget build(BuildContext context) {
     final userController = context.watch<UserController>();
-    final medic = userController.user;
+    final user = userController.user;
 
     return Center(
       child: Container(
@@ -32,14 +33,12 @@ class _InjuryCardState extends State<InjuryCard> {
           padding: const EdgeInsets.all(0),
           backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
           onTap: () {
-            final medicContent = widget.injuryType.idMedic == medic?.idUser;
-            if (medic == null || !medicContent) {
+            final ableToEdit = returnTrueIfUserCouldCreateContents(user);
+            if (user == null || !ableToEdit) {
               return _navigateToInjuryDetailsPage();
             }
 
-            if (medicContent) {
-              return _showOptions();
-            }
+            return _showOptions();
           },
           child: SizedBox(
             width: double.infinity,
@@ -48,7 +47,6 @@ class _InjuryCardState extends State<InjuryCard> {
               children: [
                 ListTile(
                   title: Text(widget.injuryType.name),
-                  subtitle: Text('Sigla: ${widget.injuryType.abbreviation}'),
                 ),
                 const SizedBox(height: 7),
                 Padding(

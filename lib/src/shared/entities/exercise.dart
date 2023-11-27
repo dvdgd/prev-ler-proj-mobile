@@ -28,43 +28,4 @@ class Exercise {
     this.updatedAt,
     this.injuryType,
   });
-
-  factory Exercise.fromMap(Map<String, dynamic> map) {
-    return Exercise(
-      idExercise: map['idExercicio'],
-      idMedic: map['idMedico'],
-      idInjuryType: map['idTipoLesao'],
-      name: map['nome'],
-      description: map['descricao'],
-      instructions: map['instrucoes'],
-      image: map['encodedGif'],
-      precautions: map['precaucoes'],
-      observations: map['observacoes'],
-      createdAt: map['dataCriacao'] != null
-          ? DateTime.parse(map['dataCriacao'])
-          : null,
-      updatedAt: map['dataAtualizacao'] != null
-          ? DateTime.parse(map['dataAtualizacao'])
-          : null,
-      injuryType: map['tipoLesao'] != null
-          ? InjuryType.fromMap(map['tipoLesao'])
-          : null,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      "idExercicio": idExercise,
-      "idMedico": idMedic,
-      "idTipoLesao": idInjuryType,
-      "nome": name,
-      "descricao": description,
-      "instrucoes": instructions,
-      "encodedGif": image,
-      "precaucoes": precautions,
-      "observacoes": observations,
-      "dataCriacao": createdAt?.toIso8601String(),
-      "dataAtualizacao": updatedAt?.toIso8601String(),
-    };
-  }
 }

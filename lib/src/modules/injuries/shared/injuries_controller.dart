@@ -32,10 +32,6 @@ class InjuriesController extends ChangeNotifier {
     }
   }
 
-  Future<InjuryType> fetchInjuryTypeById(int idInjuryType) async {
-    return service.fetchById(idInjuryType);
-  }
-
   Future<void> create(InjuryType injuryType) async {
     state = StateEnum.loading;
     notifyListeners();

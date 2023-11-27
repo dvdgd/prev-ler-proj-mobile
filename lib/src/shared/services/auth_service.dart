@@ -51,10 +51,15 @@ class AuthService {
 
   Future<void> login(String email, String password) async {
     await getUserPropsOrThrowError(email);
-    await supabaseClient.auth.signInWithPassword(
-      password: password,
-      email: email,
-    );
+
+    try {
+      await supabaseClient.auth.signInWithPassword(
+        password: password,
+        email: email,
+      );
+    } catch (e) {
+      throw BaseError(message: 'Usuário ou senha incorretos.');
+    }
 
     currentUser = await UserService().getUserProfile();
   }

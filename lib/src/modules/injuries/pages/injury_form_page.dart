@@ -26,7 +26,6 @@ class InjuryFormPage extends StatefulWidget {
 
 class _InjuryFormPageState extends State<InjuryFormPage> {
   final _nameController = TextEditingController();
-  final _abbreviationController = TextEditingController();
   final _descriptionController = TextEditingController();
 
   late final User medic;
@@ -61,7 +60,6 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
 
   void serializeControllers(InjuryType injury) {
     _nameController.text = injury.name;
-    _abbreviationController.text = injury.abbreviation;
     _descriptionController.text = injury.description;
   }
 
@@ -82,14 +80,12 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
 
   InjuryType _getInjuryFromForm() {
     final name = _nameController.text;
-    final abbreviation = _abbreviationController.text;
     final description = _descriptionController.text;
 
     return InjuryType(
       idInjuryType: widget.injury?.idInjuryType ?? 0,
-      idMedic: medic.idUser,
+      companyId: medic.company?.cnpj ?? '',
       name: name,
-      abbreviation: abbreviation,
       description: description,
       createdAt: widget.injury?.createdAt ?? DateTime.now(),
       updatedAt: DateTime.now(),
@@ -107,56 +103,47 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
-          child: Column(children: [
-            MyTextFormField(
-              validator: (text) => text == null || text.isEmpty
-                  ? 'Nome não pode ser vazio'
-                  : null,
-              controller: _nameController,
-              labelText: 'Nome',
-              prefixIcon: const Icon(Icons.text_fields),
-            ),
-            MyTextFormField(
-              validator: (text) {
-                if (text == null || text.isEmpty) {
-                  return 'Sigla não pode ser vazia';
-                }
-                return null;
-              },
-              controller: _abbreviationController,
-              labelText: 'Sigla',
-              prefixIcon: const Icon(Icons.abc),
-              maxLength: 8,
-            ),
-            MyTextFormField(
-              validator: (text) {
-                if (text == null || text.isEmpty) {
-                  return 'Descrição não pode ser vazia';
-                }
-                return null;
-              },
-              controller: _descriptionController,
-              labelText: 'Descrição',
-              prefixIcon: const Icon(Icons.description),
-              textInputType: TextInputType.multiline,
-              maxLines: 5,
-              maxLength: 2000,
-            ),
-            const SizedBox(height: 40),
-            MyFilledLoadingButton(
-              text: 'Salvar',
-              action: () async {
-                if (!formKey.currentState!.validate()) {
-                  return;
-                }
-                if (widget.injury == null) {
-                  return controller.create(_getInjuryFromForm());
-                }
-                return controller.update(_getInjuryFromForm());
-              },
-            ),
-            const SizedBox(height: 40),
-          ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MyTextFormField(
+                validator: (text) => text == null || text.isEmpty
+                    ? 'Nome não pode ser vazio'
+                    : null,
+                controller: _nameController,
+                labelText: 'Nome',
+                prefixIcon: const Icon(Icons.text_fields),
+              ),
+              MyTextFormField(
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Descrição não pode ser vazia';
+                  }
+                  return null;
+                },
+                controller: _descriptionController,
+                labelText: 'Descrição',
+                prefixIcon: const Icon(Icons.description),
+                textInputType: TextInputType.multiline,
+                maxLines: 5,
+                maxLength: 2000,
+              ),
+              const SizedBox(height: 40),
+              MyFilledLoadingButton(
+                text: 'Salvar',
+                action: () async {
+                  if (!formKey.currentState!.validate()) {
+                    return;
+                  }
+                  if (widget.injury == null) {
+                    return controller.create(_getInjuryFromForm());
+                  }
+                  return controller.update(_getInjuryFromForm());
+                },
+              ),
+              const SizedBox(height: 40),
+            ],
+          ),
         ),
       ),
     );

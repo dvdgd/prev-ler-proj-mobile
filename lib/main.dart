@@ -43,6 +43,7 @@ void main() async {
   await sup.Supabase.initialize(
     url: Environment.supabaseUrl,
     anonKey: Environment.supabaseAnonKey,
+    authFlowType: sup.AuthFlowType.implicit,
   );
 
   runApp(
