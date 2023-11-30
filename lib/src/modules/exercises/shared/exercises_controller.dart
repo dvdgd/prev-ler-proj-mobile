@@ -58,7 +58,7 @@ class ExercisesController extends ChangeNotifier {
       await service.update(newExercise);
 
       final contentIndex = exercises.indexWhere(
-        (exerc) => exerc.idExercise == newExercise.idExercise,
+        (exerc) => exerc.exerciseId == newExercise.exerciseId,
       );
 
       if (contentIndex != -1) {
@@ -85,7 +85,7 @@ class ExercisesController extends ChangeNotifier {
     try {
       await service.delete(exercise);
 
-      exercises.removeWhere((exerc) => exerc.idExercise == exercise.idExercise);
+      exercises.removeWhere((exerc) => exerc.exerciseId == exercise.exerciseId);
       state = StateEnum.success;
     } on BaseError catch (e) {
       errorMessage = e.message;

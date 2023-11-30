@@ -16,9 +16,11 @@ SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 ```
 
 # DOING List
-- CRUD de exercícios.
+- Listar sobre qual lesões um conteúdo é.
+- Listar sobre qual lesão um exercicio é.
 
 # DONE List
+- CRUD de exercícios.
 - Persistir a sessão do usuário ao fechar o aplicativo.
 - Refatoração de login e registro para o supabase
 - CRUD de Lesões (enfermidades)
@@ -26,6 +28,5 @@ SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 - Relacionar a criacao de conteudo com uma lesão (enfermidade).
 
 # TODO List
-- Listar sobre quais lesões um conteúdo é.
 - Criar nova tela de perfil.
 - Regra de não permitir uma empresa com assinatura expirada acessar o aplicativo (mostrar mensagem que a assinatura está expirada).

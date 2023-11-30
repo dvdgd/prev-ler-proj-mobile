@@ -42,9 +42,8 @@ class _ExercisePageState extends State<ExercisePage> {
     final idMedic = context.read<UserController>().user?.userId;
 
     final exercises = controller.exercises;
-    final userExercises = exercises.where((e) => e.idMedic == idMedic).toList();
-    final otherExercises =
-        exercises.where((e) => e.idMedic != idMedic).toList();
+    final userExercises = exercises.where((e) => e.userId == idMedic).toList();
+    final otherExercises = exercises.where((e) => e.userId != idMedic).toList();
     final isLoading = state == StateEnum.loading;
 
     return Scaffold(

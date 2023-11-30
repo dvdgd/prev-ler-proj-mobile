@@ -1,9 +1,10 @@
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
 
 class Exercise {
-  int idExercise;
-  String idMedic;
-  int idInjuryType;
+  int exerciseId;
+  String userId;
+  String companyId;
+  int injuryTypeId;
   String name;
   String description;
   String instructions;
@@ -15,15 +16,16 @@ class Exercise {
   InjuryType? injuryType;
 
   Exercise({
-    this.idExercise = 0,
-    required this.idMedic,
-    required this.idInjuryType,
+    this.exerciseId = 0,
+    required this.userId,
+    required this.injuryTypeId,
     required this.name,
     required this.description,
     required this.instructions,
     required this.image,
     required this.precautions,
     required this.observations,
+    required this.companyId,
     this.createdAt,
     this.updatedAt,
     this.injuryType,

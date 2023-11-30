@@ -12,7 +12,7 @@ class ExerciseCartController extends ChangeNotifier {
   }
 
   void remove(Exercise exercise) {
-    value.removeWhere((e) => e.idExercise == exercise.idExercise);
+    value.removeWhere((e) => e.exerciseId == exercise.exerciseId);
     notifyListeners();
   }
 

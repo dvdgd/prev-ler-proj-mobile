@@ -149,7 +149,7 @@ class RoutinesServiceImpl extends RoutinesService {
       return NotificationData(
         idNotification: 0,
         idRoutine: model.routineId,
-        idExercise: exercise.idExercise,
+        idExercise: exercise.exerciseId,
         title: 'Está na hora de realizar seu exercício!',
         message:
             'O seu exercício ${exercise.name} da sua rotina ${model.title} está te esperando!',

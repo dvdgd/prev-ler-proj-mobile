@@ -26,7 +26,7 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
   final _formKey = GlobalKey<FormState>();
   late final ExercisesController controller;
   late final MyConverter converter;
-  late final User medic;
+  late final User user;
 
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -44,12 +44,12 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
     controller = context.read<ExercisesController>();
     controller.addListener(_handleControllerChangeState);
     _serializeControllers();
-    final medic = context.read<UserController>().user;
-    if (medic == null) {
+    final currentUser = context.read<UserController>().user;
+    if (currentUser == null) {
       Navigator.of(Routes.navigatorKey.currentContext!)
           .pushReplacementNamed('/');
     } else {
-      this.medic = medic;
+      user = currentUser;
     }
   }
 
@@ -88,7 +88,7 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
     _instructionsController.text = exercise.instructions;
     _precautionsController.text = exercise.precautions ?? '';
     _observationsController.text = exercise.observations ?? '';
-    _injuryTypeController.text = exercise.idInjuryType.toString();
+    _injuryTypeController.text = exercise.injuryTypeId.toString();
     _imagePathController.text = exercise.image;
   }
 
@@ -101,9 +101,9 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
     final injuryTypeId = _injuryTypeController.text;
 
     return Exercise(
-      idExercise: widget.exercise?.idExercise ?? 0,
-      idMedic: medic.userId,
-      idInjuryType: int.parse(injuryTypeId),
+      exerciseId: widget.exercise?.exerciseId ?? 0,
+      userId: user.userId,
+      injuryTypeId: int.parse(injuryTypeId),
       name: name,
       description: description,
       instructions: instructions,
@@ -111,6 +111,7 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
       precautions: precautions,
       observations: observations,
       createdAt: DateTime.now(),
+      companyId: user.company?.cnpj ?? '',
     );
   }
 
@@ -169,7 +170,7 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
             ),
             InjuryDropdownButton(
               injuryTypeController: _injuryTypeController,
-              idInjuryType: widget.exercise?.idInjuryType,
+              idInjuryType: widget.exercise?.injuryTypeId,
             ),
             MyTextFormField(
               labelText: 'Instruções*',
