@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyConverter {
   static Future<String> fileToBase64(String filePath) async {
@@ -37,5 +38,9 @@ class MyConverter {
 
   static TimeOfDay toTimeOfDay(DateTime datetime) {
     return TimeOfDay.fromDateTime(datetime);
+  }
+
+  static String toDateTimeString(DateTime datetime) {
+    return DateFormat('dd/MM/yy HH:mm:ss').format(datetime);
   }
 }

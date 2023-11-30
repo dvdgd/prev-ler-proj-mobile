@@ -17,9 +17,9 @@ SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 
 # DOING List
 - Listar sobre qual lesões um conteúdo é.
-- Listar sobre qual lesão um exercicio é.
 
 # DONE List
+- Listar sobre qual lesão um exercicio é.
 - CRUD de exercícios.
 - Persistir a sessão do usuário ao fechar o aplicativo.
 - Refatoração de login e registro para o supabase

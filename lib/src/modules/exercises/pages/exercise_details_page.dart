@@ -96,12 +96,12 @@ class ExerciseDetailsPage extends StatelessWidget {
             ],
             const SizedBox(height: 30),
             Text(
-              'Exercício Criado em ${createdAt.toString()}',
+              'Exercício Criado em ${MyConverter.toDateTimeString(createdAt!)}',
               style: textTheme.bodySmall,
             ),
             if (updatedAt != null)
               Text(
-                'Exercício Atualizado em ${updatedAt.toString()}',
+                'Exercício Atualizado em ${MyConverter.toDateTimeString(updatedAt)}',
                 style: textTheme.bodySmall,
               ),
             if (injuryType != null) ...[
@@ -111,7 +111,7 @@ class ExerciseDetailsPage extends StatelessWidget {
                 style: textTheme.bodySmall,
               ),
               Text(
-                'Lesão criada em ${injuryType.createdAt.toString()}',
+                'Lesão criada em ${MyConverter.toDateTimeString(injuryType.createdAt!)}',
                 style: textTheme.bodySmall,
               ),
             ],

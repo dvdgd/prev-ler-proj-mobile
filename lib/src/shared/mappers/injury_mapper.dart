@@ -15,12 +15,18 @@ Map<String, dynamic> injuryToSupabase(InjuryType injury) {
   return injuryMap;
 }
 
-InjuryType injutyFromSupabase(dynamic injuryResponse) {
+InjuryType injuryFromSupabase(dynamic injuryResponse) {
   return InjuryType(
     userId: injuryResponse['id_usuario'],
     idInjuryType: injuryResponse['id_enfermidade'],
     companyId: injuryResponse['id_empresa'],
     name: injuryResponse['nome'],
     description: injuryResponse['descricao'],
+    createdAt: injuryResponse['data_inclusao'] != null
+        ? DateTime.parse(injuryResponse['data_inclusao'])
+        : null,
+    updatedAt: injuryResponse['data_atualizacao'] != null
+        ? DateTime.parse(injuryResponse['data_atualizacao'])
+        : null,
   );
 }

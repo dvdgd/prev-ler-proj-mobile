@@ -31,7 +31,7 @@ class InjuriesServiceImpl extends InjuriesService {
           await supabaseClient.from('enfermidade').select('*') as List<dynamic>;
 
       final injuries =
-          supabaseInjuries.map((injury) => injutyFromSupabase(injury)).toList();
+          supabaseInjuries.map((injury) => injuryFromSupabase(injury)).toList();
 
       return injuries;
     } catch (e) {

@@ -1,4 +1,5 @@
 import 'package:prev_ler/src/shared/entities/exercise.dart';
+import 'package:prev_ler/src/shared/mappers/injury_mapper.dart';
 
 Map<String, dynamic> exerciseToSupabase(Exercise exercise) {
   final Map<String, dynamic> exerciseMap = {
@@ -36,6 +37,9 @@ Exercise exerciseFromSupabase(dynamic exercise) {
     createdAt: DateTime.parse(exercise['data_inclusao']),
     updatedAt: exercise['data_atualizacao'] != null
         ? DateTime.parse(exercise['data_inclusao'])
+        : null,
+    injuryType: exercise['enfermidade'] != null
+        ? injuryFromSupabase(exercise['enfermidade'])
         : null,
   );
 }
