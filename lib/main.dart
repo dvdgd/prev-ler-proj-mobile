@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:prev_ler/src/config/notification_config.dart';
 import 'package:prev_ler/src/modules/auth/shared/auth_controller.dart';
 import 'package:prev_ler/src/modules/auth/shared/register_user_controller.dart';
@@ -22,6 +23,7 @@ import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/http/client_http.dart';
 import 'package:prev_ler/src/shared/services/auth_service.dart';
 import 'package:prev_ler/src/shared/services/notification_service.dart';
+import 'package:prev_ler/src/shared/services/secure_store.dart';
 import 'package:prev_ler/src/shared/services/user_service.dart';
 import 'package:prev_ler/src/shared/utils/my_converter.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +53,7 @@ void main() async {
       providers: [
         Provider(create: (_) => MyConverter()),
         Provider(create: (_) => NotificationConfig()),
+        Provider(create: (_) => SecureStore(const FlutterSecureStorage())),
         Provider(
           create: (ctx) =>
               FlutterNotificationService(ctx.read<NotificationConfig>()),
@@ -63,7 +66,10 @@ void main() async {
           create: (ctx) => ExercisesServiceImpl(ctx.read<MyConverter>()),
         ),
         Provider(
-          create: (ctx) => AuthService(userService: UserService()),
+          create: (ctx) => AuthService(
+            userService: UserService(),
+            secureStore: ctx.read(),
+          ),
         ),
         Provider(
           create: (ctx) => RoutinesServiceImpl(

@@ -16,10 +16,10 @@ SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 ```
 
 # DOING List
-- Persistir a sessão do usuário ao fechar o aplicativo.
 - CRUD de exercícios.
 
 # DONE List
+- Persistir a sessão do usuário ao fechar o aplicativo.
 - Refatoração de login e registro para o supabase
 - CRUD de Lesões (enfermidades)
 - CRUD de conteúdo puro (sem relacionar lesões)

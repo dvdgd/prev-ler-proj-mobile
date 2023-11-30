@@ -42,15 +42,20 @@ class AuthController extends ChangeNotifier {
   }
 
   Future<void> checkUserState() async {
-    final logged = await authService.checkUserState();
+    try {
+      final logged = await authService.checkUserState();
 
-    if (logged) {
-      state = AuthState.loggedIn;
-    } else {
-      state = AuthState.loggedOut;
+      if (logged) {
+        state = AuthState.loggedIn;
+      } else {
+        state = AuthState.loggedOut;
+      }
+    } catch (e) {
+      state = AuthState.error;
+      errorMessage = "Ops... Não foi possível recuperar a sessão do usuário";
+    } finally {
+      notifyListeners();
     }
-
-    notifyListeners();
   }
 
   void clearState() {
