@@ -109,7 +109,7 @@ class AuthService {
     await supabaseClient.auth.signOut();
   }
 
-  Future<void> updateUser(User newUser) async {
+  Future<void> updateUser(UserSignUp newUser) async {
     return;
   }
 }

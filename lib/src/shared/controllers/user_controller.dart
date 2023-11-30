@@ -32,13 +32,12 @@ class UserController extends ChangeNotifier {
     }
   }
 
-  Future<void> updateUser(User newUser) async {
+  Future<void> updateUser(UserSignUp newUser) async {
     state = StateEnum.loading;
     notifyListeners();
 
     try {
       await authService.updateUser(newUser);
-      user = newUser;
       state = StateEnum.success;
     } catch (e) {
       errorMessage = e.toString();

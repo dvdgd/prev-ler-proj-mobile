@@ -4,6 +4,7 @@ import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/dark_mode_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/splash_screen.dart';
+import 'package:prev_ler/src/shared/ui/components/user_form.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
@@ -64,12 +65,15 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const PageTitle(title: 'Meu Perfil'),
         actions: const [DarkModeButton()],
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 15),
-            SizedBox(height: 40),
+            const SizedBox(height: 15),
+            UserForm(
+              action: controller.updateUser,
+            ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
