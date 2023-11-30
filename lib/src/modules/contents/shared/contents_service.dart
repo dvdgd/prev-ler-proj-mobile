@@ -27,8 +27,9 @@ class ContentsServiceImpl extends ContentsService {
   @override
   Future<List<Content>> fetchAll() async {
     try {
-      final supContents =
-          await supabaseClient.from('conteudo').select('*') as List<dynamic>;
+      final supContents = await supabaseClient
+          .from('conteudo')
+          .select('*, enfermidade(*)') as List<dynamic>;
       final contents = supContents.map((c) => contentFromSupabase(c)).toList();
       return contents;
     } catch (e) {

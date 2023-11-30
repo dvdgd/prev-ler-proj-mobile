@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
+import 'package:prev_ler/src/shared/utils/my_converter.dart';
 
 class ContentDetailsPage extends StatelessWidget {
   const ContentDetailsPage(this.content, {super.key});
@@ -15,6 +16,8 @@ class ContentDetailsPage extends StatelessWidget {
     final subtitle = content.subtitle;
     final description = content.description;
     final observations = content.observation;
+
+    final injuryType = content.injuryType;
 
     return Scaffold(
       appBar: AppBar(
@@ -47,13 +50,24 @@ class ContentDetailsPage extends StatelessWidget {
             ],
             const SizedBox(height: 30),
             Text(
-              'Conteúdo criado em ${content.createdAt.toString()}',
+              'Conteúdo criado em ${MyConverter.toDateTimeString(content.createdAt!)}',
               style: textTheme.bodySmall,
             ),
             Text(
-              'Conteúdo atualizado em ${content.createdAt.toString()}',
+              'Conteúdo atualizado em ${MyConverter.toDateTimeString(content.createdAt!)}',
               style: textTheme.bodySmall,
             ),
+            if (injuryType != null) ...[
+              const Divider(),
+              Text(
+                'Lesão: ${injuryType.name}',
+                style: textTheme.bodySmall,
+              ),
+              Text(
+                'Lesão criada em ${MyConverter.toDateTimeString(injuryType.createdAt!)}',
+                style: textTheme.bodySmall,
+              ),
+            ],
           ],
         ),
       ),
