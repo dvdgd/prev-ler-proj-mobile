@@ -41,7 +41,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
         clipBehavior: Clip.antiAlias,
         backgroundColor: Theme.of(context).cardColor,
         onTap: () {
-          final medicContent = widget.exercise.idMedic == medic?.idUser;
+          final medicContent = widget.exercise.idMedic == medic?.userId;
           if (medic == null || !medicContent) {
             return _navigateToExerciseReadPage();
           }

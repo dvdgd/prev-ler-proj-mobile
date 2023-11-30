@@ -102,7 +102,7 @@ class _ExerciseFormPageState extends State<ExerciseFormPage> {
 
     return Exercise(
       idExercise: widget.exercise?.idExercise ?? 0,
-      idMedic: medic.idUser,
+      idMedic: medic.userId,
       idInjuryType: int.parse(injuryTypeId),
       name: name,
       description: description,

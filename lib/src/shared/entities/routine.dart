@@ -5,7 +5,7 @@ import 'package:prev_ler/src/shared/entities/notification.dart';
 
 class Routine {
   final int idRoutine;
-  final int idPatient;
+  final String idPatient;
   final String title;
   final String description;
   final TimeOfDay startTime;
@@ -36,7 +36,7 @@ class Routine {
 
   Routine copyWith({
     int? idRoutine,
-    int? idPatient,
+    String? idPatient,
     String? title,
     String? description,
     TimeOfDay? startTime,

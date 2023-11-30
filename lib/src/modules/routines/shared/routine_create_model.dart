@@ -6,7 +6,7 @@ import 'package:prev_ler/src/shared/entities/week_days.dart';
 
 class RoutineCreateModel {
   int routineId;
-  int patientId;
+  String patientId;
   String title;
   String description;
   TimeOfDay startTime;

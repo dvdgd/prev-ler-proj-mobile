@@ -104,7 +104,7 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
     final duration = Duration(minutes: minutes);
 
     return RoutineCreateModel(
-      patientId: 0,
+      patientId: '',
       title: _titleController.text,
       description: _descriptionController.text,
       startTime: _startTime.value,

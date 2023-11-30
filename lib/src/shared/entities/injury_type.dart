@@ -1,5 +1,6 @@
 class InjuryType {
   int idInjuryType;
+  String userId;
   String companyId;
   String name;
   String description;
@@ -11,6 +12,7 @@ class InjuryType {
     required this.companyId,
     required this.name,
     required this.description,
+    required this.userId,
     this.createdAt,
     this.updatedAt,
   });

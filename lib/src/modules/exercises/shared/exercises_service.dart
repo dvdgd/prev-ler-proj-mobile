@@ -24,7 +24,7 @@ class ExercisesServiceImpl extends ExerciseService {
   Future<List<Exercise>> fetchAll() async {
     return [
       Exercise(
-        idMedic: 1,
+        idMedic: '',
         idInjuryType: 1,
         name: "name",
         description: "description",

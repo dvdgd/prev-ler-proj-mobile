@@ -6,10 +6,12 @@ class Content {
   String title;
   String subtitle;
   String description;
+  int injuryTypeId;
+  String? userId;
   String? observation;
   DateTime? createdAt;
   DateTime? updatedAt;
-  List<InjuryType>? injuryType;
+  InjuryType? injuryType;
 
   Content({
     this.contentId = 0,
@@ -18,6 +20,8 @@ class Content {
     required this.subtitle,
     required this.description,
     required this.observation,
+    required this.injuryTypeId,
+    this.userId,
     this.createdAt,
     this.updatedAt,
     this.injuryType,

@@ -16,7 +16,7 @@ class UserSignUp {
 }
 
 class User {
-  int idUser;
+  String userId;
   String email;
   String firstName;
   String lastName;
@@ -28,7 +28,7 @@ class User {
   Company? company;
 
   User({
-    this.idUser = 0,
+    this.userId = '',
     required this.email,
     required this.firstName,
     required this.lastName,

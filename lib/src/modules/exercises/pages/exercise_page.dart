@@ -39,7 +39,7 @@ class _ExercisePageState extends State<ExercisePage> {
     final state = controller.state;
     final errorMessage = controller.errorMessage;
 
-    final idMedic = context.read<UserController>().user?.idUser;
+    final idMedic = context.read<UserController>().user?.userId;
 
     final exercises = controller.exercises;
     final userExercises = exercises.where((e) => e.idMedic == idMedic).toList();

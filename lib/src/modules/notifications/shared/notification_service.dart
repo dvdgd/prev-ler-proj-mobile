@@ -1,7 +1,8 @@
 import 'package:prev_ler/src/shared/entities/notification.dart';
 
 abstract class INotificationService {
-  Future<List<NotificationData>> getActiveRoutinesNotifications(int patientId);
+  Future<List<NotificationData>> getActiveRoutinesNotifications(
+      String patientId);
   Future<void> updateNotificationAsSended(NotificationData notification);
 }
 
@@ -10,7 +11,7 @@ class NotificationServiceImp implements INotificationService {
 
   @override
   Future<List<NotificationData>> getActiveRoutinesNotifications(
-      int patientId) async {
+      String patientId) async {
     return [
       NotificationData(
         idNotification: 1,

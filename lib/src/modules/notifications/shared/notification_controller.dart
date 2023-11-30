@@ -32,7 +32,7 @@ class NotificationController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final patientId = _getPatientUser().idUser;
+      final patientId = _getPatientUser().userId;
 
       notifications =
           await _notificationService.getActiveRoutinesNotifications(patientId);

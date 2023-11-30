@@ -28,7 +28,7 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  late final User medic;
+  late final User user;
   late final InjuriesController controller;
 
   final formKey = GlobalKey<FormState>();
@@ -45,7 +45,7 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
       Navigator.of(Routes.navigatorKey.currentContext!)
           .pushReplacementNamed('/');
     } else {
-      medic = user;
+      this.user = user;
     }
 
     final injury = widget.injury;
@@ -84,8 +84,9 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
 
     return InjuryType(
       idInjuryType: widget.injury?.idInjuryType ?? 0,
-      companyId: medic.company?.cnpj ?? '',
+      companyId: user.company?.cnpj ?? '',
       name: name,
+      userId: user.userId,
       description: description,
       createdAt: widget.injury?.createdAt ?? DateTime.now(),
       updatedAt: DateTime.now(),

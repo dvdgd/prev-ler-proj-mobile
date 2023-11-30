@@ -11,7 +11,7 @@ import 'package:prev_ler/src/shared/services/notification_service.dart';
 import 'package:prev_ler/src/shared/utils/my_converter.dart';
 
 abstract class RoutinesService {
-  Future<List<Routine>> getAll(int patientId);
+  Future<List<Routine>> getAll(String patientId);
   Future<Routine> create(RoutineCreateModel model);
   Future<void> update(Routine newRoutine);
   Future<void> delete(Routine routine);
@@ -25,7 +25,7 @@ class RoutinesServiceImpl extends RoutinesService {
   RoutinesServiceImpl(this._repository, this._notificationService);
 
   @override
-  Future<List<Routine>> getAll(int patientId) async {
+  Future<List<Routine>> getAll(String patientId) async {
     final routines = await _repository.getAllRoutinesByPatientId(patientId);
     return routines;
   }

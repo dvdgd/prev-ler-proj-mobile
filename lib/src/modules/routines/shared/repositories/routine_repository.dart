@@ -5,6 +5,6 @@ abstract class IRoutineRepository {
   Future<Routine> create(Routine routine);
   Future<void> delete(Routine routine);
   Future<List<NotificationData>> getAllNotificationsByPatientId(int patientId);
-  Future<List<Routine>> getAllRoutinesByPatientId(int patientId);
+  Future<List<Routine>> getAllRoutinesByPatientId(String patientId);
   Future<void> update(Routine newRoutine);
 }

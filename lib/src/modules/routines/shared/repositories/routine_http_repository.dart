@@ -22,10 +22,10 @@ class RoutineHttpRepository implements IRoutineRepository {
   }
 
   @override
-  Future<List<Routine>> getAllRoutinesByPatientId(int patientId) async {
+  Future<List<Routine>> getAllRoutinesByPatientId(String patientId) async {
     return [
       Routine(
-        idPatient: 1,
+        idPatient: patientId,
         title: "title",
         description: "description",
         startTime: const TimeOfDay(hour: 1, minute: 10),

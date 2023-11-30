@@ -2,7 +2,7 @@ import 'package:prev_ler/src/shared/entities/injury_type.dart';
 
 class Exercise {
   int idExercise;
-  int idMedic;
+  String idMedic;
   int idInjuryType;
   String name;
   String description;

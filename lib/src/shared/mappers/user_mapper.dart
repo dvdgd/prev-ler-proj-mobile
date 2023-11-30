@@ -6,6 +6,7 @@ User userFromSupabase(dynamic userResponse) {
   final userTypeEnum = userTypeFromSupabase(userResponse['id_tipo_usuario']);
 
   return User(
+    userId: userResponse['id_usuario'],
     email: userResponse['email'],
     firstName: userResponse['first_name'],
     lastName: userResponse['last_name'],

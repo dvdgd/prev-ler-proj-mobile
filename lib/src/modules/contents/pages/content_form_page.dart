@@ -4,6 +4,7 @@ import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
+import 'package:prev_ler/src/shared/ui/components/injury_dropdown_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
@@ -29,6 +30,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
   final _subtitleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _observationController = TextEditingController();
+  final _injuryTypeController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -51,6 +53,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
 
     final content = widget.content;
     if (content != null) {
+      _injuryTypeController.text = content.injuryTypeId.toString();
       _titleController.text = content.title;
       _subtitleController.text = content.subtitle;
       _descriptionController.text = content.description;
@@ -84,6 +87,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
     final subtitle = _subtitleController.text;
     final description = _descriptionController.text;
     final observation = _observationController.text;
+    final injuryTypeId = _injuryTypeController.text;
 
     return Content(
       contentId: widget.content?.contentId ?? 0,
@@ -92,6 +96,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
       subtitle: subtitle,
       description: description,
       observation: observation,
+      injuryTypeId: int.parse(injuryTypeId),
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -126,6 +131,10 @@ class _ContentFormPageState extends State<ContentFormPage> {
                 controller: _subtitleController,
                 labelText: 'Subtítulo',
                 prefixIcon: const Icon(Icons.subtitles),
+              ),
+              InjuryDropdownButton(
+                injuryTypeController: _injuryTypeController,
+                idInjuryType: widget.content?.injuryTypeId,
               ),
               MyTextFormField(
                 validator: (text) {

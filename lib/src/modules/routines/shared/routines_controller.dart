@@ -23,7 +23,7 @@ class RoutinesController extends ChangeNotifier {
     }
 
     final firstRoutine = routines[0];
-    if (firstRoutine.idPatient != _getPatientUser().idUser) {
+    if (firstRoutine.idPatient != _getPatientUser().userId) {
       await fetchAll();
     }
   }
@@ -44,7 +44,7 @@ class RoutinesController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final patientId = _getPatientUser().idUser;
+      final patientId = _getPatientUser().userId;
       newRoutine.patientId = patientId;
 
       final routine = await routinesSservice.create(newRoutine);
@@ -68,7 +68,7 @@ class RoutinesController extends ChangeNotifier {
     try {
       final patient = _getPatientUser();
 
-      routines = await routinesSservice.getAll(patient.idUser);
+      routines = await routinesSservice.getAll(patient.userId);
       state = StateEnum.success;
     } on BaseError catch (e) {
       errorMessage = e.message;
