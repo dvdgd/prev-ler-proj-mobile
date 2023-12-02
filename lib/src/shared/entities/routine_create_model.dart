@@ -6,7 +6,7 @@ import 'package:prev_ler/src/shared/entities/week_days.dart';
 
 class RoutineCreateModel {
   int routineId;
-  String patientId;
+  String userId;
   String title;
   String description;
   TimeOfDay startTime;
@@ -18,7 +18,7 @@ class RoutineCreateModel {
 
   RoutineCreateModel({
     this.routineId = 0,
-    required this.patientId,
+    required this.userId,
     required this.title,
     required this.description,
     required this.startTime,
@@ -40,8 +40,8 @@ class RoutineCreateModel {
     }).where((element) => element != null).toList();
 
     return Routine(
-      idRoutine: routineId,
-      idPatient: patientId,
+      routineId: routineId,
+      userId: userId,
       title: title,
       description: description,
       startTime: startTime,
@@ -54,11 +54,20 @@ class RoutineCreateModel {
   }
 
   factory RoutineCreateModel.fromRoutine(Routine routine) {
-    List<bool> selectedDays = List<bool>.filled(daysOfWeek.length, false);
+    final selectedDays = daysOfWeek.map((e) {
+      try {
+        final foundDayOfWeek = routine.weekdays?.firstWhere(
+          (wd) => wd?.enumName == e.enumName,
+        );
+        return foundDayOfWeek == null ? false : true;
+      } catch (e) {
+        return false;
+      }
+    }).toList();
 
     return RoutineCreateModel(
-      routineId: routine.idRoutine,
-      patientId: routine.idPatient,
+      routineId: routine.routineId,
+      userId: routine.userId,
       title: routine.title,
       description: routine.description,
       startTime: routine.startTime,

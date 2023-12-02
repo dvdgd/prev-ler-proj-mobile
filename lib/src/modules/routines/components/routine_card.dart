@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/routines/pages/routine_details_page.dart';
-import 'package:prev_ler/src/modules/routines/shared/routines_controller.dart';
+import 'package:prev_ler/src/modules/routines/pages/routine_form_page.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/routines_controller.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
 import 'package:prev_ler/src/shared/ui/components/crud_options_buttons.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
@@ -30,11 +31,19 @@ class _RoutineCardState extends State<RoutineCard> {
     final newRoutine = routine.copyWith(active: value);
     await context.read<RoutinesController>().toggleRoutine(newRoutine);
     setState(() => routine = newRoutine);
+    if (mounted) {
+      final activeStr = newRoutine.active ? 'Ativada' : 'Desativada';
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Rotina ${routine.title} $activeStr.')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final qtdExercises = routine.exercises?.length ?? 0;
+    final qtdExercises = widget.routine.exercises?.length ?? 0;
+    final qtdExercisesSubtitle = qtdExercises > 1 ? 'Exercícios' : 'Exercício';
     String activeWeekDays = ' ';
     final weekdays = routine.weekdays;
     if (weekdays != null && weekdays.isNotEmpty) {
@@ -64,6 +73,20 @@ class _RoutineCardState extends State<RoutineCard> {
               },
             ),
             MyOptionButton(
+              title: 'Editar',
+              icon: const Icon(Icons.edit_outlined),
+              pressedFunction: () {
+                final currentContext = Routes.navigatorKey.currentContext!;
+                Navigator.of(currentContext).pop();
+                Navigator.of(currentContext).push(MaterialPageRoute(
+                  builder: (context) => RoutineFormPage(
+                    routine: routine,
+                    title: 'Editar',
+                  ),
+                ));
+              },
+            ),
+            MyOptionButton(
               title: 'Deletar',
               icon: const Icon(Icons.delete_forever_outlined),
               pressedFunction: () {
@@ -87,7 +110,7 @@ class _RoutineCardState extends State<RoutineCard> {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Text(
-                  qtdExercises > 1 ? 'Exercícios' : 'Exercício',
+                  qtdExercisesSubtitle,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],

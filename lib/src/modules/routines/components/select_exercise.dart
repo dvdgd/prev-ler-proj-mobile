@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/exercises/pages/exercise_details_page.dart';
-import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/exercise_cart_controller.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_card.dart';
 import 'package:prev_ler/src/shared/utils/my_converter.dart';
@@ -23,7 +23,7 @@ class SelectExercise extends StatelessWidget {
     final imageBytes = MyConverter.base64Binary(exercise.image);
     final controller = context.watch<ExerciseCartController>();
 
-    final isSelected = controller.value.contains(exercise);
+    final isSelected = controller.exercises.contains(exercise);
     final colorScheme = Theme.of(context).colorScheme;
 
     final backgroudColor = isSelected ? colorScheme.tertiaryContainer : null;

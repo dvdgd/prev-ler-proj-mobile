@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/modules/routines/components/select_exercise.dart';
-import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/exercise_cart_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +31,7 @@ class _ExerciseCartPageState extends State<ExerciseCartPage> {
   Widget build(BuildContext context) {
     final controller = context.watch<ExercisesController>();
 
-    final selectedExercises = context.watch<ExerciseCartController>().value;
+    final selectedExercises = context.watch<ExerciseCartController>().exercises;
     final exercises = controller.exercises;
 
     controller.exercises.sort((a, b) {

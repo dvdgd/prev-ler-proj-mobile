@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -11,12 +13,12 @@ import 'package:prev_ler/src/modules/exercises/shared/exercises_service.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_service.dart';
 import 'package:prev_ler/src/modules/notifications/shared/notification_controller.dart';
-import 'package:prev_ler/src/modules/notifications/shared/notification_service.dart';
-import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
-import 'package:prev_ler/src/modules/routines/shared/repositories/routine_http_repository.dart';
-import 'package:prev_ler/src/modules/routines/shared/routines_controller.dart';
+import 'package:prev_ler/src/modules/notifications/shared/routine_notification_repository.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/exercise_cart_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/routines_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/week_day_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/repositories/routine_repository.dart';
 import 'package:prev_ler/src/modules/routines/shared/routines_service.dart';
-import 'package:prev_ler/src/modules/routines/shared/week_day_controller.dart';
 import 'package:prev_ler/src/my_material_app.dart';
 import 'package:prev_ler/src/shared/controllers/dark_mode_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
@@ -48,6 +50,14 @@ void main() async {
     authFlowType: sup.AuthFlowType.implicit,
   );
 
+  final secureStore = SecureStore(const FlutterSecureStorage());
+  supabaseClient.auth.onAuthStateChange.listen((data) {
+    final sup.AuthChangeEvent event = data.event;
+    if (event == sup.AuthChangeEvent.tokenRefreshed) {
+      secureStore.saveBearer(jsonEncode(data.session?.toJson()));
+    }
+  });
+
   runApp(
     MultiProvider(
       providers: [
@@ -58,10 +68,17 @@ void main() async {
           create: (ctx) =>
               FlutterNotificationService(ctx.read<NotificationConfig>()),
         ),
-        Provider(create: (ctx) => ClientHttp()),
-        Provider(create: (ctx) => ContentsServiceImpl()),
-        Provider(create: (ctx) => InjuriesServiceImpl()),
-        Provider(create: (ctx) => RoutineHttpRepository()),
+        Provider(create: (_) => ClientHttp()),
+        Provider(create: (_) => ContentsServiceImpl()),
+        Provider(create: (_) => InjuriesServiceImpl()),
+        Provider(
+          create: (ctx) => RoutineNotificationRepository(),
+        ),
+        Provider(
+          create: (ctx) => RoutineRepository(
+            ctx.read<RoutineNotificationRepository>(),
+          ),
+        ),
         Provider(
           create: (ctx) => ExercisesServiceImpl(ctx.read<MyConverter>()),
         ),
@@ -73,11 +90,11 @@ void main() async {
         ),
         Provider(
           create: (ctx) => RoutinesServiceImpl(
-            ctx.read<RoutineHttpRepository>(),
+            ctx.read<RoutineRepository>(),
             ctx.read<FlutterNotificationService>(),
           ),
         ),
-        Provider(create: (ctx) => NotificationServiceImp()),
+        Provider(create: (ctx) => ctx.read<RoutineNotificationRepository>()),
         ChangeNotifierProvider(create: (_) => WeekDayController()),
         ChangeNotifierProvider(create: (_) => ExerciseCartController()),
         ChangeNotifierProvider(create: (_) => DarkModeController()),
@@ -114,8 +131,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (ctx) => NotificationController(
-            ctx.read<NotificationServiceImp>(),
+            ctx.read<RoutineNotificationRepository>(),
             ctx.read<AuthService>(),
+            ctx.read<RoutineRepository>(),
           ),
         ),
       ],

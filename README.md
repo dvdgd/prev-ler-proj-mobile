@@ -24,9 +24,9 @@ SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 - Listar sobre qual lesão um exercicio é.
 - CRUD de exercícios.
 - Persistir a sessão do usuário ao fechar o aplicativo.
-- Refatoração de login e registro para o supabase
-- CRUD de Lesões (enfermidades)
-- CRUD de conteúdo puro (sem relacionar lesões)
+- Refatoração de login e registro para o supabase.
+- CRUD de Lesões (enfermidades).
+- CRUD de conteúdo puro (sem relacionar lesões).
 - Relacionar a criacao de conteudo com uma lesão (enfermidade).
 
 # TODO List

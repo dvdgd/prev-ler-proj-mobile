@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prev_ler/src/modules/routines/shared/routine_create_model.dart';
 import 'package:prev_ler/src/modules/routines/shared/routines_service.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
+import 'package:prev_ler/src/shared/entities/routine_create_model.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/errors/base_error.dart';
 import 'package:prev_ler/src/shared/services/auth_service.dart';
@@ -23,7 +23,7 @@ class RoutinesController extends ChangeNotifier {
     }
 
     final firstRoutine = routines[0];
-    if (firstRoutine.idPatient != _getPatientUser().userId) {
+    if (firstRoutine.userId != _getPatientUser().userId) {
       await fetchAll();
     }
   }
@@ -45,7 +45,7 @@ class RoutinesController extends ChangeNotifier {
 
     try {
       final patientId = _getPatientUser().userId;
-      newRoutine.patientId = patientId;
+      newRoutine.userId = patientId;
 
       final routine = await routinesSservice.create(newRoutine);
       routines.add(routine);
@@ -89,7 +89,7 @@ class RoutinesController extends ChangeNotifier {
 
     try {
       await routinesSservice.delete(routine);
-      routines.removeWhere((e) => e.idRoutine == routine.idRoutine);
+      routines.removeWhere((e) => e.routineId == routine.routineId);
       state = StateEnum.success;
     } on BaseError catch (e) {
       errorMessage = e.message;
@@ -102,14 +102,14 @@ class RoutinesController extends ChangeNotifier {
     }
   }
 
-  Future<void> update(Routine newRoutine) async {
+  Future<void> update(RoutineCreateModel routine) async {
     state = StateEnum.loading;
     notifyListeners();
 
     try {
-      await routinesSservice.update(newRoutine);
+      final updatedRoutine = await routinesSservice.update(routine);
 
-      _updateRoutineFromController(newRoutine);
+      _updateRoutineFromController(updatedRoutine);
       state = StateEnum.success;
     } on BaseError catch (e) {
       errorMessage = e.message;
@@ -124,12 +124,13 @@ class RoutinesController extends ChangeNotifier {
 
   Routine _updateRoutineFromController(Routine routine) {
     final routineIndex = routines.indexWhere(
-      (e) => e.idRoutine == routine.idRoutine,
+      (e) => e.routineId == routine.routineId,
     );
 
     if (routineIndex != -1) {
       routines[routineIndex] = routine;
     }
+    notifyListeners();
     return routine;
   }
 

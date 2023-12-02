@@ -1,6 +1,6 @@
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
 
-class Exercise {
+class Exercise extends Comparable<Exercise> {
   int exerciseId;
   String userId;
   String companyId;
@@ -30,4 +30,18 @@ class Exercise {
     this.updatedAt,
     this.injuryType,
   });
+
+  @override
+  int compareTo(Exercise other) {
+    return exerciseId.compareTo(other.exerciseId);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! Exercise) return false;
+    return (other.exerciseId == exerciseId);
+  }
+
+  @override
+  int get hashCode => exerciseId.hashCode;
 }

@@ -3,20 +3,20 @@ import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class ExerciseCartController extends ChangeNotifier {
-  List<Exercise> value = [];
+  List<Exercise> exercises = [];
   StateEnum state = StateEnum.idle;
 
   void add(Exercise exercise) {
-    value.add(exercise);
+    exercises.add(exercise);
     notifyListeners();
   }
 
   void remove(Exercise exercise) {
-    value.removeWhere((e) => e.exerciseId == exercise.exerciseId);
+    exercises.removeWhere((e) => e.exerciseId == exercise.exerciseId);
     notifyListeners();
   }
 
   void clearAll() {
-    value = [];
+    exercises = [];
   }
 }

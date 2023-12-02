@@ -36,26 +36,25 @@ class FlutterNotificationService {
   Future<void> scheduleNextWeekDayNotification(
     NotificationData myNotification,
   ) async {
-    debugPrint('Scheduling notification ${myNotification.idNotification}');
-
+    debugPrint('Scheduling notification ${myNotification.notificationId}');
     final notification = CustomNotification(
-      id: myNotification.idNotification,
+      id: myNotification.notificationId,
       title: myNotification.title,
       body: myNotification.message,
       payload: '/notifications',
       scheduleDate: tz.TZDateTime.from(myNotification.time, tz.local),
     );
-    debugPrint('Notification scheduled: ${notification.toMap()}');
 
-    _notificationConfig.scheduleNotification(notification);
+    await _notificationConfig.scheduleNotification(notification);
+    debugPrint('Notification scheduled: ${notification.toMap()}');
   }
 
   Future<void> cancelNotification(NotificationData notificationData) async {
     debugPrint(
-        'Cancelling notification, notificationId: ${notificationData.idNotification}');
+        'Cancelling notification, notificationId: ${notificationData.notificationId}');
     await _notificationConfig
-        .cancelNotification(notificationData.idNotification);
+        .cancelNotification(notificationData.notificationId);
     debugPrint(
-        'Cancel notification sucess, notificationId: ${notificationData.idNotification}');
+        'Cancel notification sucess, notificationId: ${notificationData.notificationId}');
   }
 }

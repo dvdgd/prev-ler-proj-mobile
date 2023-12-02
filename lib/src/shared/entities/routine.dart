@@ -4,8 +4,8 @@ import 'package:prev_ler/src/shared/entities/exercise.dart';
 import 'package:prev_ler/src/shared/entities/notification.dart';
 
 class Routine {
-  final int idRoutine;
-  final String idPatient;
+  final int routineId;
+  final String userId;
   final String title;
   final String description;
   final TimeOfDay startTime;
@@ -19,8 +19,8 @@ class Routine {
   final List<NotificationData>? notifications;
 
   Routine({
-    this.idRoutine = 0,
-    required this.idPatient,
+    this.routineId = 0,
+    required this.userId,
     required this.title,
     required this.description,
     required this.startTime,
@@ -50,8 +50,8 @@ class Routine {
     List<NotificationData>? notifications,
   }) {
     return Routine(
-      idRoutine: idRoutine ?? this.idRoutine,
-      idPatient: idPatient ?? this.idPatient,
+      routineId: idRoutine ?? routineId,
+      userId: idPatient ?? userId,
       title: title ?? this.title,
       description: description ?? this.description,
       startTime: startTime ?? this.startTime,

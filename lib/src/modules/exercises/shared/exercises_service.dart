@@ -76,7 +76,7 @@ class ExercisesServiceImpl extends ExerciseService {
           .eq('id_exercicio', newExercise.exerciseId);
     } catch (e) {
       throw UnknowError(
-        description: 'Ops... Ocorreu um erro ao criar exercício',
+        description: 'Ops... Ocorreu um erro ao atualizar o exercício',
       );
     }
 

@@ -28,6 +28,11 @@ class _MyHourPickerState extends State<MyHourPicker> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedTimeOfDay = widget.selectedTime.value;
+    if (mounted) {
+      _durationController.text = selectedTimeOfDay.format(context);
+    }
+
     return MyTextFormField(
       readOnly: true,
       controller: _durationController,
