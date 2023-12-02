@@ -31,6 +31,8 @@ NotificationData notificationDataFromSupabase(
     message: notification['mensagem'],
     time: DateTime.parse(notification['horario']),
     sent: notification['enviado'],
-    exercise: exerciseFromSupabase(notification['exercicio']),
+    exercise: notification['exercicio'] != null
+        ? exerciseFromSupabase(notification['exercicio'])
+        : null,
   );
 }

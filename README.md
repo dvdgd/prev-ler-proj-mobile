@@ -16,9 +16,11 @@ SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 ```
 
 # DOING List
-- CRUD de rotina
+- Regra de não permitir uma empresa com assinatura expirada acessar o aplicativo (mostrar mensagem que a assinatura está expirada).
 
 # DONE List
+- Cards de ultimos exercicios e conteudos na home page.
+- CRUD de rotina
 - Criar nova tela de perfil.
 - Listar sobre qual lesões um conteúdo é.
 - Listar sobre qual lesão um exercicio é.
@@ -30,4 +32,3 @@ SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 - Relacionar a criacao de conteudo com uma lesão (enfermidade).
 
 # TODO List
-- Regra de não permitir uma empresa com assinatura expirada acessar o aplicativo (mostrar mensagem que a assinatura está expirada).

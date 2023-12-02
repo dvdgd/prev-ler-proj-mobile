@@ -64,71 +64,64 @@ class _RoutineResumeCardState extends State<RoutineResumeCard> {
         .map((r) => r.exercises?.length ?? 0)
         .fold(0, (prev, curr) => prev += curr);
 
-    return Expanded(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(children: [
-          MyCard(
-            padding: const EdgeInsets.all(20),
-            backgroundColor: Theme.of(context).primaryColor,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return MyCard(
+      padding: const EdgeInsets.all(20),
+      backgroundColor: Theme.of(context).primaryColor,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Hoje',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            isSucess
-                                ? '$maxActivesRoutinesToday Rotinas'
-                                : '-- Rotinas',
-                            style: const TextStyle(
-                              fontSize: 25,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
+                    const Text(
+                      'Hoje',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
                       ),
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          isSucess ? '$maxExercicesToDoToday' : '--',
-                          style: const TextStyle(
-                            height: 1,
-                            color: Colors.white,
-                            fontSize: 50,
-                          ),
-                        ),
-                        const Text(
-                          'Exercícios',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                    )
+                    Text(
+                      isSucess
+                          ? '$maxActivesRoutinesToday Rotinas'
+                          : '-- Rotinas',
+                      style: const TextStyle(
+                        fontSize: 25,
+                        color: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
-              ],
-            ),
-            onTap: () => Navigator.of(Routes.navigatorKey.currentContext!)
-                .pushNamed('/routines'),
+              ),
+              Column(
+                children: [
+                  Text(
+                    isSucess ? '$maxExercicesToDoToday' : '--',
+                    style: const TextStyle(
+                      height: 1,
+                      color: Colors.white,
+                      fontSize: 50,
+                    ),
+                  ),
+                  const Text(
+                    'Exercícios',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
-        ]),
+        ],
       ),
+      onTap: () => Navigator.of(Routes.navigatorKey.currentContext!)
+          .pushNamed('/routines'),
     );
   }
 }

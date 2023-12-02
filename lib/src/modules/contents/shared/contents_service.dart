@@ -6,6 +6,7 @@ import 'package:prev_ler/src/shared/mappers/content_mapper.dart';
 abstract class ContentsService {
   Future<List<Content>> fetchAll();
   Future<Content> create(Content content);
+  Future<List<Content>> fetchLastsContents(int qtdContents);
   Future<void> update(Content newContent);
   Future<void> delete(Content content);
 }
@@ -62,6 +63,25 @@ class ContentsServiceImpl extends ContentsService {
           .eq('id_conteudo', newContent.contentId);
     } catch (e) {
       throw UnknowError();
+    }
+  }
+
+  @override
+  Future<List<Content>> fetchLastsContents(int qtdContents) async {
+    try {
+      final supContents = await supabaseClient
+          .from('conteudo')
+          .select('*, enfermidade(*)')
+          .order('id_conteudo', ascending: false)
+          .limit(qtdContents) as List<dynamic>;
+
+      final contents = supContents.map((c) => contentFromSupabase(c)).toList();
+      return contents;
+    } catch (e) {
+      throw BaseError(
+        message:
+            'Ocorreu um erro ao buscar as lessões, tente novamente mais tarde.',
+      );
     }
   }
 }

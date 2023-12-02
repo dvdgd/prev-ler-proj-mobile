@@ -10,6 +10,8 @@ import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_service.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_controller.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_service.dart';
+import 'package:prev_ler/src/modules/home/shared/lasts_contents_controller.dart';
+import 'package:prev_ler/src/modules/home/shared/lasts_exercises_controller.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_service.dart';
 import 'package:prev_ler/src/modules/notifications/shared/notification_controller.dart';
@@ -98,6 +100,16 @@ void main() async {
         ChangeNotifierProvider(create: (_) => WeekDayController()),
         ChangeNotifierProvider(create: (_) => ExerciseCartController()),
         ChangeNotifierProvider(create: (_) => DarkModeController()),
+        ChangeNotifierProvider(
+          create: (ctx) => LastsExercisesController(
+            ctx.read<ExercisesServiceImpl>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => LastsContentsController(
+            ctx.read<ContentsServiceImpl>(),
+          ),
+        ),
         ChangeNotifierProvider(
           create: (ctx) => UserController(ctx.read<AuthService>()),
         ),
