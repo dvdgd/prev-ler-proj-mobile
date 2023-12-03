@@ -40,6 +40,7 @@ class HomePage extends StatelessWidget {
           ]);
         },
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
             padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
             child: const Column(
