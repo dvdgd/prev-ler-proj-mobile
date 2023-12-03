@@ -48,6 +48,9 @@ class AuthService {
         password: password,
         email: email,
       );
+      if (authResponse.session == null) {
+        throw BaseError(message: 'Usuário ou senha incorretos.');
+      }
       await handleAuthResponse(authResponse);
     } catch (e) {
       throw BaseError(message: 'Usuário ou senha incorretos.');
