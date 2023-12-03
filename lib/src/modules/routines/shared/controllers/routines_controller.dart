@@ -30,9 +30,9 @@ class RoutinesController extends ChangeNotifier {
 
   User _getPatientUser() {
     final user = userService.currentUser;
-    if (user == null || user.type == UserType.employee) {
+    if (user == null) {
       throw BaseError(
-        message: 'Você precisa ser um funcionário para criar rotinas.',
+        message: 'Usuário não encontrado.',
       );
     }
 
