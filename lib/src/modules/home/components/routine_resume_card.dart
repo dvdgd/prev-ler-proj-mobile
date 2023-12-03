@@ -64,9 +64,11 @@ class _RoutineResumeCardState extends State<RoutineResumeCard> {
         .map((r) => r.exercises?.length ?? 0)
         .fold(0, (prev, curr) => prev += curr);
 
+    final textColor = Theme.of(context).colorScheme.onPrimaryContainer;
+
     return MyCard(
       padding: const EdgeInsets.all(20),
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -78,20 +80,20 @@ class _RoutineResumeCardState extends State<RoutineResumeCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Hoje',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.white,
+                        color: textColor,
                       ),
                     ),
                     Text(
                       isSucess
                           ? '$maxActivesRoutinesToday Rotinas'
                           : '-- Rotinas',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 25,
-                        color: Colors.white,
+                        color: textColor,
                       ),
                     ),
                   ],
@@ -101,17 +103,17 @@ class _RoutineResumeCardState extends State<RoutineResumeCard> {
                 children: [
                   Text(
                     isSucess ? '$maxExercicesToDoToday' : '--',
-                    style: const TextStyle(
+                    style: TextStyle(
                       height: 1,
-                      color: Colors.white,
+                      color: textColor,
                       fontSize: 50,
                     ),
                   ),
-                  const Text(
+                  Text(
                     'Exercícios',
                     style: TextStyle(
                       fontSize: 18,
-                      color: Colors.white,
+                      color: textColor,
                     ),
                   )
                 ],

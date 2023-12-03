@@ -33,10 +33,11 @@ class _LastsExercisesCardState extends State<LastsExercisesCard> {
 
     final exercises = controller.exercises;
     final state = controller.state;
+    final textColor = Theme.of(context).colorScheme.onSecondaryContainer;
 
     return MyCard(
       padding: const EdgeInsets.all(20),
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -47,7 +48,7 @@ class _LastsExercisesCardState extends State<LastsExercisesCard> {
               'Últimos Exercícios!',
               style: TextStyle(
                 fontSize: 20,
-                color: Theme.of(context).colorScheme.onTertiary,
+                color: textColor,
               ),
             ),
             if (state == StateEnum.loading)
@@ -55,7 +56,7 @@ class _LastsExercisesCardState extends State<LastsExercisesCard> {
                 padding: const EdgeInsets.all(90),
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: Theme.of(context).colorScheme.onTertiary,
+                    color: textColor,
                   ),
                 ),
               ),
@@ -69,7 +70,7 @@ class _LastsExercisesCardState extends State<LastsExercisesCard> {
                 child: Text(
                   'Não existem exercícios cadastrados.',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onTertiary,
+                    color: textColor,
                   ),
                 ),
               ),
@@ -80,8 +81,8 @@ class _LastsExercisesCardState extends State<LastsExercisesCard> {
                 itemBuilder: (context, index) {
                   final exercise = exercises[index];
                   return ListTile(
-                    iconColor: Theme.of(context).colorScheme.onTertiary,
-                    textColor: Theme.of(context).colorScheme.onTertiary,
+                    iconColor: textColor,
+                    textColor: textColor,
                     contentPadding: const EdgeInsets.all(0),
                     title: Text(exercise.name),
                     subtitle: Text(

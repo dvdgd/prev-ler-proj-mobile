@@ -33,11 +33,11 @@ class _LastsContentsCardState extends State<LastsContentsCard> {
     final contents = controller.contents;
     final state = controller.state;
 
-    final textColor = Theme.of(context).colorScheme.onSecondary;
+    final textColor = Theme.of(context).colorScheme.onTertiaryContainer;
 
     return MyCard(
       padding: const EdgeInsets.all(20),
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
