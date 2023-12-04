@@ -17,8 +17,12 @@ class InjuriesServiceImpl extends InjuriesService {
   Future<InjuryType> create(InjuryType injuryType) async {
     try {
       final injurySupabaseInsert = injuryToSupabase(injuryType);
-      await supabaseClient.from('enfermidade').insert(injurySupabaseInsert);
-      return injuryType;
+      final newInjurySup = await supabaseClient
+          .from('enfermidade')
+          .insert(injurySupabaseInsert)
+          .select('*')
+          .single();
+      return injuryFromSupabase(newInjurySup);
     } catch (e) {
       throw UnknowError();
     }
