@@ -46,6 +46,7 @@ class _MyHourPickerState extends State<MyHourPicker> {
 
   _onTap() async {
     final timeOfDay = await showTimePicker(
+      initialEntryMode: TimePickerEntryMode.input,
       context: context,
       initialTime: TimeOfDay.now(),
     );
