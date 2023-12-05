@@ -65,12 +65,12 @@ class _MainPageState extends State<MainPage> {
           NavigationDestination(
             icon: Icon(Icons.fitness_center_outlined),
             selectedIcon: Icon(Icons.fitness_center),
-            label: 'Exercício',
+            label: 'Exercícios',
           ),
           NavigationDestination(
             icon: Icon(Icons.description_outlined),
             selectedIcon: Icon(Icons.description),
-            label: 'Conteúdo',
+            label: 'Conteúdos',
           ),
         ],
       ),
