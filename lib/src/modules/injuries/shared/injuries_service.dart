@@ -55,7 +55,7 @@ class InjuriesServiceImpl extends InjuriesService {
           .eq('id_enfermidade', injuryType.idInjuryType);
     } catch (e) {
       throw BaseError(
-        message: 'Ops... Não foi possível excluir a enfermidade.',
+        message: 'Ops... Não foi possível excluir a lesão.',
       );
     }
   }

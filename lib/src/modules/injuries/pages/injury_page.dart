@@ -54,7 +54,7 @@ class _InjuryPageState extends State<InjuryPage> {
               ),
             if (injuries.isEmpty && state != StateEnum.loading)
               const SliverCenterText(
-                message: 'Não existem conteúdos a serem exibidos.',
+                message: 'Não existem lesões a serem exibidas.',
               ),
             if (injuries.isNotEmpty)
               SliverList(

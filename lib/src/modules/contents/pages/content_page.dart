@@ -53,7 +53,7 @@ class _ContentPageState extends State<ContentPage> {
               SliverCenterText(message: errorMessage),
             if (contents.isEmpty && !isLoading)
               const SliverCenterText(
-                message: 'Não existem conteúdo para serem exibidos.',
+                message: 'Não existem conteúdos a serem exibidos.',
               ),
             if (contents.isNotEmpty)
               SliverList(
