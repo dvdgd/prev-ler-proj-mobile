@@ -86,7 +86,7 @@ class _AuthPageState extends State<AuthPage> {
                   controller: _emailController,
                   validator: (text) =>
                       text == null || text.isEmpty ? "Preencha o email." : null,
-                  labelText: 'Email',
+                  labelText: 'Email*',
                   prefixIcon: const Icon(Icons.email_outlined),
                   textInputType: TextInputType.emailAddress,
                 ),
@@ -94,7 +94,7 @@ class _AuthPageState extends State<AuthPage> {
                   validator: (text) =>
                       text == null || text.isEmpty ? "Digite a senha." : null,
                   controller: _passwordController,
-                  labelText: 'Senha',
+                  labelText: 'Senha*',
                 ),
                 const SizedBox(height: 30),
                 Padding(

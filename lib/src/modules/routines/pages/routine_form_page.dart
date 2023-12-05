@@ -183,14 +183,14 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
                 validator: (text) =>
                     text == null || text.isEmpty ? 'Campo obrigatório.' : null,
                 controller: _titleController,
-                labelText: 'Nome',
+                labelText: 'Nome*',
                 prefixIcon: const Icon(Icons.title),
               ),
               MyTextFormField(
                 validator: (text) =>
                     text == null || text.isEmpty ? 'Campo obrigatório.' : null,
                 controller: _descriptionController,
-                labelText: 'Descrição',
+                labelText: 'Descrição*',
                 prefixIcon: const Icon(Icons.description),
                 maxLines: 10,
                 maxLength: 300,
@@ -198,7 +198,7 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
               divider,
               leftAlignWithPadding(
                 child: Text(
-                  'Dias da rotina ativa.',
+                  'Dias da rotina ativa*',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -213,7 +213,7 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
               leftAlignWithPadding(
                 child: Text(
                   style: Theme.of(context).textTheme.titleMedium,
-                  'Selecione um exercício.',
+                  'Selecione um exercício*',
                 ),
               ),
               if (exercises.isNotEmpty)
@@ -242,47 +242,49 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
               divider,
               const SizedBox(height: 15),
               MyHourPicker(
-                  selectedTime: _startTime,
-                  labelText: 'Horario de inicío',
-                  prefixIcon: const Icon(Icons.alarm_on),
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Campo obrigatório.';
-                    }
+                selectedTime: _startTime,
+                labelText: 'Horario de inicío*',
+                prefixIcon: const Icon(Icons.alarm_on),
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Campo obrigatório.';
+                  }
 
-                    final startTime = _startTime.value;
-                    if (startTime.hour == 0) {
-                      return 'Horário não permitido';
-                    }
-                    return null;
-                  }),
+                  final startTime = _startTime.value;
+                  if (startTime.hour == 0) {
+                    return 'Horário não permitido';
+                  }
+                  return null;
+                },
+              ),
               MyHourPicker(
-                  selectedTime: _endTime,
-                  labelText: 'Horario de fim',
-                  prefixIcon: const Icon(Icons.alarm_off),
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Campo obrigatório.';
-                    }
+                selectedTime: _endTime,
+                labelText: 'Horario de fim*',
+                prefixIcon: const Icon(Icons.alarm_off),
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Campo obrigatório.';
+                  }
 
-                    final endTime = _endTime.value;
-                    final startTime = _startTime.value;
-                    if (endTime == startTime) {
-                      return 'Os horários não podem ser iguais.';
-                    }
+                  final endTime = _endTime.value;
+                  final startTime = _startTime.value;
+                  if (endTime == startTime) {
+                    return 'Os horários não podem ser iguais.';
+                  }
 
-                    final isEqualHours = endTime.hour == startTime.hour;
-                    final isMinuteBefore = startTime.minute > endTime.minute;
+                  final isEqualHours = endTime.hour == startTime.hour;
+                  final isMinuteBefore = startTime.minute > endTime.minute;
 
-                    if (endTime.hour < startTime.hour ||
-                        (isEqualHours && isMinuteBefore)) {
-                      return 'Selecione um horário maior que o de início.';
-                    }
+                  if (endTime.hour < startTime.hour ||
+                      (isEqualHours && isMinuteBefore)) {
+                    return 'Selecione um horário maior que o de início.';
+                  }
 
-                    return null;
-                  }),
+                  return null;
+                },
+              ),
               MyTextFormField(
-                labelText: 'Intervalo em minutos',
+                labelText: 'Intervalo em minutos*',
                 prefixIcon: const Icon(Icons.alarm_off),
                 controller: _durationController,
                 textInputType: TextInputType.number,

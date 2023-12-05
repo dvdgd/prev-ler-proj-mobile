@@ -112,7 +112,7 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
                     ? 'Nome não pode ser vazio'
                     : null,
                 controller: _nameController,
-                labelText: 'Nome',
+                labelText: 'Nome*',
                 prefixIcon: const Icon(Icons.text_fields),
               ),
               MyTextFormField(
@@ -123,7 +123,7 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
                   return null;
                 },
                 controller: _descriptionController,
-                labelText: 'Descrição',
+                labelText: 'Descrição*',
                 prefixIcon: const Icon(Icons.description),
                 textInputType: TextInputType.multiline,
                 maxLines: 5,

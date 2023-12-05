@@ -121,7 +121,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
                     ? 'Título não pode ser vazio'
                     : null,
                 controller: _titleController,
-                labelText: 'Título',
+                labelText: 'Título*',
                 prefixIcon: const Icon(Icons.title),
               ),
               MyTextFormField(
@@ -129,7 +129,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
                     ? 'Subtítulo não pode ser vazio'
                     : null,
                 controller: _subtitleController,
-                labelText: 'Subtítulo',
+                labelText: 'Subtítulo*',
                 prefixIcon: const Icon(Icons.subtitles),
               ),
               InjuryDropdownButton(
@@ -145,7 +145,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
                 },
                 controller: _descriptionController,
                 textInputType: TextInputType.multiline,
-                labelText: 'Descrição',
+                labelText: 'Descrição*',
                 prefixIcon: const Icon(Icons.description),
                 maxLines: 10,
                 maxLength: 4000,
