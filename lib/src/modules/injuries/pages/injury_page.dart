@@ -59,13 +59,6 @@ class _InjuryPageState extends State<InjuryPage> {
             if (injuries.isNotEmpty)
               SliverList(
                 delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      'Minhas Lesões',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
