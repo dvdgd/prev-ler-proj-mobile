@@ -18,8 +18,12 @@ class ContentsServiceImpl extends ContentsService {
   Future<Content> create(Content content) async {
     try {
       final contentSup = contentToSupabase(content);
-      await supabaseClient.from('conteudo').insert(contentSup);
-      return content;
+      final createdContent = await supabaseClient
+          .from('conteudo')
+          .insert(contentSup)
+          .select('*, enfermidade(*)')
+          .single();
+      return contentFromSupabase(createdContent);
     } catch (e) {
       throw BaseError(message: 'Desculpe, não foi possível criar o conteúdo.');
     }
