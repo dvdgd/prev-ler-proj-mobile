@@ -2,6 +2,7 @@ import 'package:prev_ler/main.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
 import 'package:prev_ler/src/shared/errors/base_error.dart';
 import 'package:prev_ler/src/shared/mappers/injury_mapper.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class InjuriesService {
   Future<List<InjuryType>> fetchAll();
@@ -53,6 +54,14 @@ class InjuriesServiceImpl extends InjuriesService {
           .from('enfermidade')
           .delete()
           .eq('id_enfermidade', injuryType.idInjuryType);
+    } on PostgrestException catch (e) {
+      if (e.code == "23503") {
+        throw BaseError(
+          message:
+              'Não foi possível excluir a lesão porque ainda existem exercícios/lesões associados a ela.',
+        );
+      }
+      throw UnknowError();
     } catch (e) {
       throw BaseError(
         message: 'Ops... Não foi possível excluir a lesão.',

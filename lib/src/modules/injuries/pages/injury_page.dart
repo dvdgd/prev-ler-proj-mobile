@@ -16,13 +16,14 @@ class InjuryPage extends StatefulWidget {
 }
 
 class _InjuryPageState extends State<InjuryPage> {
-  // final _searchController = TextEditingController();
+  late final InjuriesController controller;
 
   @override
   void initState() {
     super.initState();
 
-    final controller = context.read<InjuriesController>();
+    controller = context.read<InjuriesController>();
+    controller.addListener(_handleStateChange);
     if (controller.state == StateEnum.idle) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await controller.fetchAllInjuries();
@@ -31,13 +32,25 @@ class _InjuryPageState extends State<InjuryPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.removeListener(_handleStateChange);
+  }
+
+  void _handleStateChange() {
+    if (controller.state == StateEnum.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(controller.errorMessage)),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final controller = context.watch<InjuriesController>();
 
     final injuries = controller.injuries;
-
     final state = controller.state;
-    final errorMessage = controller.errorMessage;
 
     return Scaffold(
       body: RefreshIndicator(
@@ -48,10 +61,6 @@ class _InjuryPageState extends State<InjuryPage> {
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
             _appBar,
-            if (state == StateEnum.error)
-              SliverCenterText(
-                message: errorMessage,
-              ),
             if (injuries.isEmpty && state != StateEnum.loading)
               const SliverCenterText(
                 message: 'Não existem lesões a serem exibidas.',
