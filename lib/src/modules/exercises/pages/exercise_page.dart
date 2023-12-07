@@ -66,13 +66,6 @@ class _ExercisePageState extends State<ExercisePage> {
               SliverList(
                 delegate: SliverChildListDelegate([
                   Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      'Meus:',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                  Padding(
                     padding: const EdgeInsets.only(
                       top: 10,
                       right: 10,
