@@ -67,6 +67,11 @@ class _AuthPageState extends State<AuthPage> {
             key: _formKey,
             child: Column(
               children: [
+                Image.asset(
+                  'assets/prev_ler_logo.png',
+                  width: 150,
+                ),
+                const SizedBox(height: 32),
                 Text(
                   'Bem vindo!',
                   style: Theme.of(context).textTheme.headlineLarge,
