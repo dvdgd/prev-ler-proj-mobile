@@ -27,7 +27,10 @@ class AuthController extends ChangeNotifier {
         throw BaseError(message: "O e-mail e a senha não podem ser vazios.");
       }
 
-      await authService.login(email, password);
+      await Future.wait([
+        authService.login(email, password),
+        Future.delayed(const Duration(seconds: 2)),
+      ]);
 
       state = AuthState.loggedIn;
     } on BaseError catch (e) {
