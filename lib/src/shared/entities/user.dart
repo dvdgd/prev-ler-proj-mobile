@@ -1,47 +1,42 @@
-import 'package:prev_ler/src/shared/entities/medic.dart';
-import 'package:prev_ler/src/shared/entities/patient.dart';
+import 'package:prev_ler/src/shared/entities/company.dart';
+import 'package:prev_ler/src/shared/utils/enums.dart';
+
+class UserSignUp {
+  String email;
+  String password;
+  String passwordConfirmation;
+  String cpf;
+
+  UserSignUp({
+    required this.cpf,
+    required this.email,
+    required this.password,
+    required this.passwordConfirmation,
+  });
+}
 
 class User {
-  int idUser;
+  String userId;
   String email;
-  String name;
-  DateTime bornDate;
+  String firstName;
+  String lastName;
+  String cpf;
+  String jobRole;
+  DateTime? bornDate;
   String? password;
-  Patient? patient;
-  Medic? medic;
+  UserType? type;
+  Company? company;
 
   User({
-    this.idUser = 0,
+    this.userId = '',
     required this.email,
-    required this.bornDate,
-    required this.name,
+    required this.firstName,
+    required this.lastName,
+    required this.cpf,
+    required this.jobRole,
+    this.company,
+    this.type,
+    this.bornDate,
     this.password,
-    this.patient,
-    this.medic,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'idUsuario': idUser,
-      'email': email,
-      'senhaEncriptada': password,
-      'paciente': patient?.toMap(),
-      'medico': medic?.toMap(),
-      'nome': name,
-      'dataNascimento': bornDate.toIso8601String()
-    };
-  }
-
-  factory User.fromMap(Map<String, dynamic> json) {
-    return User(
-      idUser: json['idUsuario'],
-      email: json['email'],
-      password: json['senhaEncriptada'],
-      name: json['nome'],
-      bornDate: DateTime.parse(json['dataNascimento']),
-      patient:
-          json['paciente'] != null ? Patient.fromMap(json['paciente']) : null,
-      medic: json['medico'] != null ? Medic.fromMap(json['medico']) : null,
-    );
-  }
 }

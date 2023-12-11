@@ -4,16 +4,19 @@ import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/routines/components/select_exercise.dart';
 import 'package:prev_ler/src/modules/routines/components/week_day_legend.dart';
 import 'package:prev_ler/src/modules/routines/components/week_day_picker.dart';
-import 'package:prev_ler/src/modules/routines/shared/exercise_cart_controller.dart';
-import 'package:prev_ler/src/modules/routines/shared/routine_create_model.dart';
-import 'package:prev_ler/src/modules/routines/shared/routines_controller.dart';
-import 'package:prev_ler/src/modules/routines/shared/week_day_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/exercise_cart_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/routines_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/week_day_controller.dart';
+import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
+import 'package:prev_ler/src/shared/entities/routine_create_model.dart';
+import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_hour_picker.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
+import 'package:prev_ler/src/shared/utils/gen_select_days_list.dart';
 import 'package:provider/provider.dart';
 
 class RoutineFormPage extends StatefulWidget {
@@ -44,13 +47,25 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
   final _startTime = ValueNotifier(TimeOfDay.now());
   final _endTime = ValueNotifier(TimeOfDay.now());
 
+  late final User user;
+
   @override
   void initState() {
     _exerciseCartController = context.read<ExerciseCartController>();
     _weekDayController = context.read<WeekDayController>();
 
+    final user = context.read<UserController>().user;
+    if (user == null) {
+      Navigator.of(Routes.navigatorKey.currentContext!)
+          .pushReplacementNamed('/');
+    } else {
+      this.user = user;
+    }
+
     _routinesController = context.read<RoutinesController>();
     _routinesController.addListener(_handleStateChange);
+
+    _serializeControllers();
     super.initState();
   }
 
@@ -64,47 +79,81 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
 
   _handleStateChange() {
     if (_routinesController.state == StateEnum.success) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Sucesso!')),
       );
       Navigator.of(Routes.navigatorKey.currentContext!).pop();
     }
     if (_routinesController.state == StateEnum.error) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(Routes.navigatorKey.currentContext!).showSnackBar(
         SnackBar(
           content: Text(_routinesController.errorMessage),
-          action: SnackBarAction(
-            label: 'Fechar',
-            onPressed: () =>
-                ScaffoldMessenger.of(context).hideCurrentSnackBar(),
-          ),
+          duration: const Duration(seconds: 3),
         ),
       );
     }
   }
 
-  Widget get divider => const Padding(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 20),
-        child: Divider(),
-      );
+  _serializeControllers() {
+    final routine = widget.routine;
+    if (routine == null) return;
 
-  Widget leftAlignWithPadding({required Widget child}) => Padding(
-        padding: const EdgeInsets.only(left: 20, bottom: 15),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: child,
+    _titleController.text = routine.title;
+    _descriptionController.text = routine.description;
+    _durationController.text = routine.duration.inMinutes.toString();
+
+    final selectedList = generateSelectedDaysFromRoutine(routine);
+    _weekDayController.fromList(selectedList);
+
+    routine.exercises?.forEach((exercise) {
+      _exerciseCartController.add(exercise);
+    });
+
+    _startTime.value = routine.startTime;
+    _endTime.value = routine.endTime;
+  }
+
+  Future<void> _handleFormSubmit() async {
+    final validForm = _formKey.currentState?.validate();
+    if (validForm == null || !validForm) {
+      return;
+    }
+
+    final selectedDays = _weekDayController.selectedDays;
+    final exercises = _exerciseCartController.exercises;
+
+    final someActive = selectedDays.where((e) => e == true).toList();
+    if (exercises.isEmpty || someActive.isEmpty) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Selecione no mínimo um exercicio e um dia da semana!',
+          ),
         ),
       );
 
+      return;
+    }
+
+    if (widget.routine != null) {
+      return _routinesController.update(_getRoutineCreateModel());
+    }
+    await _routinesController.create(_getRoutineCreateModel());
+  }
+
   RoutineCreateModel _getRoutineCreateModel() {
-    final exercises = _exerciseCartController.value;
+    final exercises = _exerciseCartController.exercises;
     final selectedDays = _weekDayController.selectedDays;
 
     final minutes = int.parse(_durationController.text);
     final duration = Duration(minutes: minutes);
 
     return RoutineCreateModel(
-      patientId: 0,
+      routineId: widget.routine?.routineId ?? 0,
+      userId: user.userId,
       title: _titleController.text,
       description: _descriptionController.text,
       startTime: _startTime.value,
@@ -118,10 +167,7 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final routineController = context.read<RoutinesController>();
-    final exercisesCartController = context.watch<ExerciseCartController>();
-    final selectedDays = context.watch<WeekDayController>().selectedDays;
-    final exercises = exercisesCartController.value;
+    final exercises = context.watch<ExerciseCartController>().exercises;
 
     return Scaffold(
       appBar: AppBar(
@@ -137,14 +183,14 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
                 validator: (text) =>
                     text == null || text.isEmpty ? 'Campo obrigatório.' : null,
                 controller: _titleController,
-                labelText: 'Nome',
+                labelText: 'Nome*',
                 prefixIcon: const Icon(Icons.title),
               ),
               MyTextFormField(
                 validator: (text) =>
                     text == null || text.isEmpty ? 'Campo obrigatório.' : null,
                 controller: _descriptionController,
-                labelText: 'Descrição',
+                labelText: 'Descrição*',
                 prefixIcon: const Icon(Icons.description),
                 maxLines: 10,
                 maxLength: 300,
@@ -152,7 +198,7 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
               divider,
               leftAlignWithPadding(
                 child: Text(
-                  'Dias da rotina ativa.',
+                  'Dias da rotina ativa*',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -167,7 +213,7 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
               leftAlignWithPadding(
                 child: Text(
                   style: Theme.of(context).textTheme.titleMedium,
-                  'Selecione um exercício.',
+                  'Selecione um exercício*',
                 ),
               ),
               if (exercises.isNotEmpty)
@@ -197,20 +243,48 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
               const SizedBox(height: 15),
               MyHourPicker(
                 selectedTime: _startTime,
-                labelText: 'Horario de inicío',
+                labelText: 'Horario de inicío*',
                 prefixIcon: const Icon(Icons.alarm_on),
-                validator: (text) =>
-                    text == null || text.isEmpty ? 'Campo obrigatório.' : null,
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Campo obrigatório.';
+                  }
+
+                  final startTime = _startTime.value;
+                  if (startTime.hour == 0) {
+                    return 'Horário não permitido';
+                  }
+                  return null;
+                },
               ),
               MyHourPicker(
                 selectedTime: _endTime,
-                labelText: 'Horario de fim',
+                labelText: 'Horario de fim*',
                 prefixIcon: const Icon(Icons.alarm_off),
-                validator: (text) =>
-                    text == null || text.isEmpty ? 'Campo obrigatório.' : null,
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Campo obrigatório.';
+                  }
+
+                  final endTime = _endTime.value;
+                  final startTime = _startTime.value;
+                  if (endTime == startTime) {
+                    return 'Os horários não podem ser iguais.';
+                  }
+
+                  final isEqualHours = endTime.hour == startTime.hour;
+                  final isMinuteBefore = startTime.minute > endTime.minute;
+
+                  if (endTime.hour < startTime.hour ||
+                      (isEqualHours && isMinuteBefore)) {
+                    return 'Selecione um horário maior que o de início.';
+                  }
+
+                  return null;
+                },
               ),
               MyTextFormField(
-                labelText: 'Intervalo em minutos',
+                labelText: 'Intervalo em minutos*',
                 prefixIcon: const Icon(Icons.alarm_off),
                 controller: _durationController,
                 textInputType: TextInputType.number,
@@ -232,28 +306,7 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
               const SizedBox(height: 40),
               MyFilledLoadingButton(
                 text: 'Salvar',
-                action: () async {
-                  final validForm = _formKey.currentState?.validate();
-                  if (validForm == null || !validForm) {
-                    return;
-                  }
-
-                  final someActive =
-                      selectedDays.where((e) => e == true).toList();
-                  if (exercises.isEmpty || someActive.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Selecione no mínimo um exercicio e um dia da semana!',
-                        ),
-                      ),
-                    );
-
-                    return;
-                  }
-
-                  await routineController.create(_getRoutineCreateModel());
-                },
+                action: _handleFormSubmit,
               ),
               const SizedBox(height: 40),
             ],
@@ -262,4 +315,17 @@ class _RoutineFormPageState extends State<RoutineFormPage> {
       ),
     );
   }
+
+  Widget get divider => const Padding(
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 20),
+        child: Divider(),
+      );
+
+  Widget leftAlignWithPadding({required Widget child}) => Padding(
+        padding: const EdgeInsets.only(left: 20, bottom: 15),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: child,
+        ),
+      );
 }

@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/auth/shared/register_user_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/user_form.dart';
-import 'package:prev_ler/src/shared/utils/enums.dart';
 import 'package:provider/provider.dart';
 
 class AuthRegisterPage extends StatefulWidget {
   const AuthRegisterPage({
     super.key,
-    required this.userType,
   });
-
-  final UserType userType;
 
   @override
   State<AuthRegisterPage> createState() => _AuthRegisterPageState();
@@ -52,13 +48,9 @@ class _AuthRegisterPageState extends State<AuthRegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final userType = widget.userType;
-    final isMedic = userType == UserType.medic;
-
-    final title = isMedic ? "Médico" : "Paciente";
-    final description = isMedic
-        ? "Informe seu CRM e estado de origem para garantir a segurança das informações."
-        : "Tenha acesso a conteúdos exclusivos desenvolvidos por médicos licenciados para melhorar sua saúde e bem-estar.";
+    const title = "Registre-se";
+    const description =
+        "Tenha acesso a conteúdos exclusivos desenvolvidos por médicos licenciados para melhorar sua saúde e bem-estar.";
 
     return Scaffold(
       appBar: AppBar(
@@ -84,7 +76,6 @@ class _AuthRegisterPageState extends State<AuthRegisterPage> {
               ),
               const SizedBox(height: 30),
               UserForm(
-                userType: userType,
                 action: controller.register,
               ),
               const SizedBox(height: 45),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/auth/shared/auth_request_model.dart';
+import 'package:prev_ler/src/shared/errors/base_error.dart';
 import 'package:prev_ler/src/shared/http/client_http.dart';
-import 'package:prev_ler/src/shared/services/user_service.dart';
+import 'package:prev_ler/src/shared/services/auth_service.dart';
 
 enum AuthState { loggedIn, error, loggedOut, loading, idle }
 
 class AuthController extends ChangeNotifier {
-  final UserService authService;
+  final AuthService authService;
   final ClientHttp clientHttp;
 
   AuthController(this.authService, this.clientHttp);
@@ -23,14 +24,20 @@ class AuthController extends ChangeNotifier {
 
     try {
       if (email.isEmpty && password.isEmpty) {
-        throw Exception("Email and password must be filled");
+        throw BaseError(message: "O e-mail e a senha não podem ser vazios.");
       }
 
-      await authService.login(email, password);
+      await Future.wait([
+        authService.login(email, password),
+        Future.delayed(const Duration(seconds: 2)),
+      ]);
 
       state = AuthState.loggedIn;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = AuthState.error;
     } catch (e) {
-      errorMessage = e.toString();
+      errorMessage = 'Erro inesperado';
       state = AuthState.error;
     } finally {
       notifyListeners();
@@ -38,15 +45,20 @@ class AuthController extends ChangeNotifier {
   }
 
   Future<void> checkUserState() async {
-    final logged = await authService.checkUserState();
+    try {
+      final logged = await authService.checkUserState();
 
-    if (logged) {
-      state = AuthState.loggedIn;
-    } else {
-      state = AuthState.loggedOut;
+      if (logged) {
+        state = AuthState.loggedIn;
+      } else {
+        state = AuthState.loggedOut;
+      }
+    } catch (e) {
+      state = AuthState.error;
+      errorMessage = "Ops... Não foi possível recuperar a sessão do usuário";
+    } finally {
+      notifyListeners();
     }
-
-    notifyListeners();
   }
 
   void clearState() {

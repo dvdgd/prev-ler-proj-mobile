@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/routines/components/routine_card.dart';
-import 'package:prev_ler/src/modules/routines/shared/routines_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/routines_controller.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/components/sliver_center_text.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_silver_page_app_bar.dart';
@@ -36,6 +36,7 @@ class _RoutinesPageState extends State<RoutinesPage> {
 
   _handleChangeState() {
     if (controller.state == StateEnum.error) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(controller.errorMessage)),
       );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/date_symbols.dart';
-import 'package:prev_ler/src/modules/routines/shared/week_day_controller.dart';
+import 'package:prev_ler/src/modules/routines/shared/controllers/week_day_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 

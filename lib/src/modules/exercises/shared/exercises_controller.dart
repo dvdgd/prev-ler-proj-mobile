@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/exercises/shared/exercises_service.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
+import 'package:prev_ler/src/shared/errors/base_error.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class ExercisesController extends ChangeNotifier {
@@ -19,6 +20,9 @@ class ExercisesController extends ChangeNotifier {
     try {
       exercises = await service.fetchAll();
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -35,6 +39,9 @@ class ExercisesController extends ChangeNotifier {
       final newExercise = await service.create(exercise);
       exercises.add(newExercise);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -51,7 +58,7 @@ class ExercisesController extends ChangeNotifier {
       await service.update(newExercise);
 
       final contentIndex = exercises.indexWhere(
-        (exerc) => exerc.idExercise == newExercise.idExercise,
+        (exerc) => exerc.exerciseId == newExercise.exerciseId,
       );
 
       if (contentIndex != -1) {
@@ -60,6 +67,9 @@ class ExercisesController extends ChangeNotifier {
       }
 
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -75,8 +85,11 @@ class ExercisesController extends ChangeNotifier {
     try {
       await service.delete(exercise);
 
-      exercises.removeWhere((exerc) => exerc.idExercise == exercise.idExercise);
+      exercises.removeWhere((exerc) => exerc.exerciseId == exercise.exerciseId);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;

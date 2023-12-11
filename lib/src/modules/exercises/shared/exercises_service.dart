@@ -1,57 +1,105 @@
 import 'package:prev_ler/main.dart';
 import 'package:prev_ler/src/shared/entities/exercise.dart';
-import 'package:prev_ler/src/shared/http/client_http.dart';
+import 'package:prev_ler/src/shared/errors/base_error.dart';
+import 'package:prev_ler/src/shared/mappers/exercise_mapper.dart';
 import 'package:prev_ler/src/shared/utils/my_converter.dart';
 
 abstract class ExerciseService {
   Future<List<Exercise>> fetchAll();
+  Future<List<Exercise>> fetchLastsExercises(int qtdExercises);
   Future<Exercise> create(Exercise newExercise);
   Future<void> update(Exercise newExercise);
   Future<void> delete(Exercise exercise);
 }
 
 class ExercisesServiceImpl extends ExerciseService {
-  final ClientHttp clientHttp;
   final MyConverter fileConverter;
-  final String baseUrl = '${Environment.apiBaseUrl}/exercicios';
 
   ExercisesServiceImpl(
-    this.clientHttp,
     this.fileConverter,
   );
 
   @override
   Future<Exercise> create(Exercise newExercise) async {
-    final responseBody = await clientHttp.post(
-      uri: Uri.parse(baseUrl),
-      data: newExercise.toMap(),
-    );
+    try {
+      final exerciseMap = exerciseToSupabase(newExercise);
+      final newExerciseMap = await supabaseClient
+          .from('exercicio')
+          .insert(exerciseMap)
+          .select('*, enfermidade(*)')
+          .single();
 
-    return Exercise.fromMap(responseBody);
+      return exerciseFromSupabase(newExerciseMap);
+    } catch (e) {
+      throw UnknowError(
+        description: 'Ops... Ocorreu um erro ao criar exercício',
+      );
+    }
   }
 
   @override
   Future<List<Exercise>> fetchAll() async {
-    final responseBody = await clientHttp.fetch<List<dynamic>>(
-      uri: Uri.parse(baseUrl),
-    );
-
-    final exercises = responseBody.map((e) => Exercise.fromMap(e));
-    return exercises.toList();
+    try {
+      final supExercises = await supabaseClient
+          .from('exercicio')
+          .select('*, enfermidade(*)') as List<dynamic>;
+      final exercises =
+          supExercises.map((e) => exerciseFromSupabase(e)).toList();
+      return exercises;
+    } catch (e) {
+      throw UnknowError(
+        description: 'Ops... Ocorreu um erro ao buscar os exercícios',
+      );
+    }
   }
 
   @override
   Future<void> delete(Exercise exercise) async {
-    final id = exercise.idExercise;
-    await clientHttp.delete(uri: Uri.parse('$baseUrl/$id'));
+    try {
+      await supabaseClient
+          .from('exercicio')
+          .delete()
+          .eq('id_exercicio', exercise.exerciseId);
+    } catch (e) {
+      throw UnknowError(
+        description: 'Ops... Ocorreu um erro ao deletar o exercício',
+      );
+    }
   }
 
   @override
   Future<void> update(Exercise newExercise) async {
-    final id = newExercise.idExercise;
-    await clientHttp.put(
-      uri: Uri.parse('$baseUrl/$id'),
-      data: newExercise.toMap(),
-    );
+    try {
+      final exerciseMap = exerciseToSupabase(newExercise);
+      await supabaseClient
+          .from('exercicio')
+          .update(exerciseMap)
+          .eq('id_exercicio', newExercise.exerciseId);
+    } catch (e) {
+      throw UnknowError(
+        description: 'Ops... Ocorreu um erro ao atualizar o exercício',
+      );
+    }
+
+    return Future.delayed(const Duration(seconds: 1));
+  }
+
+  @override
+  Future<List<Exercise>> fetchLastsExercises(int qtdExercises) async {
+    try {
+      final supExercises = await supabaseClient
+          .from('exercicio')
+          .select('*, enfermidade(*)')
+          .order('id_exercicio', ascending: false)
+          .limit(qtdExercises) as List<dynamic>;
+
+      final exercises =
+          supExercises.map((e) => exerciseFromSupabase(e)).toList();
+      return exercises;
+    } catch (e) {
+      throw UnknowError(
+        description: 'Ops... Ocorreu um erro ao buscar os exercícios',
+      );
+    }
   }
 }

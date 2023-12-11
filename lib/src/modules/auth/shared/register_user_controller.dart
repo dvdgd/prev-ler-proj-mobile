@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/shared/entities/user.dart';
-import 'package:prev_ler/src/shared/services/user_service.dart';
+import 'package:prev_ler/src/shared/errors/base_error.dart';
+import 'package:prev_ler/src/shared/services/auth_service.dart';
 
 enum RegisterUserState { success, idle, loading, error }
 
 class RegisterUserController extends ChangeNotifier {
   RegisterUserState state = RegisterUserState.idle;
 
-  final UserService service;
+  final AuthService service;
 
   RegisterUserController(this.service);
 
-  Future<void> register(User user) async {
+  Future<void> register(UserSignUp user) async {
     state = RegisterUserState.loading;
     notifyListeners();
 
     try {
       await service.register(user);
       state = RegisterUserState.success;
+      notifyListeners();
+    } on BaseError {
+      state = RegisterUserState.error;
       notifyListeners();
     } catch (e) {
       state = RegisterUserState.error;

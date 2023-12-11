@@ -2,18 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/routines/shared/repositories/routine_repository.dart';
-import 'package:prev_ler/src/modules/routines/shared/routine_create_model.dart';
 import 'package:prev_ler/src/shared/entities/day_of_week.dart';
 import 'package:prev_ler/src/shared/entities/notification.dart';
 import 'package:prev_ler/src/shared/entities/routine.dart';
+import 'package:prev_ler/src/shared/entities/routine_create_model.dart';
 import 'package:prev_ler/src/shared/entities/week_days.dart';
 import 'package:prev_ler/src/shared/services/notification_service.dart';
 import 'package:prev_ler/src/shared/utils/my_converter.dart';
 
 abstract class RoutinesService {
-  Future<List<Routine>> getAll(int patientId);
+  Future<List<Routine>> getAll(String patientId);
   Future<Routine> create(RoutineCreateModel model);
-  Future<void> update(Routine newRoutine);
+  Future<Routine> update(RoutineCreateModel newModel);
   Future<void> delete(Routine routine);
   Future<void> toggleRoutine(Routine routine);
 }
@@ -25,41 +25,9 @@ class RoutinesServiceImpl extends RoutinesService {
   RoutinesServiceImpl(this._repository, this._notificationService);
 
   @override
-  Future<List<Routine>> getAll(int patientId) async {
-    final routines = await _repository.getAllRoutinesByPatientId(patientId);
+  Future<List<Routine>> getAll(String patientId) async {
+    final routines = await _repository.getAllRoutinesByUserId(patientId);
     return routines;
-  }
-
-  @override
-  Future<Routine> create(RoutineCreateModel model) async {
-    final selectedDays = model.selectedDays;
-    final routineWeekDays = _generateWeekDays(selectedDays);
-    final notifications = _generateRoutineCreateModelNotitications(model);
-
-    final routine = Routine(
-      idRoutine: 0,
-      idPatient: model.patientId,
-      title: model.title,
-      description: model.description,
-      startTime: model.startTime,
-      endTime: model.endTime,
-      active: model.active,
-      duration: model.duration,
-      exercises: model.exercises,
-      weekdays: routineWeekDays,
-      createdAt: DateTime.now(),
-      notifications: notifications.toList(),
-    );
-
-    final newRoutine = await _repository.create(routine);
-
-    final notificationsForSchedule = newRoutine.notifications;
-    if (notificationsForSchedule != null) {
-      await _scheduleNotifications(notificationsForSchedule);
-    }
-
-    newRoutine.exercises?.addAll(model.exercises);
-    return newRoutine;
   }
 
   @override
@@ -73,8 +41,23 @@ class RoutinesServiceImpl extends RoutinesService {
   }
 
   @override
-  Future<void> update(Routine newRoutine) async {
-    await _repository.update(newRoutine);
+  Future<Routine> create(RoutineCreateModel model) async {
+    final routine = _routineFromCreateModel(model);
+    final newRoutine = await _repository.create(routine);
+
+    final notificationsForSchedule = newRoutine.notifications;
+    if (notificationsForSchedule != null) {
+      await _scheduleNotifications(notificationsForSchedule);
+    }
+
+    return newRoutine;
+  }
+
+  @override
+  Future<Routine> update(RoutineCreateModel newModel) async {
+    final routine = _routineFromCreateModel(newModel);
+    final updatedRoutine = await _repository.update(routine);
+    return updatedRoutine;
   }
 
   @override
@@ -82,51 +65,52 @@ class RoutinesServiceImpl extends RoutinesService {
     final notifications = routine.notifications;
 
     if (routine.active && notifications != null && notifications.isNotEmpty) {
-      debugPrint('Scheduling notifications from routine ${routine.idRoutine}');
+      debugPrint('Scheduling notifications from routine ${routine.routineId}');
       await _scheduleNotifications(notifications);
     }
 
     if (!routine.active && notifications != null && notifications.isNotEmpty) {
-      debugPrint('Turning off notifications from routine ${routine.idRoutine}');
+      debugPrint('Turning off notifications from routine ${routine.routineId}');
       await _cancelNotifications(notifications);
     }
 
     await _repository.update(routine);
   }
 
-  List<DayOfWeek?> _generateWeekDays(List<bool> selectedDays) {
-    final List<DayOfWeek?> routineWeekDays =
-        List.generate(selectedDays.length, (index) {
-      final isIndexSelected = selectedDays[index];
-      if (isIndexSelected) {
-        return daysOfWeek[index];
-      }
-      return null;
-    }).where((element) => element != null).toList();
+  Routine _routineFromCreateModel(RoutineCreateModel model) {
+    final selectedDays = model.selectedDays;
+    final routineWeekDays = _generateWeekDays(selectedDays);
+    final notifications = _generateRoutineCreateModelNotitications(model);
 
+    return Routine(
+      routineId: model.routineId,
+      userId: model.userId,
+      title: model.title,
+      description: model.description,
+      startTime: model.startTime,
+      endTime: model.endTime,
+      active: model.active,
+      duration: model.duration,
+      exercises: model.exercises,
+      weekdays: routineWeekDays,
+      createdAt: DateTime.now(),
+      notifications: notifications.toList(),
+    );
+  }
+
+  List<DayOfWeek?> _generateWeekDays(List<bool> selectedDays) {
+    final generatedList = List.generate(selectedDays.length, (index) {
+      final isIndexSelected = selectedDays[index];
+      return isIndexSelected ? daysOfWeek[index] : null;
+    });
+
+    final routineWeekDays = generatedList.where((dw) => dw != null).toList();
     return routineWeekDays;
   }
 
-  List<DateTime> _getNotificationsHours(
-    TimeOfDay startTime,
-    TimeOfDay endTime,
-    Duration intervalDuration,
-  ) {
-    DateTime timeIncrementor = MyConverter.toDateTime(startTime);
-    final finishTime = MyConverter.toDateTime(endTime);
-
-    final List<DateTime> notificationsHours = [];
-
-    while (timeIncrementor.add(intervalDuration).isBefore(finishTime)) {
-      notificationsHours.add(timeIncrementor);
-      timeIncrementor = timeIncrementor.add(intervalDuration);
-    }
-
-    return notificationsHours;
-  }
-
   List<NotificationData> _generateRoutineCreateModelNotitications(
-      RoutineCreateModel model) {
+    RoutineCreateModel model,
+  ) {
     final scheduleHours = _getNotificationsHours(
       model.startTime,
       model.endTime,
@@ -147,9 +131,9 @@ class RoutinesServiceImpl extends RoutinesService {
       final exercise = model.exercises[randomIndex];
 
       return NotificationData(
-        idNotification: 0,
-        idRoutine: model.routineId,
-        idExercise: exercise.idExercise,
+        notificationId: 0,
+        routineId: model.routineId,
+        exerciseId: exercise.exerciseId,
         title: 'Está na hora de realizar seu exercício!',
         message:
             'O seu exercício ${exercise.name} da sua rotina ${model.title} está te esperando!',
@@ -159,6 +143,24 @@ class RoutinesServiceImpl extends RoutinesService {
     });
 
     return notifications.toList();
+  }
+
+  List<DateTime> _getNotificationsHours(
+    TimeOfDay startTime,
+    TimeOfDay endTime,
+    Duration intervalDuration,
+  ) {
+    DateTime timeIncrementor = MyConverter.toDateTime(startTime);
+    final finishTime = MyConverter.toDateTime(endTime);
+
+    final List<DateTime> notificationsHours = [];
+
+    while (timeIncrementor.add(intervalDuration).isBefore(finishTime)) {
+      notificationsHours.add(timeIncrementor);
+      timeIncrementor = timeIncrementor.add(intervalDuration);
+    }
+
+    return notificationsHours;
   }
 
   Future<void> _scheduleNotifications(

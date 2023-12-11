@@ -3,7 +3,7 @@ import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
-import 'package:prev_ler/src/shared/entities/medic.dart';
+import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_text_form_field.dart';
@@ -26,10 +26,9 @@ class InjuryFormPage extends StatefulWidget {
 
 class _InjuryFormPageState extends State<InjuryFormPage> {
   final _nameController = TextEditingController();
-  final _abbreviationController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  late final Medic medic;
+  late final User user;
   late final InjuriesController controller;
 
   final formKey = GlobalKey<FormState>();
@@ -41,12 +40,12 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
     controller = context.read<InjuriesController>();
     controller.addListener(_handleAuthStateChange);
 
-    final medic = context.read<UserController>().user?.medic;
-    if (medic == null) {
+    final user = context.read<UserController>().user;
+    if (user == null || user.type == UserType.employee) {
       Navigator.of(Routes.navigatorKey.currentContext!)
           .pushReplacementNamed('/');
     } else {
-      this.medic = medic;
+      this.user = user;
     }
 
     final injury = widget.injury;
@@ -61,7 +60,6 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
 
   void serializeControllers(InjuryType injury) {
     _nameController.text = injury.name;
-    _abbreviationController.text = injury.abbreviation;
     _descriptionController.text = injury.description;
   }
 
@@ -82,14 +80,13 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
 
   InjuryType _getInjuryFromForm() {
     final name = _nameController.text;
-    final abbreviation = _abbreviationController.text;
     final description = _descriptionController.text;
 
     return InjuryType(
       idInjuryType: widget.injury?.idInjuryType ?? 0,
-      idMedic: medic.idMedic,
+      companyId: user.company?.cnpj ?? '',
       name: name,
-      abbreviation: abbreviation,
+      userId: user.userId,
       description: description,
       createdAt: widget.injury?.createdAt ?? DateTime.now(),
       updatedAt: DateTime.now(),
@@ -107,56 +104,47 @@ class _InjuryFormPageState extends State<InjuryFormPage> {
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
-          child: Column(children: [
-            MyTextFormField(
-              validator: (text) => text == null || text.isEmpty
-                  ? 'Nome não pode ser vazio'
-                  : null,
-              controller: _nameController,
-              labelText: 'Nome',
-              prefixIcon: const Icon(Icons.text_fields),
-            ),
-            MyTextFormField(
-              validator: (text) {
-                if (text == null || text.isEmpty) {
-                  return 'Sigla não pode ser vazia';
-                }
-                return null;
-              },
-              controller: _abbreviationController,
-              labelText: 'Sigla',
-              prefixIcon: const Icon(Icons.abc),
-              maxLength: 8,
-            ),
-            MyTextFormField(
-              validator: (text) {
-                if (text == null || text.isEmpty) {
-                  return 'Descrição não pode ser vazia';
-                }
-                return null;
-              },
-              controller: _descriptionController,
-              labelText: 'Descrição',
-              prefixIcon: const Icon(Icons.description),
-              textInputType: TextInputType.multiline,
-              maxLines: 5,
-              maxLength: 2000,
-            ),
-            const SizedBox(height: 40),
-            MyFilledLoadingButton(
-              text: 'Salvar',
-              action: () async {
-                if (!formKey.currentState!.validate()) {
-                  return;
-                }
-                if (widget.injury == null) {
-                  return controller.create(_getInjuryFromForm());
-                }
-                return controller.update(_getInjuryFromForm());
-              },
-            ),
-            const SizedBox(height: 40),
-          ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MyTextFormField(
+                validator: (text) => text == null || text.isEmpty
+                    ? 'Nome não pode ser vazio'
+                    : null,
+                controller: _nameController,
+                labelText: 'Nome*',
+                prefixIcon: const Icon(Icons.text_fields),
+              ),
+              MyTextFormField(
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Descrição não pode ser vazia';
+                  }
+                  return null;
+                },
+                controller: _descriptionController,
+                labelText: 'Descrição*',
+                prefixIcon: const Icon(Icons.description),
+                textInputType: TextInputType.multiline,
+                maxLines: 5,
+                maxLength: 2000,
+              ),
+              const SizedBox(height: 40),
+              MyFilledLoadingButton(
+                text: 'Salvar',
+                action: () async {
+                  if (!formKey.currentState!.validate()) {
+                    return;
+                  }
+                  if (widget.injury == null) {
+                    return controller.create(_getInjuryFromForm());
+                  }
+                  return controller.update(_getInjuryFromForm());
+                },
+              ),
+              const SizedBox(height: 40),
+            ],
+          ),
         ),
       ),
     );

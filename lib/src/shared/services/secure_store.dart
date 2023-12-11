@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:prev_ler/src/shared/errors/base_error.dart';
 
 enum _SecureKeys {
   bearerToken(key: 'jwt_token'),
@@ -18,7 +19,7 @@ class SecureStore {
     final value = await _storage.read(key: key);
 
     if (value == null) {
-      throw Exception('Key $key not found.');
+      throw UnknowError(detailedMessage: 'Key $key not found.');
     }
 
     return value;

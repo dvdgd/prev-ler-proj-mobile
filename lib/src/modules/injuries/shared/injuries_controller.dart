@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prev_ler/src/modules/injuries/shared/injuries_service.dart';
 import 'package:prev_ler/src/shared/entities/injury_type.dart';
+import 'package:prev_ler/src/shared/errors/base_error.dart';
 import 'package:prev_ler/src/shared/utils/enums.dart';
 
 class InjuriesController extends ChangeNotifier {
@@ -20,16 +21,15 @@ class InjuriesController extends ChangeNotifier {
     try {
       injuries = await service.fetchAll();
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
     } finally {
       notifyListeners();
     }
-  }
-
-  Future<InjuryType> fetchInjuryTypeById(int idInjuryType) async {
-    return service.fetchById(idInjuryType);
   }
 
   Future<void> create(InjuryType injuryType) async {
@@ -40,6 +40,9 @@ class InjuriesController extends ChangeNotifier {
       final newInjuryType = await service.create(injuryType);
       injuries.add(newInjuryType);
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -65,6 +68,9 @@ class InjuriesController extends ChangeNotifier {
       }
 
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;
@@ -84,6 +90,9 @@ class InjuriesController extends ChangeNotifier {
         (cnt) => cnt.idInjuryType == injuryType.idInjuryType,
       );
       state = StateEnum.success;
+    } on BaseError catch (e) {
+      errorMessage = e.message;
+      state = StateEnum.error;
     } catch (e) {
       errorMessage = e.toString();
       state = StateEnum.error;

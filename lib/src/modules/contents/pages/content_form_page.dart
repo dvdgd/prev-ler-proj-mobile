@@ -3,7 +3,7 @@ import 'package:prev_ler/src/config/routes.dart';
 import 'package:prev_ler/src/modules/contents/shared/contents_controller.dart';
 import 'package:prev_ler/src/shared/controllers/user_controller.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
-import 'package:prev_ler/src/shared/entities/medic.dart';
+import 'package:prev_ler/src/shared/entities/user.dart';
 import 'package:prev_ler/src/shared/ui/components/injury_dropdown_button.dart';
 import 'package:prev_ler/src/shared/ui/components/page_title.dart';
 import 'package:prev_ler/src/shared/ui/widgets/my_filled_loading_button.dart';
@@ -28,14 +28,14 @@ class ContentFormPage extends StatefulWidget {
 class _ContentFormPageState extends State<ContentFormPage> {
   final _titleController = TextEditingController();
   final _subtitleController = TextEditingController();
-  final _injuryTypeController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _observationController = TextEditingController();
+  final _injuryTypeController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
   late final ContentsController controller;
-  late final Medic medic;
+  late final User user;
 
   @override
   void initState() {
@@ -43,20 +43,19 @@ class _ContentFormPageState extends State<ContentFormPage> {
     controller = context.read<ContentsController>();
     controller.addListener(_handleAuthStateChange);
 
-    final medic = context.read<UserController>().user?.medic;
-    if (medic == null) {
+    final user = context.read<UserController>().user;
+    if (user == null) {
       Navigator.of(Routes.navigatorKey.currentContext!)
           .pushReplacementNamed('/');
     } else {
-      this.medic = medic;
+      this.user = user;
     }
 
     final content = widget.content;
     if (content != null) {
+      _injuryTypeController.text = content.injuryTypeId.toString();
       _titleController.text = content.title;
       _subtitleController.text = content.subtitle;
-      _injuryTypeController.text =
-          content.injuryType?.idInjuryType.toString() ?? '';
       _descriptionController.text = content.description;
       _observationController.text = content.observation ?? '';
     }
@@ -91,13 +90,13 @@ class _ContentFormPageState extends State<ContentFormPage> {
     final injuryTypeId = _injuryTypeController.text;
 
     return Content(
-      idContent: widget.content?.idContent ?? 0,
-      idMedic: medic.idMedic,
-      idInjuryType: int.parse(injuryTypeId),
+      contentId: widget.content?.contentId ?? 0,
+      companyId: user.company?.cnpj ?? '',
       title: title,
       subtitle: subtitle,
       description: description,
       observation: observation,
+      injuryTypeId: int.parse(injuryTypeId),
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -122,7 +121,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
                     ? 'Título não pode ser vazio'
                     : null,
                 controller: _titleController,
-                labelText: 'Título',
+                labelText: 'Título*',
                 prefixIcon: const Icon(Icons.title),
               ),
               MyTextFormField(
@@ -130,12 +129,12 @@ class _ContentFormPageState extends State<ContentFormPage> {
                     ? 'Subtítulo não pode ser vazio'
                     : null,
                 controller: _subtitleController,
-                labelText: 'Subtítulo',
+                labelText: 'Subtítulo*',
                 prefixIcon: const Icon(Icons.subtitles),
               ),
               InjuryDropdownButton(
                 injuryTypeController: _injuryTypeController,
-                idInjuryType: widget.content?.injuryType?.idInjuryType,
+                idInjuryType: widget.content?.injuryTypeId,
               ),
               MyTextFormField(
                 validator: (text) {
@@ -146,7 +145,7 @@ class _ContentFormPageState extends State<ContentFormPage> {
                 },
                 controller: _descriptionController,
                 textInputType: TextInputType.multiline,
-                labelText: 'Descrição',
+                labelText: 'Descrição*',
                 prefixIcon: const Icon(Icons.description),
                 maxLines: 10,
                 maxLength: 4000,

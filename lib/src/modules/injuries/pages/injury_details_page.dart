@@ -12,7 +12,6 @@ class InjuryDetailsPage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     final title = injuryType.name;
-    final subtitle = injuryType.abbreviation;
     final description = injuryType.description;
 
     final createdAt = injuryType.createdAt;
@@ -30,8 +29,6 @@ class InjuryDetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(title, style: textTheme.titleLarge),
-              const SizedBox(height: 10),
-              Text(subtitle, style: textTheme.titleMedium),
               const SizedBox(height: 15),
               Text(
                 description,

@@ -26,25 +26,17 @@ class _AuthPageState extends State<AuthPage> {
   void initState() {
     super.initState();
     controller = context.read<AuthController>();
-
-    controller.addListener(_handleAuthStateChange);
-  }
-
-  @override
-  void dispose() {
-    controller.removeListener(_handleAuthStateChange);
-    super.dispose();
-  }
-
-  void _handleAuthStateChange() {
-    if (controller.state == AuthState.loggedIn) {
-      Navigator.of(Routes.navigatorKey.currentContext!)
-          .pushReplacementNamed('/home');
-    } else if (controller.state == AuthState.error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(controller.errorMessage)),
-      );
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (controller.state == AuthState.error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(controller.errorMessage)),
+        );
+      }
+      if (controller.state == AuthState.loggedIn) {
+        Navigator.of(Routes.navigatorKey.currentContext!)
+            .pushReplacementNamed('/home');
+      }
+    });
   }
 
   Future<void> _makeLogin() async {
@@ -75,6 +67,11 @@ class _AuthPageState extends State<AuthPage> {
             key: _formKey,
             child: Column(
               children: [
+                Image.asset(
+                  'assets/prev_ler_logo.png',
+                  width: 150,
+                ),
+                const SizedBox(height: 32),
                 Text(
                   'Bem vindo!',
                   style: Theme.of(context).textTheme.headlineLarge,
@@ -94,7 +91,7 @@ class _AuthPageState extends State<AuthPage> {
                   controller: _emailController,
                   validator: (text) =>
                       text == null || text.isEmpty ? "Preencha o email." : null,
-                  labelText: 'Email',
+                  labelText: 'Email*',
                   prefixIcon: const Icon(Icons.email_outlined),
                   textInputType: TextInputType.emailAddress,
                 ),
@@ -102,7 +99,7 @@ class _AuthPageState extends State<AuthPage> {
                   validator: (text) =>
                       text == null || text.isEmpty ? "Digite a senha." : null,
                   controller: _passwordController,
-                  labelText: 'Senha',
+                  labelText: 'Senha*',
                 ),
                 const SizedBox(height: 30),
                 Padding(
@@ -116,11 +113,17 @@ class _AuthPageState extends State<AuthPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildTextButton('Registrar médico', '/register/medic'),
-                      _buildTextButton(
-                          'Registrar paciente', '/register/patient'),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(Routes.navigatorKey.currentContext!)
+                              .pushNamed('/register');
+                        },
+                        child: const Center(
+                          child: Text('Registrar-se'),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -128,17 +131,6 @@ class _AuthPageState extends State<AuthPage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildTextButton(String text, String route) {
-    return TextButton(
-      onPressed: () {
-        Navigator.of(Routes.navigatorKey.currentContext!).pushNamed(route);
-      },
-      child: Center(
-        child: Text(text),
       ),
     );
   }

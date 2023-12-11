@@ -19,8 +19,6 @@ class ExercisePage extends StatefulWidget {
 }
 
 class _ExercisePageState extends State<ExercisePage> {
-  final _searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -41,12 +39,11 @@ class _ExercisePageState extends State<ExercisePage> {
     final state = controller.state;
     final errorMessage = controller.errorMessage;
 
-    final idMedic = context.read<UserController>().user?.medic?.idMedic;
+    final idMedic = context.read<UserController>().user?.userId;
 
     final exercises = controller.exercises;
-    final userExercises = exercises.where((e) => e.idMedic == idMedic).toList();
-    final otherExercises =
-        exercises.where((e) => e.idMedic != idMedic).toList();
+    final userExercises = exercises.where((e) => e.userId == idMedic).toList();
+    final otherExercises = exercises.where((e) => e.userId != idMedic).toList();
     final isLoading = state == StateEnum.loading;
 
     return Scaffold(
@@ -68,13 +65,6 @@ class _ExercisePageState extends State<ExercisePage> {
             if (userExercises.isNotEmpty)
               SliverList(
                 delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      'Meus:',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 10,

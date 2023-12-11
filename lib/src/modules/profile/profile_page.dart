@@ -58,8 +58,6 @@ class _ProfilePageState extends State<ProfilePage> {
       return const SplashScreen();
     }
 
-    final isMedic = user.medic != null;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -74,8 +72,6 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 15),
             UserForm(
               action: controller.updateUser,
-              userType: isMedic ? UserType.medic : UserType.patient,
-              user: user,
             ),
             const SizedBox(height: 40),
           ],

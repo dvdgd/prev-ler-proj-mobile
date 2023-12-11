@@ -1,62 +1,91 @@
 import 'package:prev_ler/main.dart';
 import 'package:prev_ler/src/shared/entities/content.dart';
-import 'package:prev_ler/src/shared/http/client_http.dart';
+import 'package:prev_ler/src/shared/errors/base_error.dart';
+import 'package:prev_ler/src/shared/mappers/content_mapper.dart';
 
 abstract class ContentsService {
   Future<List<Content>> fetchAll();
-  Future<Content> fetchById(int idContent);
   Future<Content> create(Content content);
+  Future<List<Content>> fetchLastsContents(int qtdContents);
   Future<void> update(Content newContent);
   Future<void> delete(Content content);
 }
 
 class ContentsServiceImpl extends ContentsService {
-  final String _baseUrl = '${Environment.apiBaseUrl}/conteudos';
-  final ClientHttp clientHttp;
-
-  ContentsServiceImpl(this.clientHttp);
-
-  @override
-  Future<List<Content>> fetchAll() async {
-    final responseBody = await clientHttp.fetch<List<dynamic>>(
-      uri: Uri.parse(_baseUrl),
-    );
-
-    final contentsList = responseBody.map((e) => Content.fromMap(e));
-
-    return List.from(contentsList);
-  }
-
-  @override
-  Future<Content> fetchById(int idContent) async {
-    final responseBody = await clientHttp.fetch(
-      uri: Uri.parse('$_baseUrl/$idContent'),
-    );
-
-    return Content.fromMap(responseBody);
-  }
+  ContentsServiceImpl();
 
   @override
   Future<Content> create(Content content) async {
-    final responseBody = await clientHttp.post(
-      uri: Uri.parse(_baseUrl),
-      data: content.toMap(),
-    );
+    try {
+      final contentSup = contentToSupabase(content);
+      final createdContent = await supabaseClient
+          .from('conteudo')
+          .insert(contentSup)
+          .select('*, enfermidade(*)')
+          .single();
+      return contentFromSupabase(createdContent);
+    } catch (e) {
+      throw BaseError(message: 'Desculpe, não foi possível criar o conteúdo.');
+    }
+  }
 
-    return Content.fromMap(responseBody);
+  @override
+  Future<List<Content>> fetchAll() async {
+    try {
+      final supContents = await supabaseClient
+          .from('conteudo')
+          .select('*, enfermidade(*)') as List<dynamic>;
+      final contents = supContents.map((c) => contentFromSupabase(c)).toList();
+      return contents;
+    } catch (e) {
+      throw BaseError(
+        message:
+            'Ocorreu um erro ao buscar as lessões, tente novamente mais tarde.',
+      );
+    }
   }
 
   @override
   Future<void> delete(Content content) async {
-    await clientHttp.delete(uri: Uri.parse('$_baseUrl/${content.idContent}'));
+    try {
+      await supabaseClient
+          .from('conteudo')
+          .delete()
+          .eq('id_conteudo', content.contentId);
+    } catch (e) {
+      throw UnknowError();
+    }
   }
 
   @override
   Future<void> update(Content newContent) async {
-    final id = newContent.idContent;
-    await clientHttp.put(
-      uri: Uri.parse('$_baseUrl/$id'),
-      data: newContent.toMap(),
-    );
+    try {
+      final supContent = contentToSupabase(newContent);
+      await supabaseClient
+          .from('conteudo')
+          .update(supContent)
+          .eq('id_conteudo', newContent.contentId);
+    } catch (e) {
+      throw UnknowError();
+    }
+  }
+
+  @override
+  Future<List<Content>> fetchLastsContents(int qtdContents) async {
+    try {
+      final supContents = await supabaseClient
+          .from('conteudo')
+          .select('*, enfermidade(*)')
+          .order('id_conteudo', ascending: false)
+          .limit(qtdContents) as List<dynamic>;
+
+      final contents = supContents.map((c) => contentFromSupabase(c)).toList();
+      return contents;
+    } catch (e) {
+      throw BaseError(
+        message:
+            'Ocorreu um erro ao buscar as lessões, tente novamente mais tarde.',
+      );
+    }
   }
 }

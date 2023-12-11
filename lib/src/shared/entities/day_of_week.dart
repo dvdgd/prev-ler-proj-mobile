@@ -1,20 +1,11 @@
 class DayOfWeek {
   int idWeekday;
   String name;
+  String enumName;
 
   DayOfWeek({
     required this.idWeekday,
     required this.name,
+    required this.enumName,
   });
-
-  factory DayOfWeek.fromMap(Map<String, dynamic> map) {
-    return DayOfWeek(
-      idWeekday: map['idDiaSemana'],
-      name: map['nome'],
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {'idDiaSemana': idWeekday, 'nome': name};
-  }
 }

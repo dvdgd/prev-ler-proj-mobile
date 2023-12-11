@@ -10,7 +10,7 @@ class MyTextFormField extends StatelessWidget {
   final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final List<FilteringTextInputFormatter>? inputFormatters;
+  final List<TextInputFormatter>? inputFormatters;
   final TextInputType? textInputType;
   final int? maxLength;
   final bool? obscureText;

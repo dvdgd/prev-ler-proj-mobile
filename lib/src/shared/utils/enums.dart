@@ -6,6 +6,8 @@ enum StateEnum {
 }
 
 enum UserType {
-  medic,
-  patient,
+  healthProfessional,
+  employee,
+  businessRepresentavive,
+  admin,
 }
